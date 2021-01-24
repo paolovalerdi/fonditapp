@@ -3,7 +3,7 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
-    customer-app \
     data \
+    tests \
+    customer-app \
     manager-app \
-    tests
