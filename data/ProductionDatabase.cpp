@@ -8,22 +8,23 @@ ProductionDatabase &ProductionDatabase::getInstance()
 
 ProductionDatabase::ProductionDatabase()
 {
-    database = new QSqlDatabase();
-    database->addDatabase("QMYSQL");
-    database->setHostName("http://127.0.0.1/");
-    database->setDatabaseName("fonditapp");
-    database->setUserName("root");
-    database->setPassword("");
-    bool isOpen = database->open();
+    database = QSqlDatabase::addDatabase("QMYSQL");
+    database.setHostName("localhost");
+    database.setDatabaseName("fonditapp");
+    database.setUserName("root");
+    database.setPassword("");
+    bool isOpen = database.open();
     if (!isOpen) {
         qDebug() << "[ProductionDatabase] => Couldn´t open database";
-        qDebug() << database->lastError().text();
+        qDebug() << database.lastError().text();
+    } else {
+        qDebug() << "Connected!";
     }
 }
 
 QSqlQuery ProductionDatabase::executeQuery(QString queryStr)
 {
-    QSqlQuery query(*database);
+    QSqlQuery query(database);
     query.exec(queryStr);
     return query;
 }

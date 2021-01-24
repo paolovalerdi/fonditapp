@@ -11,5 +11,5 @@ public:
     QSqlQuery executeQuery(QString queryStr) override;
 private:
     ProductionDatabase();
-    QSqlDatabase* database = nullptr;
+    QSqlDatabase database;
 };
