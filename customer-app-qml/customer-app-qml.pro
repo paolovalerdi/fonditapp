@@ -11,8 +11,8 @@ SOURCES += \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
-        ProductList.cpp \
-        ProductModel.cpp \
+        ProductViewModel.cpp \
+        ProductViewModelCallback.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -34,8 +34,8 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
-    ProductList.h \
-    ProductModel.h
+    ProductViewModel.h \
+    ProductViewModelCallback.h
 
 INCLUDEPATH += \
     ../data

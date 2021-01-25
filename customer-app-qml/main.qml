@@ -36,7 +36,7 @@ ApplicationWindow {
                 text: qsTr("Entradas")
                 width: parent.width
                 onClicked: {
-                    productList.updateCategory(2)
+                    productViewModelCallback.updateCategory(2)
                     toolbarTitle.text = "Entradas"
                     drawer.close()
                 }
@@ -45,7 +45,7 @@ ApplicationWindow {
                 text: qsTr("Plato fuerte")
                 width: parent.width
                 onClicked: {
-                    productList.updateCategory(3)
+                    productViewModelCallback.updateCategory(3)
                     toolbarTitle.text = "PlatoFuerte"
                     drawer.close()
                 }
@@ -54,7 +54,7 @@ ApplicationWindow {
                 text: qsTr("Postres")
                 width: parent.width
                 onClicked: {
-                    productList.updateCategory(4)
+                    productViewModelCallback.updateCategory(4)
                     toolbarTitle.text = "Postres"
                     drawer.close()
                 }
@@ -63,7 +63,7 @@ ApplicationWindow {
                 text: qsTr("Bebidas")
                 width: parent.width
                 onClicked: {
-                    productList.updateCategory(1)
+                    productViewModelCallback.updateCategory(1)
                     toolbarTitle.text = "Bebidas"
                     drawer.close()
                 }
@@ -72,7 +72,7 @@ ApplicationWindow {
                 text: qsTr("Otros")
                 width: parent.width
                 onClicked: {
-                    productList.updateCategory(5)
+                    productViewModelCallback.updateCategory(5)
                     toolbarTitle.text = "Otros"
                     drawer.close()
                 }
@@ -87,8 +87,8 @@ ApplicationWindow {
         }
         cellWidth: (width / 3)
         cellHeight: (height / 3)
-        model: ProductModel {
-            callback: productList
+        model: ProductViewModel {
+            callback: productViewModelCallback
         }
         delegate: Item {
             width: gridView.cellWidth
