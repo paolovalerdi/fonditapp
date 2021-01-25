@@ -10,6 +10,7 @@ class ProductsDao
 {
 public:
     ProductsDao(AbsDatabase* database);
+    QList<Product> getAllProducts();
     QList<Product> getProductsByCategory(int id);
     void insertProduct(Product product);
     void deleteProduct(Product product);

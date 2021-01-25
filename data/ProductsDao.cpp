@@ -5,6 +5,24 @@ ProductsDao::ProductsDao(AbsDatabase* database)
     this->database = database;
 }
 
+QList<Product> ProductsDao::getAllProducts()
+{
+    auto results = QList<Product>();
+    auto query = database->executeQuery(
+                QString("SELECT * FROM products INNER JOIN categories ON products.id_category = categories.id_category"));
+    while(query.next()) {
+        auto id = query.value("id_product").toInt();
+        auto name = query.value("name").toString();
+        auto description = query.value("description").toString();
+        auto picture = query.value("picture").toByteArray();
+        auto price = query.value("price").toDouble();
+        auto categoryId = query.value("id_category").toInt();
+        auto categoryTitle = query.value("title").toString();
+        results.append(Product(id, name, description, price, picture, Category(categoryId, categoryTitle)));
+    }
+    return results;
+}
+
 QList<Product> ProductsDao::getProductsByCategory(int id)
 {
     auto results = QList<Product>();
