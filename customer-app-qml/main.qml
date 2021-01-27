@@ -88,6 +88,7 @@ ApplicationWindow {
         cellWidth: (width / 3)
         cellHeight: (height / 3)
         model: ProductViewModel {
+            // @disable-check M16
             callback: productViewModelCallback
         }
         delegate: Item {
