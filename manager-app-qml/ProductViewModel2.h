@@ -17,7 +17,7 @@
 class ProductViewModel2 : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(ProductViewModelCallback *callback2 READ getCallback WRITE setCallback)
+    Q_PROPERTY(ProductViewModelCallback2 *callback2 READ getCallback WRITE setCallback)
 
 public:
     /**
