@@ -26,7 +26,7 @@ QVariant ProductViewModel::data(const QModelIndex &index, int role) const
         // es necesario convertilar a base64 y agregar el tipo.
         return QVariant("data:image/png;base64," + item.getPicture().toBase64());
     case PriceRole:
-        return QVariant(item.getPrice());
+        return QVariant(QString("$%1").arg(QString::number(item.getPrice(), 'f', 2)));
     }
     return QVariant();
 }

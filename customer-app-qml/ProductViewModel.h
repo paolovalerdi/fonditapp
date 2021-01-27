@@ -28,7 +28,7 @@ public:
     enum {
         NameRole,
         PriceRole,
-        PictureRole,
+        PictureRole
     };
     explicit ProductViewModel(QObject *parent = nullptr);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
