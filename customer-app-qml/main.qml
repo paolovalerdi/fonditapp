@@ -42,6 +42,15 @@ ApplicationWindow {
                 }
             }
             ItemDelegate {
+                text: qsTr("Entradas")
+                width: parent.width
+                onClicked: {
+                    productViewModelCallback.updateCategory(2)
+                    toolbarTitle.text = "Entradas"
+                    drawer.close()
+                }
+            }
+            ItemDelegate {
                 text: qsTr("Plato fuerte")
                 width: parent.width
                 onClicked: {
@@ -87,7 +96,6 @@ ApplicationWindow {
         cellWidth: (width / 3)
         cellHeight: (height / 3)
         model: ProductViewModel {
-            // @disable-check M16
             callback: productViewModelCallback
         }
         delegate: ProductItemView {
