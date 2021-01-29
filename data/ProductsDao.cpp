@@ -62,3 +62,19 @@ void ProductsDao::deleteProduct(Product product)
 {
     auto query = database->executeQuery(QString("DELETE FROM products WHERE id_product = %1").arg(product.getId()));
 }
+
+void ProductsDao::updateProduct(int id,
+                                QString name,
+                                QString description,
+                                QString price)
+{
+    auto query = database->executeQuery(QString("UPDATE products ")
+                                        .append("SET name = '%1', ")
+                                        .append("description = '%2', ")
+                                        .append("price = %3 ")
+                                        .append("WHERE id_product = %4")
+                                        .arg(name)
+                                        .arg(description)
+                                        .arg(price.toDouble())
+                                        .arg(id));
+}

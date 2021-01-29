@@ -17,7 +17,10 @@ public:
     /**
      * Actualiza todos los campos, excepto el id
      */
-    void updateProduct(Product updatedProduct);
+    void updateProduct(int id,
+                       QString name,
+                       QString description,
+                       QString price);
 private:
     AbsDatabase* database;
 };
