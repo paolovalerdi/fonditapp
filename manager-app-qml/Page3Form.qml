@@ -1,122 +1,138 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
+import QtQuick.Dialogs 1.2
 
-import QtQuick.Controls.Styles 1.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.0
 
 Page {
+    id: editFormRoot
+
+    property int productId: -1
+    property string name: ""
+    property string description: ""
+    property string picture: ""
+    property string price: ""
+
+    title: "Editar producto"
+
     anchors.fill: parent
 
-    title: qsTr("Editar Producto")
-
-
-    Label {
-        x: 298
-        y: 76
-        text: qsTr("Nombre")
-
-
-    }
-
-
-
-    Label{
-        x: 300
-        y: 133
-        text: qsTr("Descripción")
-
-    }
-    Label{
-        x: 298
-        y: 209
-        width: 58
-        height: 20
-        text: qsTr("Precio")
-        font.pointSize: 8
-        font.family: "Arial"
-        //horizontalAlignment: Text.AlignLeft
-        //anchors.left: parent
-    }
-
-
-    Image {
-
-        id: img
-        x: 68
-        y: 76
-        width: 202
-        height: 182
-
-        source: 'file:///C:/Users/maria/Desktop/610-sopes.jpg'
+    MessageDialog {
+        id: confirmationDialog
+        visible: false
+        title: "Confirmación"
+        text: "¿Seguro que quieres editar este producto?"
+        onAccepted: {
+            productFormViewModel.updateProduct(productId,
+                                               nameTextField.text,
+                                               descriptionTextArea.text,
+                                               priceTextField.text);
+            stackView.pop();
+        }
 
     }
 
-Label {
-    id: label
-    x: 73
-    y: 48
-    width: 107
-    height: 16
-    text: qsTr("Editar Producto")
-    font.pointSize: 10
+    Rectangle {
+        id: imageContainer
+        width: parent.width * 0.3
+        height: width
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: parent.width * 0.1
+        }
+        Rectangle {
+            id: mask
+            width: parent.width
+            height: parent.width
+            radius: parent.width / 2
+            visible: false
+        }
+        Image {
+            id: productPicture
+            width: parent.width
+            height: parent.width
+            source: picture
+            fillMode: Image.PreserveAspectCrop
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: mask
+            }
+        }
+    }
+    Column {
+        spacing: 8
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: imageContainer.right
+            right: parent.right
+            leftMargin: parent.width * .1
+        }
+        Column {
+            width: parent.width
+            spacing: 4
+            Label {
+                text: "Nombre"
+            }
+            TextField {
+                id: nameTextField
+                text: name
+                placeholderText: "Nombre del producto"
+            }
+            Column {
+                width: parent.width
+                Label {
+                    text: "Descripción"
+                }
+                TextArea {
+                    id: descriptionTextArea
+                    width: 220
+                    text: description
+                    wrapMode: TextEdit.WordWrap
+                }
+            }
+            Column {
+                Label { text: "Precio" }
+                Row {
+                    Label {
+                        y: 8
+                        text: "$"
+                    }
+                    TextField {
+                        id: priceTextField
+                        text: price
+                        placeholderText: "Precio"
+                        validator: DoubleValidator {
+                            bottom: 0
+                            decimals: 2
+                            top: 1000
+                        }
+                    }
+                }
+
+            }
+            Row {
+                spacing: 8
+                Button {
+                    text: "Guardar"
+                    onClicked: {
+                        confirmationDialog.visible = true
+                    }
+                }
+                Button {
+                    text: "Eliminar"
+                    Material.background: Material.Red
+                    Material.foreground: Material.White
+                    onClicked: {
+                        confirmationDialog.visible = true
+                    }
+                }
+            }
+
+        }
+    }
 }
 
-CheckBox {
-    x: 350
-    y: 262
-    text: "Check Box"
-
-
-   }
-
-
-
-Button {
-    id: button1
-    x: 308
-    y: 330
-    text: qsTr("Guardar cambios")
-    font.capitalization: Font.MixedCase
-
-}
-
-Button {
-    id: button2
-    x: 457
-    y: 326
-    width: 76
-    height: 54
-    //text: qsTr("Eliminar producto")
-    icon.name: "Eliminar producto"
-    icon.source: 'file:///D:/Descargas/bote_b.png'
-}
-
-TextArea {
-    id: textArea
-    x: 380
-    y: 118
-    placeholderText: qsTr("Text Area")
-}
-
-TextArea {
-    id: textArea1
-    x: 380
-    y: 68
-    placeholderText: qsTr("Text Area")
-}
-
-TextArea {
-    id: textArea2
-    x: 380
-    y: 199
-    placeholderText: qsTr("Text Area")
-}
-}
-
-
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;formeditorZoom:1.25;height:480;width:640}
-}
-##^##*/

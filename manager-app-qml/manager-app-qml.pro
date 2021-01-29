@@ -7,12 +7,13 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ../customer-app-qml/ProductViewModel.cpp \
+        ../customer-app-qml/ProductViewModelCallback.cpp \
         ../data/Category.cpp \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
-        ProductViewModel2.cpp \
-        ProductViewModelCallback2.cpp \
+        ProductFormViewModel.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -31,14 +32,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 INCLUDEPATH += \
     ../data
+    ../customer-app-qml
 
 HEADERS += \
+    ../customer-app-qml/ProductViewModel.h \
+    ../customer-app-qml/ProductViewModelCallback.h \
     ../data/AbsDatabase.h \
     ../data/Category.h \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
-    ProductViewModel2.h \
-    ProductViewModelCallback2.h
+    ProductFormViewModel.h
 
 DISTFILES +=

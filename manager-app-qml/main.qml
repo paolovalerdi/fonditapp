@@ -8,10 +8,10 @@ import QtQuick.Controls.Styles 1.4
 
 ApplicationWindow {
     id: window
-    width: 640
-    height: 480
+    width: 800
+    height: 600
     visible: true
-    title: qsTr("Stack")
+    title: qsTr("Gerente")
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
