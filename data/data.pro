@@ -9,10 +9,12 @@ SOURCES += \
         Category.cpp \
         Product.cpp \
         ProductionDatabase.cpp \
+        ProductsDao.cpp \
         main.cpp
 
 HEADERS += \
     AbsDatabase.h \
     Category.h \
     Product.h \
-    ProductionDatabase.h
+    ProductionDatabase.h \
+    ProductsDao.h

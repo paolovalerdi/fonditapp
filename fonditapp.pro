@@ -5,5 +5,5 @@ CONFIG += ordered
 SUBDIRS += \
     data \
     tests \
-    customer-app \
-    manager-app \
+    customer-app-qml \
+    manager-app-qml \

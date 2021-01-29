@@ -1,8 +1,12 @@
 #include "ProductionDatabase.h"
 
-ProductionDatabase &ProductionDatabase::getInstance()
+ProductionDatabase* ProductionDatabase::instance = nullptr;
+
+ProductionDatabase* ProductionDatabase::getInstance()
 {
-    static ProductionDatabase instance;
+    if (instance == nullptr) {
+        instance = new ProductionDatabase();
+    }
     return instance;
 }
 
@@ -24,7 +28,18 @@ ProductionDatabase::ProductionDatabase()
 
 QSqlQuery ProductionDatabase::executeQuery(QString queryStr)
 {
+    return executeQuery(prepareQuery(queryStr));
+}
+
+QSqlQuery ProductionDatabase::executeQuery(QSqlQuery queryObj)
+{
+    queryObj.exec();
+    return queryObj;
+}
+
+QSqlQuery ProductionDatabase::prepareQuery(QString queryString)
+{
     QSqlQuery query(database);
-    query.exec(queryStr);
+    query.prepare(queryString);
     return query;
 }

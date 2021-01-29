@@ -7,9 +7,16 @@
 class ProductionDatabase : public AbsDatabase
 {
 public:
-    static ProductionDatabase& getInstance();
+    static ProductionDatabase* getInstance();
     QSqlQuery executeQuery(QString queryStr) override;
+    QSqlQuery executeQuery(QSqlQuery queryObj) override;
+    QSqlQuery prepareQuery(QString queryString) override;
+protected:
+    static ProductionDatabase* instance;
 private:
     ProductionDatabase();
     QSqlDatabase database;
 };
+
+//ProductionDatabase* ProductionDatabase::instance = nullptr;
+

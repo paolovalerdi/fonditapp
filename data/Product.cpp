@@ -9,12 +9,13 @@ Product::Product()
     this->category = Category();
 }
 
-Product::Product(int id, QString name, QString description, double price, Category category)
+Product::Product(int id, QString name, QString description, double price, QByteArray picture, Category category)
 {
     this->id = id;
     this->name = name;
     this->description = description;
     this->price = price;
+    this->picture = picture;
     this->category = category;
 }
 
@@ -36,4 +37,14 @@ double Product::getPrice() const
 Category Product::getCategory() const
 {
     return category;
+}
+
+QByteArray Product::getPicture() const
+{
+    return picture;
+}
+
+QString Product::getName() const
+{
+    return name;
 }

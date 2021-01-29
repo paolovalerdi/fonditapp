@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QByteArray>
 #include "Category.h"
 
 class Product
@@ -11,18 +12,20 @@ public:
             QString name,
             QString description,
             double price,
-            /*TODO: BLOB*/
+            QByteArray picture,
             Category category);
     int getId() const;
     QString getDescription() const;
     double getPrice() const;
     Category getCategory() const;
+    QByteArray getPicture() const;
+    QString getName() const;
 
 private:
     int id;
     QString name;
     QString description;
-    // TODO: BLOB
+    QByteArray picture;
     double price;
     Category category;
 
