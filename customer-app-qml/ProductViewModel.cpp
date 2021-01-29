@@ -19,14 +19,18 @@ QVariant ProductViewModel::data(const QModelIndex &index, int role) const
 
     auto item = productList.at(index.row());
     switch (role) {
+    case IdRole:
+        return QVariant(item.getId());
     case NameRole:
         return QVariant(item.getName());
+    case DescriptionRole:
+        return QVariant(item.getDescription());
     case PictureRole:
         // QML no entiende imagenes representadas como arreglos de bits
         // es necesario convertilar a base64 y agregar el tipo.
         return QVariant("data:image/png;base64," + item.getPicture().toBase64());
     case PriceRole:
-        return QVariant(QString("$%1").arg(QString::number(item.getPrice(), 'f', 2)));
+        return QVariant(item.getPrice());
     }
     return QVariant();
 }
@@ -34,9 +38,11 @@ QVariant ProductViewModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> ProductViewModel::roleNames() const
 {
     QHash<int, QByteArray> names;
+    names[IdRole] = "productId";
     names[NameRole] = "name";
-    names[PriceRole]= "price";
+    names[DescriptionRole] = "description";
     names[PictureRole] = "picture";
+    names[PriceRole]= "price";
     return names;
 }
 
