@@ -11,6 +11,7 @@ class ProductsDao
 public:
     ProductsDao(AbsDatabase* database);
     QList<Product> getAllProducts();
+    Product getProductById(int idProduct) const;
     QList<Product> getProductsByCategory(int id);
     void insertProduct(Product product);
     void deleteProduct(Product product);
