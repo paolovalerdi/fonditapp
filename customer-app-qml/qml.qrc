@@ -4,5 +4,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>ProductItemView.qml</file>
         <file>MenuView.qml</file>
+        <file>OrderProductItemView.qml</file>
     </qresource>
 </RCC>

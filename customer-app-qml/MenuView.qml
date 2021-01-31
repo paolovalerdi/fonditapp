@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 import Product 1.0
-
+import Order 1.0
 Page {
     id: menuPage
     anchors.fill: parent
@@ -167,10 +167,33 @@ Page {
                     text: "Agregar a la orden"
                     onClicked: {
                         menuPage.state = "selectMode"
+                        orderViewModelCallback.addProduct(menuPage.productId,menuPage.amount)
+                        orderListView.visible = true
+
                     }
                 }
             }
         }
+    }
+
+    ListView{
+        id: orderListView
+        visible: false
+        anchors.fill: parent
+        model: OrderViewModel{callback: orderViewModelCallback}
+        delegate: OrderProductItemView{
+            name:model.name
+            description: model.description
+            price: model.price
+            quantity: model.quantity
+            image: model.picture
+        }
+    }
+    Button{
+        width: parent.width*.5
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        onClicked: orderListView.visible=false
     }
 
     onAmountChanged: {
