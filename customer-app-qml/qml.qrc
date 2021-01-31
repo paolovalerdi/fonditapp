@@ -5,5 +5,10 @@
         <file>ProductItemView.qml</file>
         <file>MenuView.qml</file>
         <file>OrderProductItemView.qml</file>
+        <file>../icons/ic_shoppingcar.svg</file>
+        <file>../icons/ic_add.svg</file>
+        <file>../icons/ic_delete.svg</file>
+        <file>../icons/ic_remove.svg</file>
+        <file>../icons/ic_receipt.svg</file>
     </qresource>
 </RCC>

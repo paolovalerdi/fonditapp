@@ -61,7 +61,7 @@ void ProductViewModel::setCallback(ProductViewModelCallback *value)
         endRemoveRows();
 
         // Actualizamos la lista
-        productList = productDao.getProductsByCategory(id);
+        productList = id==-1 ? productDao.getAllProducts():productDao.getProductsByCategory(id);
 
         // Insertamos los nuevos elementos desde 0 hasta el final de la lista
         beginInsertRows(QModelIndex(), 0, productList.size() - 1);

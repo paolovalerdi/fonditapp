@@ -32,6 +32,8 @@ QVariant OrderViewModel::data(const QModelIndex &index, int role) const
         return QVariant("data:image/png;base64," + item.getPicture().toBase64());
     case PriceRole:
         return QVariant(item.getPrice());
+    case AmountRole:
+        return QVariant(list.at(index.row()).getQuantity());
     }
     return QVariant();
 }

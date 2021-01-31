@@ -1,6 +1,7 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 import Order 1.0
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: window
@@ -13,6 +14,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButton
             text: "\u2630"
+            Material.foreground:"#FFF"
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             onClicked: {
                 drawer.open()
@@ -21,6 +23,7 @@ ApplicationWindow {
         Label {
             id: toolbarTitle
             text: "Menú"
+            color: "#FFF"
             anchors.centerIn: parent
         }
     }
@@ -31,11 +34,11 @@ ApplicationWindow {
         Column {
             anchors.fill: parent
             ItemDelegate {
-                text: qsTr("Entradas")
+                text: qsTr("Todo")
                 width: parent.width
                 onClicked: {
-                    productViewModelCallback.updateCategory(2)
-                    toolbarTitle.text = "Entradas"
+                    productViewModelCallback.updateCategory(-1)
+                    toolbarTitle.text = "Todo"
                     drawer.close()
                 }
             }

@@ -1,10 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-
+import QtQuick.Controls.Material 2.12
 import Product 1.0
 import Order 1.0
+
 Page {
     id: menuPage
+    font.capitalization: Font.MixedCase
     anchors.fill: parent
     state: "selectMode"
 
@@ -45,6 +47,9 @@ Page {
                     menuPage.unitPrice = model.price
                     menuPage.productId = model.productId
                     menuPage.state = "detailsMode"
+                    addToOrderButton.text = "Agregar producto"
+                    addToOrderButton.enabled = true
+                    hideOrderList.start()
                 }
             }
         }
@@ -131,10 +136,10 @@ Page {
                         leftMargin: parent.width * 0.08
                         rightMargin: parent.width * 0.08
                     }
-                    Button {
+                    ToolButton {
                         id: minusButton
                         width: parent.width / 3
-                        text: "-"
+                        icon.source: "qrc:/../icons/ic_remove.svg"
                         enabled: menuPage.amount > 1
                         onClicked: {
                             menuPage.amount--;
@@ -148,52 +153,112 @@ Page {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
-                    Button {
+                    ToolButton {
                         id: plusButton
+                        icon.source: "qrc:/../icons/ic_add.svg"
                         width: parent.width / 3
-                        text: "+"
+
                         onClicked: {
                             menuPage.amount++;
                         }
                     }
                 }
                 Button {
+                    id: addToOrderButton
                     anchors {
                         left: parent.left
                         right: parent.right
                         leftMargin: parent.width * 0.08
                         rightMargin: parent.width * 0.08
                     }
+
+                    background: Rectangle {
+                           border.width: 1
+                           border.color: "#0FBF5C"
+                           radius: 10
+                       }
+                    Material.background:  "#FFF"
+                    Material.foreground:"#0FBF5C"
                     text: "Agregar a la orden"
+
+
                     onClicked: {
+
                         menuPage.state = "selectMode"
                         orderViewModelCallback.addProduct(menuPage.productId,menuPage.amount)
-                        orderListView.visible = true
-
+                        addToOrderButton.text = "Producto agregado"
+                        addToOrderButton.enabled = false
+                        menuPage.state = "selectMode"
+                        //revealOrderList.start()
                     }
                 }
             }
         }
     }
-
-    ListView{
-        id: orderListView
-        visible: false
-        anchors.fill: parent
-        model: OrderViewModel{callback: orderViewModelCallback}
-        delegate: OrderProductItemView{
-            name:model.name
-            description: model.description
-            price: model.price
-            quantity: model.quantity
-            image: model.picture
+    Rectangle{
+        id: orderListContainer
+        y: gridView.height
+        width: gridView.width*.5
+        height: gridView.height
+        anchors.horizontalCenter: gridView.horizontalCenter
+        property bool isCollapsed: false
+        onIsCollapsedChanged: {
+            if(isCollapsed)
+            {
+                revealOrderList.start()
+            }
+            else
+            {
+                hideOrderList.start()
+            }
+        }
+        OrderViewModel{
+            id: orderViewModel
+            callback: orderViewModelCallback
+        }
+        ListView{
+            id: orderListView
+            anchors.fill:parent
+            clip: true
+            model: orderViewModel
+            delegate: OrderProductItemView{
+                name:model.name
+                description: model.description
+                price: model.price
+                quantity: model.quantity
+                image: model.picture
+            }
+            onCountChanged: {
+                orderButton.visible = count>=1
+            }
+        }
+        PropertyAnimation {
+            id: revealOrderList
+            target: orderListContainer
+            properties: "y"
+            to: 0
+            duration: 300
+        }
+        PropertyAnimation {
+            id: hideOrderList
+            target: orderListContainer
+            properties: "y"
+            to: menuPage.height
+            duration: 300
         }
     }
+
     Button{
-        width: parent.width*.5
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        onClicked: orderListView.visible=false
+        id: orderButton
+        width: gridView.width*.5
+        anchors.bottom: gridView.bottom
+        anchors.horizontalCenter: gridView.horizontalCenter
+        Material.background:  "#0FBF5C"
+        text: "Ver mi orden"
+         Material.foreground:"#FFF"
+
+        icon.source: "../icons/ic_receipt.svg"
+        onClicked: orderListContainer.isCollapsed = !orderListContainer.isCollapsed
     }
 
     onAmountChanged: {
@@ -211,6 +276,7 @@ Page {
                 target: productDetailsPanel
                 x: menuPage.width
             }
+
             PropertyChanges {
                 target: separator
                 opacity: 0
@@ -227,6 +293,8 @@ Page {
                 opacity: 1
             }
         }
+
+
     ]
 
     transitions: [
