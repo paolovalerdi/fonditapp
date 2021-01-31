@@ -1,9 +1,6 @@
 import QtQuick 2.9
 import QtQuick.Controls 2.2
 
-import Product 1.0
-import QtGraphicalEffects 1.0
-
 ApplicationWindow {
     id: window
     width: 860
@@ -88,27 +85,5 @@ ApplicationWindow {
             }
         }
     }
-    GridView {
-        id: gridView
-        anchors {
-            fill: parent
-        }
-        cellWidth: (width / 3)
-        cellHeight: (height / 3)
-        model: ProductViewModel {
-            callback: productViewModelCallback
-        }
-        delegate: ProductItemView {
-            id: productItemView
-            width: gridView.cellWidth
-            height: gridView.cellHeight
-            spanCount: 3
-            spacing: 12
-            indexOfThis: index
-            name: model.name
-            price: model.price
-            picture: model.picture
-        }
-        ScrollIndicator.vertical: ScrollIndicator {}
-    }
+    MenuView { }
 }
