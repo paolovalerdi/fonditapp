@@ -3,12 +3,18 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>ProductItemView.qml</file>
-        <file>MenuView.qml</file>
+        <file>MenuPage.qml</file>
         <file>OrderProductItemView.qml</file>
         <file>../icons/ic_shoppingcar.svg</file>
         <file>../icons/ic_add.svg</file>
         <file>../icons/ic_delete.svg</file>
         <file>../icons/ic_remove.svg</file>
         <file>../icons/ic_receipt.svg</file>
+        <file>../icons/ic_bebidas.svg</file>
+        <file>../icons/ic_entradas.svg</file>
+        <file>../icons/ic_otros.svg</file>
+        <file>../icons/ic_plato_fuerte.svg</file>
+        <file>../icons/ic_postres.svg</file>
+        <file>../icons/ic_menu_book.svg</file>
     </qresource>
 </RCC>
