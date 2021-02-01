@@ -16,5 +16,6 @@
         <file>../icons/ic_plato_fuerte.svg</file>
         <file>../icons/ic_postres.svg</file>
         <file>../icons/ic_menu_book.svg</file>
+        <file>../icons/ic_drawer.svg</file>
     </qresource>
 </RCC>

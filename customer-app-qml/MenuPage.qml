@@ -5,21 +5,37 @@ import Product 1.0
 import Order 1.0
 
 Page {
-    id: menuPage
-    font.capitalization: Font.MixedCase
-    anchors.fill: parent
-    state: "selectMode"
+    id: menuPageRoot
 
+    property string toolbarTitleText: "Inicio"
     property int amount: 1
     property real unitPrice: 0
     property int productId: -1
 
+    font.capitalization: Font.MixedCase
+    anchors.fill: parent
+    state: "selectMode"
+
+    ItemDelegate {
+        id: toolbar
+
+        height: menuPageRoot.height * .1
+        icon.source: "../icons/ic_drawer.svg"
+        text: qsTr(toolbarTitleText)
+        font.pointSize: 18
+        font.bold: true
+
+        onClicked: drawer.open()
+    }
+
     GridView {
         id: menuGridView
+
+        clip: true
         anchors {
             left: parent.left
             right: productDetailsPanel.left
-            top: parent.top
+            top: toolbar.bottom
             bottom: parent.bottom
         }
         cellWidth: (width / 3)
@@ -42,9 +58,9 @@ Page {
                     productDetailsName.text = model.name
                     productDetailsDescription.text = model.description
                     productDetailsPrice.text = "$" + model.price
-                    menuPage.unitPrice = model.price
-                    menuPage.productId = model.productId
-                    menuPage.state = "detailsMode"
+                    menuPageRoot.unitPrice = model.price
+                    menuPageRoot.productId = model.productId
+                    menuPageRoot.state = "detailsMode"
                     addToOrderButton.text = "Agregar producto"
                     addToOrderButton.enabled = true
                     hideOrderList.start()
@@ -138,15 +154,15 @@ Page {
                         id: minusButton
                         width: parent.width / 3
                         icon.source: "qrc:/../icons/ic_remove.svg"
-                        enabled: menuPage.amount > 1
+                        enabled: menuPageRoot.amount > 1
                         onClicked: {
-                            menuPage.amount--;
+                            menuPageRoot.amount--;
                         }
                     }
                     Text {
                         width: parent.width / 3
                         height: parent
-                        text: menuPage.amount
+                        text: menuPageRoot.amount
                         font.pointSize: 14
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -157,7 +173,7 @@ Page {
                         width: parent.width / 3
 
                         onClicked: {
-                            menuPage.amount++;
+                            menuPageRoot.amount++;
                         }
                     }
                 }
@@ -182,11 +198,11 @@ Page {
 
                     onClicked: {
 
-                        menuPage.state = "selectMode"
-                        orderViewModelCallback.addProduct(menuPage.productId,menuPage.amount)
+                        menuPageRoot.state = "selectMode"
+                        orderViewModelCallback.addProduct(menuPageRoot.productId,menuPageRoot.amount)
                         addToOrderButton.text = "Producto agregado"
                         addToOrderButton.enabled = false
-                        menuPage.state = "selectMode"
+                        menuPageRoot.state = "selectMode"
                         //revealOrderList.start()
                     }
                 }
@@ -233,6 +249,7 @@ Page {
         PropertyAnimation {
             id: revealOrderList
             target: orderListContainer
+            easing.type: Easing.InOutExpo
             properties: "y"
             to: 0
             duration: 300
@@ -240,8 +257,9 @@ Page {
         PropertyAnimation {
             id: hideOrderList
             target: orderListContainer
+            easing.type: Easing.InOutExpo
             properties: "y"
-            to: menuPage.height
+            to: menuPageRoot.height
             duration: 300
         }
     }
@@ -272,7 +290,7 @@ Page {
             name: "selectMode"
             PropertyChanges {
                 target: productDetailsPanel
-                x: menuPage.width
+                x: menuPageRoot.width
             }
 
             PropertyChanges {
@@ -284,7 +302,7 @@ Page {
             name: "detailsMode"
             PropertyChanges {
                 target: productDetailsPanel
-                x: menuPage.width - productDetailsPanel.width
+                x: menuPageRoot.width - productDetailsPanel.width
             }
             PropertyChanges {
                 target: separator
@@ -301,12 +319,12 @@ Page {
             to: "detailsMode"
             NumberAnimation {
                 properties: "x";
-                easing.type: Easing.InOutQuad;
+                easing.type: Easing.InOutQuint;
                 duration: 300;
             }
             NumberAnimation {
                 properties: "opacity";
-                easing.type: Easing.InOutQuad;
+                easing.type: Easing.InOutQuint;
                 duration: 300;
             }
         },

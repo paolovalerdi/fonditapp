@@ -21,6 +21,7 @@ ApplicationWindow {
 
             model: CategoryViewModel { }
             delegate: ItemDelegate {
+                id: categoryItem
                 width: parent.width
                 text: qsTr(model.title)
                 highlighted: ListView.isCurrentItem
@@ -36,14 +37,15 @@ ApplicationWindow {
             }
         }
 
-        function updateCategory(id, title) {
-            productViewModelCallback.updateCategory(id)
-            // TODO: Add toolbar
+        function updateCategory(categoryId, categoryTitle) {
+            productViewModelCallback.updateCategory(categoryId)
+            menuPage.toolbarTitleText = categoryTitle
             drawer.close()
         }
     }
 
     MenuPage {
+        id: menuPage
         transform: Translate {
             x: drawer.position * drawer.width
         }
