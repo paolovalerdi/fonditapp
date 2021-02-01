@@ -37,10 +37,17 @@ ApplicationWindow {
             }
         }
 
+        Timer {
+            id: closeDetailPanelTimer
+            interval: 325
+            onTriggered: menuPage.closeDetailPanel()
+        }
+
         function updateCategory(categoryId, categoryTitle) {
             productViewModelCallback.updateCategory(categoryId)
             menuPage.toolbarTitleText = categoryTitle
             drawer.close()
+            closeDetailPanelTimer.start()
         }
     }
 

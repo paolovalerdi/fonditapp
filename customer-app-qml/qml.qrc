@@ -17,5 +17,7 @@
         <file>../icons/ic_postres.svg</file>
         <file>../icons/ic_menu_book.svg</file>
         <file>../icons/ic_drawer.svg</file>
+        <file>../icons/ic_close.svg</file>
+        <file>ProductDetailView.qml</file>
     </qresource>
 </RCC>

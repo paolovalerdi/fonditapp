@@ -14,7 +14,6 @@ Page {
 
     font.capitalization: Font.MixedCase
     anchors.fill: parent
-    state: "selectMode"
 
     ItemDelegate {
         id: toolbar
@@ -25,7 +24,9 @@ Page {
         font.pointSize: 18
         font.bold: true
 
-        onClicked: drawer.open()
+        onClicked: {
+            drawer.open()
+        }
     }
 
     GridView {
@@ -54,7 +55,8 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     console.log(model)
-                    productDetailsImage.source = model.picture
+                    productDetailsPanel.open(model)
+                   /* productDetailsImage.source = model.picture
                     productDetailsName.text = model.name
                     productDetailsDescription.text = model.description
                     productDetailsPrice.text = "$" + model.price
@@ -62,7 +64,7 @@ Page {
                     menuPageRoot.productId = model.productId
                     menuPageRoot.state = "detailsMode"
                     addToOrderButton.text = "Agregar producto"
-                    addToOrderButton.enabled = true
+                    addToOrderButton.enabled = true*/
                     hideOrderList.start()
                 }
             }
@@ -78,7 +80,12 @@ Page {
         color: "#1f000000"
     }
 
-    Rectangle {
+
+    ProductDetailView {
+        id: productDetailsPanel
+    }
+
+    /*Rectangle {
         id: productDetailsPanel
         width: parent.width * 0.35
         height: parent.height
@@ -87,128 +94,9 @@ Page {
         ScrollView {
             anchors.fill: parent
 
-            Column {
-                width: productDetailsPanel.width
-                bottomPadding: 20
-                spacing: 10
 
-                Rectangle {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    height: width
-                    Image {
-                        id: productDetailsImage
-                        width: parent.width * 0.85
-                        height: width
-                        anchors.centerIn: parent
-                        fillMode: Image.PreserveAspectCrop
-                    }
-                }
-                Text {
-                    id: productDetailsName
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    text: "Nombre"
-                    font.pointSize: 14
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                }
-                Text {
-                    id: productDetailsDescription
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: parent.width * 0.08
-                        rightMargin: parent.width * 0.08
-                    }
-                    text: "Descripcionnnnnnnnnnnnnnnnnnnn"
-                    font.pointSize: 10
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                }
-                Text {
-                    id: productDetailsPrice
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                    }
-                    text: "20.0"
-                    font.pointSize: 14
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                }
-                Row {
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: parent.width * 0.08
-                        rightMargin: parent.width * 0.08
-                    }
-                    ToolButton {
-                        id: minusButton
-                        width: parent.width / 3
-                        icon.source: "qrc:/../icons/ic_remove.svg"
-                        enabled: menuPageRoot.amount > 1
-                        onClicked: {
-                            menuPageRoot.amount--;
-                        }
-                    }
-                    Text {
-                        width: parent.width / 3
-                        height: parent
-                        text: menuPageRoot.amount
-                        font.pointSize: 14
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    ToolButton {
-                        id: plusButton
-                        icon.source: "qrc:/../icons/ic_add.svg"
-                        width: parent.width / 3
-
-                        onClicked: {
-                            menuPageRoot.amount++;
-                        }
-                    }
-                }
-                Button {
-                    id: addToOrderButton
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        leftMargin: parent.width * 0.08
-                        rightMargin: parent.width * 0.08
-                    }
-
-                    background: Rectangle {
-                           border.width: 1
-                           border.color: "#0FBF5C"
-                           radius: 10
-                       }
-                    Material.background:  "#FFF"
-                    Material.foreground:"#0FBF5C"
-                    text: "Agregar a la orden"
-
-
-                    onClicked: {
-
-                        menuPageRoot.state = "selectMode"
-                        orderViewModelCallback.addProduct(menuPageRoot.productId,menuPageRoot.amount)
-                        addToOrderButton.text = "Producto agregado"
-                        addToOrderButton.enabled = false
-                        menuPageRoot.state = "selectMode"
-                        //revealOrderList.start()
-                    }
-                }
-            }
         }
-    }
+    }*/
     Rectangle{
         id: orderListContainer
         y: menuGridView.height
@@ -285,62 +173,7 @@ Page {
         amount = 1
     }
 
-    states: [
-        State {
-            name: "selectMode"
-            PropertyChanges {
-                target: productDetailsPanel
-                x: menuPageRoot.width
-            }
-
-            PropertyChanges {
-                target: separator
-                opacity: 0
-            }
-        },
-        State {
-            name: "detailsMode"
-            PropertyChanges {
-                target: productDetailsPanel
-                x: menuPageRoot.width - productDetailsPanel.width
-            }
-            PropertyChanges {
-                target: separator
-                opacity: 1
-            }
-        }
-
-
-    ]
-
-    transitions: [
-        Transition {
-            from: "selectMode"
-            to: "detailsMode"
-            NumberAnimation {
-                properties: "x";
-                easing.type: Easing.InOutQuint;
-                duration: 300;
-            }
-            NumberAnimation {
-                properties: "opacity";
-                easing.type: Easing.InOutQuint;
-                duration: 300;
-            }
-        },
-        Transition {
-            from: "detailsMode"
-            to: "selectMode"
-            NumberAnimation {
-                properties: "x";
-                easing.type: Easing.InOutQuad;
-                duration: 300;
-            }
-            NumberAnimation {
-                properties: "opacity";
-                easing.type: Easing.InOutQuad;
-                duration: 300;
-            }
-        }
-    ]
+    function closeDetailPanel() {
+        productDetailsPanel.close()
+    }
 }
