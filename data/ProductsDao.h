@@ -15,7 +15,7 @@ public:
     Product getProductById(int idProduct) const;
     QList<Product> getProductsByCategory(int id);
     void insertProduct(Product product);
-    void deleteProduct(Product product);
+    void deleteProduct(int id);
     void updateProduct(int id,
                        QString name,
                        QString description,

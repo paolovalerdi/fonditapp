@@ -11,5 +11,6 @@
         <file>../icons/ic_close.svg</file>
         <file>../icons/ic_save.svg</file>
         <file>../icons/ic_delete.svg</file>
+        <file>../icons/ic_add2.svg</file>
     </qresource>
 </RCC>

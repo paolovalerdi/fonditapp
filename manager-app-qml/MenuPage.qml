@@ -4,6 +4,7 @@ import QtQuick.Controls 2.2
 import Product 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls.Material 2.12
 
 import QtQuick.Controls.Styles 1.4
 
@@ -37,6 +38,23 @@ Page {
             bottom: parent.bottom
             right: productEditPanel.left
         }
+    }
+
+    RoundButton{
+        width:76
+        height: 76
+        icon.source: "../icons/ic_add2.svg"
+        icon.width: 40
+        icon.height: 40
+        Material.background: "#F25C05"
+        Material.foreground: "#FFF"
+        anchors {
+            bottom: gridView.bottom
+            right: gridView.right
+            bottomMargin: 18
+            rightMargin: 18
+        }
+        onClicked: productEditPanel.create()
     }
 
     ProductEditPanel {

@@ -11,6 +11,7 @@ public:
     QSqlQuery executeQuery(QString queryStr) override;
     QSqlQuery executeQuery(QSqlQuery queryObj) override;
     QSqlQuery prepareQuery(QString queryString) override;
+    void printLastError() override;
 protected:
     static ProductionDatabase* instance;
 private:

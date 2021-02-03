@@ -1,4 +1,5 @@
 #include "ProductsDao.h"
+#include "QDebug"
 
 ProductsDao::ProductsDao(AbsDatabase* database)
 {
@@ -84,11 +85,13 @@ void ProductsDao::insertProduct(Product product)
     query.bindValue(":picture", QVariant(product.getPicture()));
     query.bindValue(":price", product.getPrice());
     query.bindValue(":id_category", product.getCategory().getId());
+    query.exec();
+    database->printLastError();
 }
 
-void ProductsDao::deleteProduct(Product product)
+void ProductsDao::deleteProduct(int id )
 {
-    auto query = database->executeQuery(QString("DELETE FROM products WHERE id_product = %1").arg(product.getId()));
+    auto query = database->executeQuery(QString("DELETE FROM products WHERE id_product = %1").arg(id));
 }
 
 void ProductsDao::updateProduct(int id,
@@ -105,4 +108,5 @@ void ProductsDao::updateProduct(int id,
                                         .arg(description)
                                         .arg(price.toDouble())
                                         .arg(id));
+    database->printLastError();
 }

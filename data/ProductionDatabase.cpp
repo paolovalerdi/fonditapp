@@ -43,3 +43,8 @@ QSqlQuery ProductionDatabase::prepareQuery(QString queryString)
     query.prepare(queryString);
     return query;
 }
+
+void ProductionDatabase::printLastError()
+{
+    qDebug()<<database.lastError();
+}

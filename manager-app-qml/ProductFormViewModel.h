@@ -15,6 +15,11 @@ public slots:
                        QString name,
                        QString description,
                        QString price);
+    void deleteProduct(int id);
+    void createProduct(QString name,
+                       QString description,
+                       QString price);
 private:
+
     ProductsDao productsDao = ProductsDao(ProductionDatabase::getInstance());
 };

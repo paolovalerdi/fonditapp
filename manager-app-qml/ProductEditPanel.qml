@@ -8,6 +8,7 @@ Rectangle {
 
     property var model: null
     property bool isBound: false
+    property bool isCreateMode: false
 
     width: parent.width * 0.35
     height: parent.height
@@ -159,7 +160,7 @@ Rectangle {
                 id: saveButton
 
                 icon.source: "../icons/ic_save.svg"
-                text: "Guardar cambios"
+                text: root.isCreateMode ? "Agregar Producto":"Guardar cambios"
                 enabled: false
                 anchors {
                     left: parent.left
@@ -167,10 +168,22 @@ Rectangle {
                     leftMargin: parent.width * 0.08
                     rightMargin: parent.width * 0.08
                 }
+                onClicked:
+                {
+                    if(root.isCreateMode)
+                    {
+                        productFormViewModel.createProduct(nameTextField.text,descriptionTextField.text,priceTextField.text)
+                    }else
+                    {
+                        console.log("actualizando")
+                        productFormViewModel.updateProduct(root.model.productId,nameTextField.text,descriptionTextField.text,priceTextField.text)
+                    }
+                }
             }
             Button {
                 id: deleteButton
 
+                visible: !root.isCreateMode
                 icon.source: "../icons/ic_delete.svg"
                 text: "Eliminar producto"
                 Material.background: "#c62828"
@@ -181,6 +194,10 @@ Rectangle {
                     leftMargin: parent.width * 0.08
                     rightMargin: parent.width * 0.08
                 }
+                onClicked: {
+                    productFormViewModel.deleteProduct(root.model.productId)
+                    root.close()
+                }
             }
 
             RegExpValidator {
@@ -189,11 +206,17 @@ Rectangle {
             }
 
             function toggleButtonState() {
-                if (root.isBound) {
+                if (root.isBound && !root.isCreateMode) {
                     var didNameChange = (root.model.name.localeCompare(nameTextField.text) !== 0) && nameTextField.acceptableInput
                     var didDecriptionChange = (root.model.description.localeCompare(descriptionTextField.text) !== 0) && regex.regExp.test(descriptionTextField.text)
                     var didPriceChange = priceTextField.acceptableInput && (root.model.price !== parseFloat(priceTextField.text))
                     saveButton.enabled = didNameChange || didDecriptionChange || didPriceChange
+                }else
+                {
+                    var didNameChange2= nameTextField.acceptableInput
+                    var didDecriptionChange2 = regex.regExp.test(descriptionTextField.text)
+                    var didPriceChange2 = priceTextField.acceptableInput
+                    saveButton.enabled = didNameChange2 || didDecriptionChange2 || didPriceChange2
                 }
             }
         }
@@ -214,16 +237,32 @@ Rectangle {
     }
 
     function open(product) {
+        isCreateMode=false
         root.model = product
         state = "open"
     }
 
     function render(product) {
-        if (product !== null) {
+        if (product !== null && !root.isCreateMode) {
             nameTextField.text = product.name
             descriptionTextField.text = product.description
             priceTextField.text = product.price
+        }else
+        {
+            nameTextField.clear()
+            descriptionTextField.clear()
+            priceTextField.clear()
         }
+
         root.isBound = product !== null
+    }
+
+    function create()
+    {
+        root.isCreateMode=true
+        root.isBound=false
+        root.model=null
+        root.isBound=true
+        state="open"
     }
 }
