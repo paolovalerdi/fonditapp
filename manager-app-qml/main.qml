@@ -1,59 +1,34 @@
-import QtQuick 2.9
-import QtQuick.Controls 2.2
-
-import Product 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Controls.Styles 1.4
-
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 ApplicationWindow {
     id: window
-    width: 800
+    width: 900
     height: 600
     visible: true
     title: qsTr("Gerente")
 
-    header: ToolBar {
-        contentHeight: toolButton.implicitHeight
-
-        ToolButton {
-            id: toolButton
-            text: stackView.depth > 1 ? "\u25C0" : "\u2630"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
-            onClicked: {
-                if (stackView.depth > 1) {
-                    stackView.pop()
-                } else {
-                    drawer.open()
-                }
-            }
-        }
-
-        Label {
-            text: stackView.currentItem.title
-            anchors.centerIn: parent
-        }
-    }
-
     Drawer {
         id: drawer
-        width: window.width * 0.40
+        width: window.width * 0.25
         height: window.height
 
         Column {
             anchors.fill: parent
 
             ItemDelegate {
-                text: qsTr("Restaurante")
                 width: parent.width
+                icon.source: "../icons/ic_menu_book.svg"
+                text: qsTr("Editar menu")
                 onClicked: {
                     stackView.push("Page1Form.qml")
                     drawer.close()
                 }
             }
             ItemDelegate {
-                text: qsTr("Estadísticas")
                 width: parent.width
+                icon.source: "../icons/ic_menu_book.svg"
+                text: qsTr("Estadísticas")
                 onClicked: {
                     stackView.push("Page2Form.qml")
                     drawer.close()
@@ -64,7 +39,7 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        initialItem: "HomeForm.qml"
+        initialItem: "MenuPage.qml"
         anchors.fill: parent
     }
 }
