@@ -112,7 +112,7 @@ Page {
                         leftMargin: parent.width * 0.08
                         rightMargin: parent.width * 0.08
                     }
-                    text: "Descripcionnnnnnnnnnnnnnnnnnnn"
+                    text: "Descripcion"
                     font.pointSize: 10
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
@@ -173,10 +173,10 @@ Page {
                     }
 
                     background: Rectangle {
-                           border.width: 1
-                           border.color: "#0FBF5C"
-                           radius: 10
-                       }
+                        border.width: 1
+                        border.color: "#0FBF5C"
+                        radius: 10
+                    }
                     Material.background:  "#FFF"
                     Material.foreground:"#0FBF5C"
                     text: "Agregar a la orden"
@@ -195,6 +195,7 @@ Page {
             }
         }
     }
+
     Rectangle{
         id: orderListContainer
         y: gridView.height
@@ -216,8 +217,29 @@ Page {
             id: orderViewModel
             callback: orderViewModelCallback
         }
+
+
         ListView{
             id: orderListView
+            header : Button {
+                width:parent.width *0.5
+                anchors.horizontalCenter: parent.horizontalCenter
+                background: Rectangle {
+                    border.width: 1
+                    border.color: "#0FBF5C"
+                    radius: 10
+                }
+                Material.background:  "#FFF"
+                Material.foreground:"#0FBF5C"
+                text: "Confirmar orden"
+
+                onClicked:
+                {
+                    orderViewModelCallback.createdOrder(1)
+                    hideOrderList.start()
+                }
+
+            }
             anchors.fill:parent
             clip: true
             model: orderViewModel
@@ -232,6 +254,9 @@ Page {
                 orderButton.visible = count>=1
             }
         }
+
+
+
         PropertyAnimation {
             id: revealOrderList
             target: orderListContainer
@@ -246,6 +271,8 @@ Page {
             to: menuPage.height
             duration: 300
         }
+
+
     }
 
     Button{
@@ -255,7 +282,7 @@ Page {
         anchors.horizontalCenter: gridView.horizontalCenter
         Material.background:  "#0FBF5C"
         text: "Ver mi orden"
-         Material.foreground:"#FFF"
+        Material.foreground:"#FFF"
 
         icon.source: "../icons/ic_receipt.svg"
         onClicked: orderListContainer.isCollapsed = !orderListContainer.isCollapsed

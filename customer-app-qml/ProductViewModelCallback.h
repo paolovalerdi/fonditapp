@@ -13,6 +13,7 @@ public:
     explicit ProductViewModelCallback(QObject *parent = 0);
 signals:
     void onCategoryUpdated(int id);
+    void onStatusSelected();
 public slots:
     /**
      * Esta función es la que se llama desde QML
@@ -22,4 +23,5 @@ public slots:
      * @param id El id de la categoría
      */
     void updateCategory(int id);
+    void clearWindow();
 };

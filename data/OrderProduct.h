@@ -11,7 +11,6 @@ public:
     int getIdProduct() const;
     int getQuantity() const;
     int getIdOrder() const;
-
     void setIdOrder(int value);
 
 private:

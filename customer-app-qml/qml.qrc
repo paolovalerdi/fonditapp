@@ -10,5 +10,7 @@
         <file>../icons/ic_delete.svg</file>
         <file>../icons/ic_remove.svg</file>
         <file>../icons/ic_receipt.svg</file>
+        <file>OrderStatusView.qml</file>
+        <file>ProgressPie.qml</file>
     </qresource>
 </RCC>

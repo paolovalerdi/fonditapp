@@ -48,3 +48,5 @@ HEADERS += \
 INCLUDEPATH += \
     ../data
 
+DISTFILES +=
+

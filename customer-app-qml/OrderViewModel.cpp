@@ -65,4 +65,19 @@ void OrderViewModel::setCallback(OrderViewModelCallback *value)
         beginInsertRows(QModelIndex(),0, list.size()-1);
         endInsertRows();
     });
+    connect(callback, &OrderViewModelCallback::onCreatedOrder, this, [=](int idTable) {
+        beginRemoveRows(QModelIndex(), 0, list.size() - 1);
+        endRemoveRows();
+        orderdao.insertIntoOrder(list,callback->getIdCurrentId());
+        list.clear();
+    });
+    connect(callback, &OrderViewModelCallback::onLoadOrder, this, [=](int idOrder) {
+        qDebug()<<"cargando...";
+        beginRemoveRows(QModelIndex(), 0, list.size() - 1);
+        endRemoveRows();
+        list.clear();
+        list = orderdao.getProductsByOrderId(idOrder);
+        beginInsertRows(QModelIndex(),0, list.size()-1);
+        endInsertRows();
+    });
 }
