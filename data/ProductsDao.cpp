@@ -23,6 +23,16 @@ QList<Product> ProductsDao::getAllProducts()
     return results;
 }
 
+QList<Category> ProductsDao::getAllCategories()
+{
+    auto results = QList<Category>();
+    auto query = database->executeQuery("SELECT * FROM categories");
+    while (query.next()) {
+        results.append(Category(query.value("id_category").toInt(), query.value("title").toString()));
+    }
+    return results;
+}
+
 Product ProductsDao::getProductById(int idProduct) const
 {
     auto query = database->executeQuery(

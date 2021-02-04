@@ -1,136 +1,65 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
 import Order 1.0
 import QtQuick.Controls.Material 2.12
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.4
 
 
+import Category 1.0
+
 ApplicationWindow {
 
     id: window
-    width: 860
-    height: 540
+    width: 900
+    height: 600
     visible: true
     title: qsTr("Cliente")
-    header: ToolBar {
-        contentHeight: toolButton.implicitHeight
-        ToolButton {
-            id: toolButton
-            text: "\u2630"
-            Material.foreground:"#FFF"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
-            onClicked: {
-                drawer.open()
-            }
-        }
-        Label {
-            id: toolbarTitle
-            text: "Menú"
-            color: "#FFF"
-            anchors.centerIn: parent
-        }
-    }
+
     Drawer {
         id: drawer
         width: window.width * 0.25
         height: window.height
-        Column {
+
+        ListView {
+            id: drawerMenuList
             anchors.fill: parent
-            ItemDelegate {
-                id: progressPie
-                text: qsTr("Seguir orden")
+
+            model: CategoryViewModel { }
+            delegate: ItemDelegate {
+                id: categoryItem
                 width: parent.width
+                text: qsTr(model.title)
+                highlighted: ListView.isCurrentItem
+                icon.source: qsTr(model.iconPath)
                 onClicked: {
-                    toolbarTitle.text = "Status orden"
-                    productViewModelCallback.clearWindow()
-                    stackView.push(Qt.createComponent("OrderStatusView.qml"),
-                                   {
-                                   "orderId":orderViewModelCallback.getIdCurrentId(),
-                                    "amount":orderViewModelCallback.getTotal(),
-                                    "status":orderViewModelCallback.getStatus()
-                                   }
-                                   )
-                    drawer.close()
+                    drawer.updateCategory(model.categoryId, model.title)
+                    drawerMenuList.currentIndex = index
                 }
             }
-            ItemDelegate {
-                text: qsTr("Todo")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(-1)
-                    toolbarTitle.text = "Todo"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
+
+            Component.onCompleted: {
+                currentIndex = 0
             }
-            ItemDelegate {
-                text: qsTr("Entradas")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(2)
-                    toolbarTitle.text = "Entradas"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Plato fuerte")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(3)
-                    toolbarTitle.text = "PlatoFuerte"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Postres")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(4)
-                    toolbarTitle.text = "Postres"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Bebidas")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(1)
-                    toolbarTitle.text = "Bebidas"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Otros")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(5)
-                    toolbarTitle.text = "Otros"
-                    stackView.clear()
-                    progress1.visible = false
-                    drawer.close()
-                }
-            }
+        }
+
+        Timer {
+            id: closeDetailPanelTimer
+            interval: 325
+            onTriggered: menuPage.closeDetailPanel()
+        }
+
+        function updateCategory(categoryId, categoryTitle) {
+            productViewModelCallback.updateCategory(categoryId)
+            menuPage.toolbarTitleText = categoryTitle
+            drawer.close()
+            closeDetailPanelTimer.start()
         }
     }
 
-    MenuView {
-
+    MenuPage {
+        id: menuPage
+        transform: Translate {
+            x: drawer.position * drawer.width
+        }
     }
-
-    StackView {
-        id: stackView
-        anchors.fill: parent
-    }
-
-
 }
