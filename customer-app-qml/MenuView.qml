@@ -271,8 +271,6 @@ Page {
             to: menuPage.height
             duration: 300
         }
-
-
     }
 
     Button{

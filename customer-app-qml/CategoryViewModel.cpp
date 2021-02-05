@@ -5,6 +5,7 @@ CategoryViewModel::CategoryViewModel(QObject *parent)
 {
     categories.append(Category(-1, "Todo"));
     categories.append(productDao.getAllCategories());
+    categories.append(Category(-2, "Seguir Orden"));
 }
 
 int CategoryViewModel::rowCount(const QModelIndex &parent) const
@@ -45,6 +46,8 @@ QHash<int, QByteArray> CategoryViewModel::roleNames() const
 QString CategoryViewModel::getImagePath(int categoryId) const
 {
     switch (categoryId) {
+    case -2:
+        return QString("../icons/ic_receipt.svg");
     case -1:
         return QString("../icons/ic_menu_book.svg");
     case 1:

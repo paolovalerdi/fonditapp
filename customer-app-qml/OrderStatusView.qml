@@ -15,30 +15,44 @@ Page{
     property real amount: -1
     property real quantity: -1
     property string status: ""
-    Timer{
-     id: timer
-     interval: 1000
-     running: false
-     repeat: true
-     onTriggered: {
 
-         if(progress2.value<0.99) {
-             progress2.value = progress2.value + 0.10
-         }
-         else
-         {
-             timer.stop()
-         }
+    ItemDelegate {
+        id: toolbar
 
-     }
+        height: root.height * .1
+        icon.source: "../icons/ic_drawer.svg"
+        text: qsTr("Seguir orden")
+        font.pointSize: 18
+        font.bold: true
+
+        onClicked: {
+            drawer.open()
+        }
     }
 
-    Rectangle
-    {
+    Timer{
+        id: timer
+        interval: 1000
+        running: false
+        repeat: true
+        onTriggered: {
+
+            if(progress2.value<0.99) {
+                progress2.value = progress2.value + 0.10
+            }
+            else
+            {
+                timer.stop()
+            }
+
+        }
+    }
+
+    Rectangle {
         anchors{
-            left: orderListView.right
+            left: orderListContainer.right
             right: parent.right
-            top: parent.top
+            top: toolbar.bottom
             bottom: parent.bottom
         }
 
@@ -93,34 +107,41 @@ Page{
         }
     }
 
-    ListView{
-        id: orderListView
+
+    Rectangle {
+        id: orderListContainer
+        color: "white"
+        width: parent.width / 2
         anchors{
             left: parent.left
-            top: parent.top
+            top: toolbar.bottom
             bottom: parent.bottom
         }
-        width: parent.width/2
-        clip: true
-        model: OrderViewModel {
-            callback: orderViewModelCallback
-        }
 
-        delegate: OrderProductItemView{
-            name:model.name
-            description: model.description
-            price: model.price
-            quantity: model.quantity
-            image: model.picture
-        }
-        Component.onCompleted: {
-            console.log(root.orderId)
-            if(root.orderId!==-1)
-            {
-                orderViewModelCallback.loadOrder(root.orderId)
-                console.log(root.amount)
+        ListView{
+            id: orderListView
+            anchors.fill: parent
+            clip: true
+            model: OrderViewModel {
+                callback: orderViewModelCallback
             }
 
+            delegate: OrderProductItemView{
+                name:model.name
+                description: model.description
+                price: model.price
+                quantity: model.quantity
+                image: model.picture
+            }
+            Component.onCompleted: {
+                console.log(root.orderId)
+                if(root.orderId!==-1)
+                {
+                    orderViewModelCallback.loadOrder(root.orderId)
+                    console.log(root.amount)
+                }
+
+            }
         }
     }
 }

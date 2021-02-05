@@ -49,11 +49,26 @@ ApplicationWindow {
         }
 
         function updateCategory(categoryId, categoryTitle) {
-            productViewModelCallback.updateCategory(categoryId)
-            menuPage.toolbarTitleText = categoryTitle
+            if (categoryId === -2) {
+                stackView.push(Qt.createComponent("OrderStatusView.qml"), {
+                                   "orderId":orderViewModelCallback.getIdCurrentId(),
+                                   "amount":orderViewModelCallback.getTotal(),
+                                   "status":orderViewModelCallback.getStatus()
+                               })
+            } else {
+                stackView.pop();
+                menuPage.toolbarTitleText = categoryTitle
+                productViewModelCallback.updateCategory(categoryId)
+            }
             drawer.close()
             closeDetailPanelTimer.start()
         }
+    }
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: menuPage
     }
 
     MenuPage {

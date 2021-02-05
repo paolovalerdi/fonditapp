@@ -9,6 +9,8 @@ Rectangle {
     property int quantity: 1
     property real unitPrice: 0
 
+    signal addProduct()
+
     width: parent.width * 0.35
     height: parent.height
     color: "white"
@@ -199,13 +201,9 @@ Rectangle {
 
 
                 onClicked: {
-
-                    menuPageRoot.state = "selectMode"
-                    orderViewModelCallback.addProduct(3,5)
-                    addToOrderButton.text = "Producto agregado"
-                    addToOrderButton.enabled = false
-                    menuPageRoot.state = "selectMode"
-                    //revealOrderList.start()
+                    orderViewModelCallback.addProduct(productDetailRoot.productModel.productId, quantity)
+                    productDetailRoot.close()
+                    productDetailRoot.addProduct()
                 }
             }
         }

@@ -46,7 +46,7 @@ Item {
             }
             Text {
                 id: orderProductPrice
-                text: price
+                text: "$" + (quantity * price)
             }
         }
 

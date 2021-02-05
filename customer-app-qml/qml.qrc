@@ -21,5 +21,6 @@
         <file>../icons/ic_drawer.svg</file>
         <file>../icons/ic_close.svg</file>
         <file>ProductDetailView.qml</file>
+        <file>OrderListView.qml</file>
     </qresource>
 </RCC>
