@@ -8,9 +8,14 @@ CONFIG += c++11
 
 SOURCES += \
         ../data/Category.cpp \
+        ../data/OrderDao.cpp \
+        ../data/OrderProduct.cpp \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
+        CategoryViewModel.cpp \
+        OrderViewModel.cpp \
+        OrderViewModelCallback.cpp \
         ProductViewModel.cpp \
         ProductViewModelCallback.cpp \
         main.cpp
@@ -31,12 +36,19 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     ../data/AbsDatabase.h \
     ../data/Category.h \
+    ../data/OrderDao.h \
+    ../data/OrderProduct.h \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
+    CategoryViewModel.h \
+    OrderViewModel.h \
+    OrderViewModelCallback.h \
     ProductViewModel.h \
     ProductViewModelCallback.h
 
 INCLUDEPATH += \
     ../data
+
+DISTFILES +=
 

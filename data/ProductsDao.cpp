@@ -1,4 +1,5 @@
 #include "ProductsDao.h"
+#include "QDebug"
 
 ProductsDao::ProductsDao(AbsDatabase* database)
 {
@@ -21,6 +22,34 @@ QList<Product> ProductsDao::getAllProducts()
         results.append(Product(id, name, description, price, picture, Category(categoryId, categoryTitle)));
     }
     return results;
+}
+
+QList<Category> ProductsDao::getAllCategories()
+{
+    auto results = QList<Category>();
+    auto query = database->executeQuery("SELECT * FROM categories");
+    while (query.next()) {
+        results.append(Category(query.value("id_category").toInt(), query.value("title").toString()));
+    }
+    return results;
+}
+
+Product ProductsDao::getProductById(int idProduct) const
+{
+    auto query = database->executeQuery(
+                QString("SELECT * FROM products INNER JOIN categories ON products.id_category = categories.id_category WHERE id_product = %1").arg(idProduct));
+   while(query.next())
+   {
+       auto id = query.value("id_product").toInt();
+       auto name = query.value("name").toString();
+       auto description = query.value("description").toString();
+       auto picture = query.value("picture").toByteArray();
+       auto price = query.value("price").toDouble();
+       auto categoryId = query.value("id_category").toInt();
+       auto categoryTitle = query.value("title").toString();
+       return Product(id, name, description, price, picture, Category(categoryId, categoryTitle));
+   }
+
 }
 
 QList<Product> ProductsDao::getProductsByCategory(int id)
@@ -56,11 +85,13 @@ void ProductsDao::insertProduct(Product product)
     query.bindValue(":picture", QVariant(product.getPicture()));
     query.bindValue(":price", product.getPrice());
     query.bindValue(":id_category", product.getCategory().getId());
+    query.exec();
+    database->printLastError();
 }
 
-void ProductsDao::deleteProduct(Product product)
+void ProductsDao::deleteProduct(int id )
 {
-    auto query = database->executeQuery(QString("DELETE FROM products WHERE id_product = %1").arg(product.getId()));
+    auto query = database->executeQuery(QString("DELETE FROM products WHERE id_product = %1").arg(id));
 }
 
 void ProductsDao::updateProduct(int id,
@@ -77,4 +108,5 @@ void ProductsDao::updateProduct(int id,
                                         .arg(description)
                                         .arg(price.toDouble())
                                         .arg(id));
+    database->printLastError();
 }

@@ -1,114 +1,80 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
+import Order 1.0
+import QtQuick.Controls.Material 2.12
+import QtQuick.Window 2.2
+import QtQuick.Controls 2.4
 
-import Product 1.0
-import QtGraphicalEffects 1.0
+
+import Category 1.0
 
 ApplicationWindow {
+
     id: window
-    width: 860
-    height: 540
+    width: 900
+    height: 600
     visible: true
     title: qsTr("Cliente")
-    header: ToolBar {
-        contentHeight: toolButton.implicitHeight
-        ToolButton {
-            id: toolButton
-            text: "\u2630"
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
-            onClicked: {
-                drawer.open()
-            }
-        }
-        Label {
-            id: toolbarTitle
-            text: "Menú"
-            anchors.centerIn: parent
-        }
-    }
+
     Drawer {
         id: drawer
         width: window.width * 0.25
         height: window.height
-        Column {
+
+        ListView {
+            id: drawerMenuList
             anchors.fill: parent
-            ItemDelegate {
-                text: qsTr("Entradas")
+
+            model: CategoryViewModel { }
+            delegate: ItemDelegate {
+                id: categoryItem
                 width: parent.width
+                text: qsTr(model.title)
+                highlighted: ListView.isCurrentItem
+                icon.source: qsTr(model.iconPath)
                 onClicked: {
-                    productViewModelCallback.updateCategory(2)
-                    toolbarTitle.text = "Entradas"
-                    drawer.close()
+                    drawer.updateCategory(model.categoryId, model.title)
+                    drawerMenuList.currentIndex = index
                 }
             }
-            ItemDelegate {
-                text: qsTr("Entradas")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(2)
-                    toolbarTitle.text = "Entradas"
-                    drawer.close()
-                }
+
+            Component.onCompleted: {
+                currentIndex = 0
             }
-            ItemDelegate {
-                text: qsTr("Plato fuerte")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(3)
-                    toolbarTitle.text = "PlatoFuerte"
-                    drawer.close()
-                }
+        }
+
+        Timer {
+            id: closeDetailPanelTimer
+            interval: 325
+            onTriggered: menuPage.closeDetailPanel()
+        }
+
+        function updateCategory(categoryId, categoryTitle) {
+            if (categoryId === -2) {
+                stackView.push(Qt.createComponent("OrderStatusView.qml"), {
+                                   "orderId":orderViewModelCallback.getIdCurrentId(),
+                                   "amount":orderViewModelCallback.getTotal(),
+                                   "status":orderViewModelCallback.getStatus()
+                               })
+            } else {
+                stackView.pop();
+                menuPage.toolbarTitleText = categoryTitle
+                productViewModelCallback.updateCategory(categoryId)
             }
-            ItemDelegate {
-                text: qsTr("Postres")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(4)
-                    toolbarTitle.text = "Postres"
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Bebidas")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(1)
-                    toolbarTitle.text = "Bebidas"
-                    drawer.close()
-                }
-            }
-            ItemDelegate {
-                text: qsTr("Otros")
-                width: parent.width
-                onClicked: {
-                    productViewModelCallback.updateCategory(5)
-                    toolbarTitle.text = "Otros"
-                    drawer.close()
-                }
-            }
+            drawer.close()
+            closeDetailPanelTimer.start()
         }
     }
-    GridView {
-        id: gridView
-        anchors {
-            fill: parent
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: menuPage
+    }
+
+    MenuPage {
+        id: menuPage
+        transform: Translate {
+            x: drawer.position * drawer.width
         }
-        cellWidth: (width / 3)
-        cellHeight: (height / 3)
-        model: ProductViewModel {
-            callback: productViewModelCallback
-        }
-        delegate: ProductItemView {
-            id: productItemView
-            width: gridView.cellWidth
-            height: gridView.cellHeight
-            spanCount: 3
-            spacing: 12
-            indexOfThis: index
-            name: model.name
-            price: model.price
-            picture: model.picture
-        }
-        ScrollIndicator.vertical: ScrollIndicator {}
     }
 }

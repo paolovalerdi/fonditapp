@@ -11,12 +11,11 @@ class ProductsDao
 public:
     ProductsDao(AbsDatabase* database);
     QList<Product> getAllProducts();
+    QList<Category> getAllCategories();
+    Product getProductById(int idProduct) const;
     QList<Product> getProductsByCategory(int id);
     void insertProduct(Product product);
-    void deleteProduct(Product product);
-    /**
-     * Actualiza todos los campos, excepto el id
-     */
+    void deleteProduct(int id);
     void updateProduct(int id,
                        QString name,
                        QString description,

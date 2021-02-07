@@ -1,11 +1,16 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>HomeForm.qml</file>
-        <file>Page1Form.qml</file>
-        <file>Page2Form.qml</file>
+        <file>MenuPage.qml</file>
+        <file>StatisticsPage.qml</file>
         <file>qtquickcontrols2.conf</file>
-        <file>Page3Form.qml</file>
         <file>ProductItemView.qml</file>
+        <file>../icons/ic_menu_book.svg</file>
+        <file>../icons/ic_stats.svg</file>
+        <file>ProductEditPanel.qml</file>
+        <file>../icons/ic_close.svg</file>
+        <file>../icons/ic_save.svg</file>
+        <file>../icons/ic_delete.svg</file>
+        <file>../icons/ic_add2.svg</file>
     </qresource>
 </RCC>

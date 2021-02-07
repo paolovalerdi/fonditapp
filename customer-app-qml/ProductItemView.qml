@@ -63,7 +63,7 @@ Item {
                 id: priceText
                 color: "white"
                 font.pointSize: 8
-                text: price
+                text: "$" + price
             }
         }
     }

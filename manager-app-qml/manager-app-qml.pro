@@ -43,5 +43,3 @@ HEADERS += \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
     ProductFormViewModel.h
-
-DISTFILES +=

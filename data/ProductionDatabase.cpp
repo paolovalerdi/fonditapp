@@ -12,7 +12,7 @@ ProductionDatabase* ProductionDatabase::getInstance()
 
 ProductionDatabase::ProductionDatabase()
 {
-    database = QSqlDatabase::addDatabase("QMYSQL");
+    database = QSqlDatabase::addDatabase("QODBC");
     database.setHostName("localhost");
     database.setDatabaseName("fonditapp");
     database.setUserName("root");
@@ -42,4 +42,9 @@ QSqlQuery ProductionDatabase::prepareQuery(QString queryString)
     QSqlQuery query(database);
     query.prepare(queryString);
     return query;
+}
+
+void ProductionDatabase::printLastError()
+{
+    qDebug()<<database.lastError();
 }
