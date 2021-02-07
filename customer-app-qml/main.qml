@@ -1,9 +1,14 @@
 import QtQuick 2.9
-import QtQuick.Controls 2.2
+import Order 1.0
+import QtQuick.Controls.Material 2.12
+import QtQuick.Window 2.2
+import QtQuick.Controls 2.4
+
 
 import Category 1.0
 
 ApplicationWindow {
+
     id: window
     width: 900
     height: 600
@@ -44,11 +49,26 @@ ApplicationWindow {
         }
 
         function updateCategory(categoryId, categoryTitle) {
-            productViewModelCallback.updateCategory(categoryId)
-            menuPage.toolbarTitleText = categoryTitle
+            if (categoryId === -2) {
+                stackView.push(Qt.createComponent("OrderStatusView.qml"), {
+                                   "orderId":orderViewModelCallback.getIdCurrentId(),
+                                   "amount":orderViewModelCallback.getTotal(),
+                                   "status":orderViewModelCallback.getStatus()
+                               })
+            } else {
+                stackView.pop();
+                menuPage.toolbarTitleText = categoryTitle
+                productViewModelCallback.updateCategory(categoryId)
+            }
             drawer.close()
             closeDetailPanelTimer.start()
         }
+    }
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        initialItem: menuPage
     }
 
     MenuPage {

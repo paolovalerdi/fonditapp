@@ -67,4 +67,15 @@ void ProductViewModel::setCallback(ProductViewModelCallback *value)
         beginInsertRows(QModelIndex(), 0, productList.size() - 1);
         endInsertRows();
     });
+
+    connect(callback, &ProductViewModelCallback::onStatusSelected, this, [=]() {
+        // Primero quitamos todos los elementos desde 0 hasta el final de la lista
+        qDebug()<<"here";
+        beginRemoveRows(QModelIndex(), 0, productList.size() - 1);
+        endRemoveRows();
+    });
+
+
+
+
 }

@@ -31,6 +31,7 @@ public:
     void setCallback(OrderViewModelCallback *value);
 
 private:
+    int idOrder =-1;
     QList<OrderProduct> list;
     const OrderDao orderdao = OrderDao(ProductionDatabase::getInstance());
     const ProductsDao productDao = ProductsDao(ProductionDatabase::getInstance());
