@@ -1,5 +1,5 @@
-#include "OrderDao.h"
-
+﻿#include "OrderDao.h"
+#include <QDebug>
 OrderDao::OrderDao(AbsDatabase* database)
 {
     this->database = database;
@@ -66,3 +66,16 @@ QString OrderDao::getStatus(int idOrder) const
 
     return status;
 }
+
+void OrderDao::insertIntoBill(int idOrder) const
+{
+    QDateTime cData = QDateTime::currentDateTime();
+
+    auto query = database->executeQuery(
+                QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
+                .arg(idOrder)
+                );
+
+
+}
+
