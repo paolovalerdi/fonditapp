@@ -1,4 +1,5 @@
 #include "OrderDao.h"
+#include "Order.h"
 
 OrderDao::OrderDao(AbsDatabase* database)
 {
@@ -75,7 +76,7 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
                 .arg(id_s)
                 );
     while(query.next())
-        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt()));
+        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt(),calculateTotal(query.value("id_order").toInt())));
     return result;
 }
 

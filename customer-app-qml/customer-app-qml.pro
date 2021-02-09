@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         ../data/Category.cpp \
+        ../data/Order.cpp \
         ../data/OrderDao.cpp \
         ../data/OrderProduct.cpp \
         ../data/Product.cpp \
@@ -36,6 +37,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     ../data/AbsDatabase.h \
     ../data/Category.h \
+    ../data/Order.h \
     ../data/OrderDao.h \
     ../data/OrderProduct.h \
     ../data/Product.h \
