@@ -7,3 +7,4 @@ SUBDIRS += \
     tests \
     customer-app-qml \
     manager-app-qml \
+    waiter-app-qml
