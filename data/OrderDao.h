@@ -5,6 +5,7 @@
 #include "Product.h"
 #include "OrderProduct.h"
 #include "ProductsDao.h"
+#include "Order.h"
 #include <QList>
 class OrderDao
 {
@@ -15,6 +16,8 @@ public:
     QList<OrderProduct> getProductsByOrderId(int idOrder) const;
     double calculateTotal(int idOrder) const;
     QString getStatus(int idOrder) const;
+    QList<Order> getOrdersByStatus(int id_s);
+    void updateOrderStatus(Order order);
 private:
     AbsDatabase* database;
      //const ProductsDao productDao;
