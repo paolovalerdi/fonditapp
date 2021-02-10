@@ -45,3 +45,7 @@ HEADERS += \
     ../data/ProductsDao.h \
     OrderListModel.h \
     OrderListModelCallback.h
+
+DISTFILES += \
+    ../icons/ic_receipt.svg \
+    ../icons/ic_tablechair.svg
