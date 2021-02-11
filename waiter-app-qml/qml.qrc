@@ -6,5 +6,7 @@
         <file>../icons/ic_table.svg</file>
         <file>../icons/ic_receipt.svg</file>
         <file>qtquickcontrols2.conf</file>
+        <file>WaiterOrderList.qml</file>
+        <file>../icons/ic_cooking.svg</file>
     </qresource>
 </RCC>

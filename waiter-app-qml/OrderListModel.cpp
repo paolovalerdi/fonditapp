@@ -7,7 +7,7 @@ OrderListModel::OrderListModel(QObject *parent): QAbstractListModel(parent)
 
 int OrderListModel::rowCount(const QModelIndex &parent) const
 {
-    return parent.isValid() ? list.size() : 0;
+    return parent.isValid() ? 0 : list.size();
 }
 
 QVariant OrderListModel::data(const QModelIndex &index, int role) const
