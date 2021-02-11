@@ -1,7 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-
+#include "ProductionDatabase.h"
 #include "../customer-app-qml/ProductViewModel.h"
 #include "ProductFormViewModel.h"
 
@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
     // Registramos ProductViewModelCallback como una variable dentro del contexto de QML.
     //ProductViewModelCallback productViewModelCallback;
     //engine.rootContext()->setContextProperty("productViewModelCallback", &productViewModelCallback);
-
     ProductFormViewModel productFormViewModel;
     engine.rootContext()->setContextProperty("productFormViewModel", &productFormViewModel);
     const QUrl url(QStringLiteral("qrc:/main.qml"));

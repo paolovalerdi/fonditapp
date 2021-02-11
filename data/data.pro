@@ -7,6 +7,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         Category.cpp \
+        Order.cpp \
         OrderDao.cpp \
         OrderProduct.cpp \
         Product.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     AbsDatabase.h \
     Category.h \
+    Order.h \
     OrderDao.h \
     OrderProduct.h \
     Product.h \
