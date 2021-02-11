@@ -40,7 +40,7 @@ int OrderListModel::getStatus() const
 void OrderListModel::setStatus(int value)
 {
     status = value;
-    //update();
+    update();
 }
 
 QHash<int, QByteArray> OrderListModel::roleNames() const
@@ -55,7 +55,6 @@ QHash<int, QByteArray> OrderListModel::roleNames() const
 
 void OrderListModel::update()
 {
-    qDebug() << "Updating model";
     if (status != -1) {
         beginRemoveRows(QModelIndex(), 0, list.size() - 1);
         endRemoveRows();
