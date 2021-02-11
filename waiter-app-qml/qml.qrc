@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>OrderCard.qml</file>
+        <file>../icons/ic_pay.svg</file>
+        <file>../icons/ic_table.svg</file>
+        <file>../icons/ic_receipt.svg</file>
+    </qresource>
+</RCC>

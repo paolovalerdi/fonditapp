@@ -14,11 +14,8 @@ SOURCES += \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
-        CategoryViewModel.cpp \
-        OrderViewModel.cpp \
-        OrderViewModelCallback.cpp \
-        ProductViewModel.cpp \
-        ProductViewModelCallback.cpp \
+        OrderListModel.cpp \
+        OrderListModelCallback.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -34,6 +31,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+INCLUDEPATH += \
+    ../data
+
 HEADERS += \
     ../data/AbsDatabase.h \
     ../data/Category.h \
@@ -43,14 +43,9 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
-    CategoryViewModel.h \
-    OrderViewModel.h \
-    OrderViewModelCallback.h \
-    ProductViewModel.h \
-    ProductViewModelCallback.h
+    OrderListModel.h \
+    OrderListModelCallback.h
 
-INCLUDEPATH += \
-    ../data
-
-DISTFILES +=
-
+DISTFILES += \
+    ../icons/ic_receipt.svg \
+    ../icons/ic_tablechair.svg

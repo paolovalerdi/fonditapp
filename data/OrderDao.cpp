@@ -1,5 +1,7 @@
-﻿#include "OrderDao.h"
 #include <QDebug>
+#include "OrderDao.h"
+#include "Order.h"
+
 OrderDao::OrderDao(AbsDatabase* database)
 {
     this->database = database;
@@ -79,3 +81,35 @@ void OrderDao::insertIntoBill(int idOrder) const
 
 }
 
+QList<Order> OrderDao::getOrdersByStatus(int id_s)
+{
+    QList<Order> result;
+    auto query = database->executeQuery(
+                QString("SELECT * FROM orders WHERE id_status = %1")
+                .arg(id_s)
+                );
+    while(query.next())
+        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt(),calculateTotal(query.value("id_order").toInt())));
+    return result;
+}
+
+void OrderDao::updateOrderStatus(Order order)
+{
+    QString queryStr = QString("UPDATE orders SET id_status = %1 WHERE id_order = %2");
+    switch(order.getId_status()){
+     case 3:
+        queryStr = queryStr.arg(4);
+        break;
+    case 4:
+       queryStr = queryStr.arg(5);
+       break;
+    case 5:
+      queryStr = queryStr.arg(6);
+       break;
+    default:
+        throw "wut?!";
+        break;
+    }
+    queryStr=queryStr.arg(order.getId_order());
+    auto query = database->executeQuery(queryStr);
+}
