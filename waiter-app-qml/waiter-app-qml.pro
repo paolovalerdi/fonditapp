@@ -15,7 +15,6 @@ SOURCES += \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
         OrderListModel.cpp \
-        OrderListModelCallback.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -43,9 +42,4 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
-    OrderListModel.h \
-    OrderListModelCallback.h
-
-DISTFILES += \
-    ../icons/ic_receipt.svg \
-    ../icons/ic_tablechair.svg
+    OrderListModel.h

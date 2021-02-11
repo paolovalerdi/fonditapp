@@ -1,8 +1,10 @@
-import Order 1.0
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Material 2.0
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
+
+import Order 1.0
+
 ApplicationWindow {
     id: window
     width: 900
@@ -10,29 +12,33 @@ ApplicationWindow {
     visible: true
     title: qsTr("Mesero")
 
-    RowLayout{
-        anchors.fill: parent
+    OrderListModel {
+        id: pendingListModel
+        status: 3
+    }
+
+    RowLayout {
         spacing: 15
-        anchors{
+        anchors {
+            fill: parent
             margins: 14
         }
+
+
 
         ListView{
             id: pendientes
             spacing: 9
             Layout.fillWidth : true
             Layout.fillHeight: true
-         // snapMode: ListView.SnapPosition
+            // snapMode: ListView.SnapPosition
             header: Text {
                 text: qsTr("Pendientes")
                 font.bold: true
                 font.pointSize: 20
                 height: 50
             }
-            model: OrderListModel{
-                callback: orderListModelCallback
-                id_status: 3
-            }
+            model: pendingListModel
             delegate: OrderCard{
                 orderModel: model
                 textColor: "#FFF"
@@ -52,10 +58,10 @@ ApplicationWindow {
                 text: qsTr("En progreso")
             }
 
-            model: OrderListModel{
-                callback: orderListModelCallback
-                id_status: 4
+            model: OrderListModel {
+                status: 3
             }
+
             delegate: OrderCard{
                 orderModel: model
                 textColor: "black"
@@ -73,10 +79,8 @@ ApplicationWindow {
                 height: 50
                 text: qsTr("Entregadas")
             }
-            model: OrderListModel{
-                callback: orderListModelCallback
-                id_status: 5
-            }
+            model: OrderListModel { status: 3 }
+
             delegate: OrderCard{
                 orderModel: model
                 textColor: "#FFF"

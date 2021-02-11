@@ -1,45 +1,38 @@
 #pragma once
-#include "OrderProduct.h"
-#include <QAbstractListModel>
-#include "OrderDao.h"
-#include "ProductionDatabase.h"
-#include "ProductsDao.h"
-#include "OrderListModelCallback.h"
 
 #include <QAbstractListModel>
+
+#include "ProductionDatabase.h"
+#include "OrderDao.h"
+#include "ProductsDao.h"
+#include "OrderProduct.h"
 
 class OrderListModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(OrderListModelCallback *callback READ getCallback WRITE setCallback)
-    Q_PROPERTY(int id_status READ getId_status WRITE setId_status)
+    Q_PROPERTY(int status READ getStatus WRITE setStatus)
+
+public slots:
+    void update();
 
 public:
+    enum {
+        ID_ROLE,
+        ID_TABLE_ROLE,
+        ID_STATUS_ROLE,
+        TOTAL_ROLE
+    };
+
     explicit OrderListModel(QObject *parent = nullptr);
-
-enum{
- idOrder, idTable, idStatus, total
-};
-
-    // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-
+    QHash<int, QByteArray> roleNames() const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-     QHash<int, QByteArray> roleNames() const override;
-
-
-     OrderListModelCallback *getCallback() const;
-     void setCallback(OrderListModelCallback *value);
-
-     int getId_status() const;
-     void setId_status(int value);
+    int getStatus() const;
+    void setStatus(int value);
 
 private:
-
-     OrderListModelCallback * callback;
-     QList<Order> list;
-     int id_status;
-     OrderDao orderdao = OrderDao(ProductionDatabase::getInstance());
-
+    int status; // The particular order-status-id this list is linked to
+    OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
+    QList<Order> list;
 };
 
