@@ -110,3 +110,4 @@ void ProductsDao::updateProduct(int id,
                                         .arg(id));
     database->printLastError();
 }
+

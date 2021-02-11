@@ -38,3 +38,8 @@ QString OrderViewModelCallback::getStatus()
 {
     return orderdao.getStatus(idOrder);
 }
+
+void OrderViewModelCallback::insertIntoBill(int idOrder)
+{
+    orderdao.insertIntoBill(idOrder);
+}

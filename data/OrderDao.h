@@ -7,6 +7,7 @@
 #include "ProductsDao.h"
 #include "Order.h"
 #include <QList>
+#include <QDateTime>
 class OrderDao
 {
 public:
@@ -16,8 +17,10 @@ public:
     QList<OrderProduct> getProductsByOrderId(int idOrder) const;
     double calculateTotal(int idOrder) const;
     QString getStatus(int idOrder) const;
+    void insertIntoBill(int idOrder) const;
     QList<Order> getOrdersByStatus(int id_s);
     void updateOrderStatus(Order order);
+
 private:
     AbsDatabase* database;
      //const ProductsDao productDao;

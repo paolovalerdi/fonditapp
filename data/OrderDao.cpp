@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "OrderDao.h"
 #include "Order.h"
 
@@ -66,6 +67,18 @@ QString OrderDao::getStatus(int idOrder) const
         status = query.value(0).toString();
 
     return status;
+}
+
+void OrderDao::insertIntoBill(int idOrder) const
+{
+    QDateTime cData = QDateTime::currentDateTime();
+
+    auto query = database->executeQuery(
+                QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
+                .arg(idOrder)
+                );
+
+
 }
 
 QList<Order> OrderDao::getOrdersByStatus(int id_s)

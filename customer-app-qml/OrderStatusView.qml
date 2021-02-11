@@ -6,7 +6,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import Product 1.0
 import Order 1.0
-
+import QtQuick 2.2
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.0
 Page{
     id: root
     anchors.fill : parent
@@ -90,19 +92,18 @@ Page{
                 width:parent.width
                 Material.background:  "#FFF"
                 Material.foreground:"#0FBF5C"
-                text: "Pagar orden"
+                text: "Pedir cuenta"
 
                 onClicked:
                 {
-                    text.text = "Procesando pago"
+                    pago.text= "Atendiendo solicitud"
+                    orderViewModelCallback.insertIntoBill(root.orderId)
+                    dialog.open()
                 }
+
             }
-            Text {
-                id: text
-                font.bold: true
-                font.pointSize: 20
-                text: "Total a pagar: " + root.amount
-            }
+
+
 
         }
     }
@@ -142,6 +143,30 @@ Page{
                 }
 
             }
+        }
+    }
+    Dialog {
+        id: dialog
+        width: parent.width*.5
+        height: parent.height*.3
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        modal:true
+        title: "Solicitud enviada"
+        clip: true
+        Label {
+             text: "Tu solicitud de pago sera antendida por un mesero en seguida"
+             wrapMode: Label.wrapMode
+             clip: true
+         }
+        Button {
+            id: btnaceptar
+            anchors.centerIn: parent
+            Material.background: "#0FBF5C"
+            Material.foreground: "#FFF"
+            y: Math.round((parent.height - height) / 2)
+            text: qsTr("Aceptar")
+            onClicked: dialog.close()
         }
     }
 }
