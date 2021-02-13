@@ -6,11 +6,13 @@
 #include "OrderDao.h"
 #include "ProductsDao.h"
 #include "OrderProduct.h"
+#include "WaiterBoardMediator.h"
 
 class OrderListModel : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int status READ getStatus WRITE setStatus)
+    Q_PROPERTY(WaiterBoardMediator *mediator READ getMediator WRITE setMediator)
 
 public slots:
     void update();
@@ -29,10 +31,13 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int getStatus() const;
     void setStatus(int value);
+    WaiterBoardMediator *getMediator() const;
+    void setMediator(WaiterBoardMediator *value);
 
 private:
     int status; // The particular order-status-id this list is linked to
     OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
     QList<Order> list;
+    WaiterBoardMediator* mediator;
 };
 

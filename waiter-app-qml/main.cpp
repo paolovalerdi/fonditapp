@@ -3,6 +3,7 @@
 #include <QQmlContext>
 
 #include "OrderListModel.h"
+#include "WaiterBoardMediator.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +14,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     qmlRegisterType<OrderListModel>("Order", 1, 0, "OrderListModel");
+    qmlRegisterUncreatableType<WaiterBoardMediator>("Order", 1, 0, "WaiterBoardMediator", "Can't create instaces of this class");
+
+    WaiterBoardMediator waiterBoardMediator;
+    engine.rootContext()->setContextProperty("waiterBoardMediator", &waiterBoardMediator);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

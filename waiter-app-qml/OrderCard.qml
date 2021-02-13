@@ -19,6 +19,20 @@ Rectangle {
 
     height: column.implicitHeight + 32
     radius: 6
+    Drag.keys: [ (root.order.idStatus + 1).toString() ]
+    Drag.active: rootMouseArea.drag.active
+    Drag.hotSpot.x: root.width / 2
+    Drag.hotSpot.y: root.height / 2
+
+    states: [
+        State {
+            when: root.Drag.active
+            ParentChange {
+                target: root
+                parent: windowContent
+            }
+        }
+    ]
 
     Column {
         id: column
@@ -103,5 +117,13 @@ Rectangle {
                 onClicked: console.log("OrderCard: button clicked")
             }
         }
+    }
+
+    MouseArea {
+        id: rootMouseArea
+        anchors.fill: parent
+
+        drag.target: root
+        drag.onActiveChanged: root.Drag.drop();
     }
 }

@@ -1,6 +1,7 @@
 #include "OrderListModel.h"
 
-OrderListModel::OrderListModel(QObject *parent): QAbstractListModel(parent)
+OrderListModel::OrderListModel(QObject *parent):
+    QAbstractListModel(parent), mediator(nullptr)
 {
     status = -1;
 }
@@ -41,6 +42,20 @@ void OrderListModel::setStatus(int value)
 {
     status = value;
     update();
+}
+
+WaiterBoardMediator *OrderListModel::getMediator() const
+{
+    return mediator;
+}
+
+void OrderListModel::setMediator(WaiterBoardMediator *value)
+{
+    mediator = value;
+    connect(mediator,
+            &WaiterBoardMediator::onBoardUpdated,
+            this,
+            &OrderListModel::update);
 }
 
 QHash<int, QByteArray> OrderListModel::roleNames() const

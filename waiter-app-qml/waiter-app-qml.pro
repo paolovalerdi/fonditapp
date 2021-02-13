@@ -15,6 +15,7 @@ SOURCES += \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
         OrderListModel.cpp \
+        WaiterBoardMediator.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -42,4 +43,5 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
-    OrderListModel.h
+    OrderListModel.h \
+    WaiterBoardMediator.h

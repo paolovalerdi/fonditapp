@@ -11,34 +11,39 @@ ApplicationWindow {
     visible: true
     title: qsTr("Mesero")
 
-    RowLayout {
-        spacing: 16
+    Item {
+        id: windowContent
         anchors.fill: parent
-        anchors.margins: 16
 
-        WaiterOrderList {
-            title: "Pendientes"
-            status: 3
-            cardIcon: "../icons/ic_receipt.svg"
-            cardBackgroundColor: "#804BF2"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-        WaiterOrderList {
-            title: "En progreso"
-            status: 4
-            cardIcon: "../icons/ic_cooking.svg"
-            cardBackgroundColor: "#FF8552"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-        WaiterOrderList {
-            title: "Entregadas"
-            status: 5
-            cardIcon: "../icons/ic_pay.svg"
-            cardBackgroundColor: "#5FAD56"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+        RowLayout {
+            spacing: 16
+            anchors.fill: parent
+            anchors.margins: 16
+
+            WaiterOrderList {
+                title: "Pendientes"
+                status: 3
+                cardIcon: "../icons/ic_receipt.svg"
+                cardBackgroundColor: "#804BF2"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            WaiterOrderList {
+                title: "En progreso"
+                status: 4
+                cardIcon: "../icons/ic_cooking.svg"
+                cardBackgroundColor: "#FF8552"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
+            WaiterOrderList {
+                title: "Entregadas"
+                status: 5
+                cardIcon: "../icons/ic_pay.svg"
+                cardBackgroundColor: "#5FAD56"
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
         }
     }
 }

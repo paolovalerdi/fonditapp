@@ -30,6 +30,8 @@ Rectangle {
     ListView {
         id: listView
 
+        property int draggedItemIndex: -1
+
         clip: true
         spacing: 16
         anchors {
@@ -42,12 +44,27 @@ Rectangle {
         model: OrderListModel {
             id: listModel
             status: root.status
+            mediator: waiterBoardMediator
         }
         delegate: OrderCard {
+            id: cardDelegate
             width: listView.width
             icon: root.cardIcon
             color: root.cardBackgroundColor
             order: model
         }
+
+        DropArea {
+            id: dropArea
+            anchors.fill: parent
+            keys: [ (root.status).toString() ]
+            onDropped:  {
+                waiterBoardMediator.updateOrderStatus(dropArea.drag
+                                                      .source
+                                                      .order
+                                                      .idOrder);
+            }
+        }
+
     }
 }
