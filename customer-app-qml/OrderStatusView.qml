@@ -6,6 +6,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 import Product 1.0
 import Order 1.0
+import QtQuick.Controls 2.15
+
 
 Page{
     id: root
@@ -96,12 +98,23 @@ Page{
                 {
                     text.text = "Procesando pago"
                 }
+
+
             }
             Text {
                 id: text
                 font.bold: true
                 font.pointSize: 20
                 text: "Total a pagar: " + root.amount
+            }
+            Dialog {
+                id: dialog
+               // @disable-check M16
+                text: 'Are you sure?'
+                // @disable-check M16
+                buttons: ['No', 'Yes']
+               // @disable-check M16
+                onClicked: visible = false
             }
 
         }
