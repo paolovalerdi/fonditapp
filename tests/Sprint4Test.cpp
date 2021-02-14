@@ -18,10 +18,6 @@ TEST_CASE("GetBill")
         Fecha=query.value(1).toString();
 
     }
-
-    qDebug()<<Fecha;
     REQUIRE(Fecha=="9-02-21 3:30:33");
-
-
 }
 

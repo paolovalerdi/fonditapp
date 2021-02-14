@@ -1,17 +1,8 @@
 #include "TestDatabase.h"
 
-TestDatabase* TestDatabase::instance = nullptr;
-
-TestDatabase* TestDatabase::getInstance()
-{
-    if (instance == nullptr) {
-        instance = new TestDatabase();
-    }
-    return instance;
-}
-
 TestDatabase::TestDatabase()
 {
+    QSqlDatabase::removeDatabase("TEST_CONNECTION");
     database = QSqlDatabase::addDatabase("QSQLITE","TEST_CONNECTION");
     database.setDatabaseName(":memory:");
     bool isOpen = database.open();
@@ -62,15 +53,15 @@ void TestDatabase::CreateTables()
                   );
 
 
-    database.exec(QString("CREATE TABLE tables (id_table int(11) PRIMARY KEY NOT NULL,ocupied tinyint(1) NOT NULL)"));
+    database.exec(QString("CREATE TABLE tables (id_table int(11) PRIMARY KEY NOT NULL,ocupied tinyint(1) NOT NULL);"));
 
-    database.exec(QString("CREATE TABLE order_status (id_status int(11) PRIMARY KEY NOT NULL,name varchar(100) NOT NULL)")
+    database.exec(QString("CREATE TABLE order_status (id_status int(11) PRIMARY KEY NOT NULL,name varchar(100) NOT NULL);")
                   );
 
     database.exec(QString("CREATE TABLE orders(")
                   .append("id_order int(11) NOT NULL,")
                   .append("id_table int(11) NOT NULL,")
-                  .append("id_status int(11) NOT NULL DEFAULT 3),")
+                  .append("id_status int(11) NOT NULL DEFAULT 3,")
                   .append("FOREIGN KEY(id_table) REFERENCES tables(id_table) ,")
                   .append("FOREIGN KEY(id_status) REFERENCES order_status(id_status) );")
                   );
@@ -124,8 +115,8 @@ void TestDatabase::InsertTables()
 
 
     database.exec(QString("INSERT INTO orders (id_order, id_table, id_status) VALUES")
-                  .append("(1,1,0),")
-                  .append("(2,2,0);")
+                  .append("(1,1,3),")
+                  .append("(2,2,3);")
                   );
 
 

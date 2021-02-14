@@ -7,7 +7,6 @@
 class TestDatabase : public AbsDatabase
 {
 public:
-    static TestDatabase* getInstance();
     TestDatabase();
     QSqlQuery executeQuery(QString queryStr) override;
     QSqlQuery executeQuery(QSqlQuery queryObj) override;
@@ -15,8 +14,6 @@ public:
     void printLastError() override;
     void CreateTables();
     void InsertTables();
-protected:
-    static TestDatabase* instance;
 private:
     QSqlDatabase database;
 };
