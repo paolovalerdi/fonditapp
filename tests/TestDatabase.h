@@ -4,20 +4,16 @@
 #include <QSqlError>
 #include <QDebug>
 
-class ProductionDatabase : public AbsDatabase
+class TestDatabase : public AbsDatabase
 {
 public:
-    static ProductionDatabase* getInstance();
+    TestDatabase();
     QSqlQuery executeQuery(QString queryStr) override;
     QSqlQuery executeQuery(QSqlQuery queryObj) override;
     QSqlQuery prepareQuery(QString queryString) override;
     void printLastError() override;
-protected:
-    static ProductionDatabase* instance;
+    void CreateTables();
+    void InsertTables();
 private:
-    ProductionDatabase ();
     QSqlDatabase database;
 };
-
-//ProductionDatabase* ProductionDatabase::instance = nullptr;
-

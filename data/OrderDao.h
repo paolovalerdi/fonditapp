@@ -20,6 +20,7 @@ public:
     void insertIntoBill(int idOrder) const;
     QList<Order> getOrdersByStatus(int id_s);
     void updateOrderStatus(Order order);
+    Order getOrderById(int id);
 
 private:
     AbsDatabase* database;

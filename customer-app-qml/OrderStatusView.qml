@@ -9,6 +9,7 @@ import Order 1.0
 import QtQuick 2.2
 import QtQuick.Dialogs 1.1
 import QtQuick.Window 2.0
+
 Page{
     id: root
     anchors.fill : parent
@@ -101,6 +102,15 @@ Page{
                     dialog.open()
                 }
 
+            }
+            Dialog {
+                id: dialog
+               // @disable-check M16
+                text: 'Are you sure?'
+                // @disable-check M16
+                buttons: ['No', 'Yes']
+               // @disable-check M16
+                onClicked: visible = false
             }
 
 
