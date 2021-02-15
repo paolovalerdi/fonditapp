@@ -77,4 +77,8 @@ ApplicationWindow {
             x: drawer.position * drawer.width
         }
     }
+
+    TableSelection{
+
+    }
 }
