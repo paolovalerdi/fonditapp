@@ -14,6 +14,7 @@ ApplicationWindow {
     height: 600
     visible: true
     title: qsTr("Cliente")
+    property int idTable: -1
 
     Drawer {
         id: drawer

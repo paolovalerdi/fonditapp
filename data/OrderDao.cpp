@@ -19,8 +19,20 @@ int OrderDao::createOrder(int idTable) const
 
 void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
 {
+    auto orignialList = getProductsByOrderId(idOrder);
+    for(auto originalValue : orignialList)
+    {
+        for(int i=0; i< list.size();i++)
+        {
+            if(originalValue.getIdProduct()==list.at(i).getIdProduct())
+            {
+                list.removeAt(i);
+            }
+        }
+    }
     for(auto value : list)
     {
+
         auto query = database->executeQuery(
                     QString("INSERT INTO order_products(id_product,quantity,id_order) VALUES(%1,%2,%3);")
                     .arg(value.getIdProduct())

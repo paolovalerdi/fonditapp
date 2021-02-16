@@ -9,7 +9,8 @@
 class TablesModel : public QAbstractListModel
 {
     Q_OBJECT
-
+public slots:
+    void updateTable(int idTable);
 public:
     explicit TablesModel(QObject *parent = nullptr);
     enum {idRole,

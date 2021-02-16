@@ -1,5 +1,10 @@
 #include "TablesModel.h"
 
+void TablesModel::updateTable(int idTable)
+{
+    tablesDao.updateOcupied(idTable,true);
+}
+
 TablesModel::TablesModel(QObject *parent)
     : QAbstractListModel(parent)
 {

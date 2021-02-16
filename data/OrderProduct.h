@@ -12,10 +12,11 @@ public:
     int getQuantity() const;
     int getIdOrder() const;
     void setIdOrder(int value);
+    void setQuantity(int value) const;
 
 private:
     int idProduct;
-    int quantity;
+    static int quantity;
     int idOrder;
 };
 
