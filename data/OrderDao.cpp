@@ -33,7 +33,7 @@ void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
     for(auto value : list)
     {
 
-        auto query = database->executeQuery(
+        database->executeQuery(
                     QString("INSERT INTO order_products(id_product,quantity,id_order) VALUES(%1,%2,%3);")
                     .arg(value.getIdProduct())
                     .arg(value.getQuantity())
