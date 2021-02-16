@@ -22,6 +22,7 @@ public slots:
     double getTotal();
     QString getStatus();
     void insertIntoBill(int idOrder);
+    void request();
 private:
     int idOrder=-1;
     const OrderDao orderdao = OrderDao(ProductionDatabase::getInstance());

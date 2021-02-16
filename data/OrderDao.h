@@ -21,7 +21,9 @@ public:
     QList<Order> getOrdersByStatus(int id_s);
     void updateOrderStatus(Order order);
     Order getOrderById(int id);
-
+    void updateRequest(int id) const;
+    //bool Request(int id_table) const;
+    int getRequest() const;
 private:
     AbsDatabase* database;
      //const ProductsDao productDao;
