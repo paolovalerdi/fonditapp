@@ -99,23 +99,11 @@ Page{
                 {
                     pago.text= "Atendiendo solicitud"
                     orderViewModelCallback.insertIntoBill(root.orderId)
+                    orderViewModelCallback.request()
                     dialog.open()
                 }
 
             }
-            Dialog {
-                id: dialog
-               // @disable-check M16
-                text: 'Are you sure?'
-                // @disable-check M16
-                buttons: ['No', 'Yes']
-               // @disable-check M16
-                onClicked: visible = false
-            }
-
-
-
-        }
     }
 
 
@@ -138,6 +126,7 @@ Page{
             }
 
             delegate: OrderProductItemView{
+                showControlls: false
                 name:model.name
                 description: model.description
                 price: model.price

@@ -26,6 +26,8 @@ QVariant OrderListModel::data(const QModelIndex &index, int role) const
             return QVariant(order.getId_status());
         case TOTAL_ROLE:
             return QVariant(order.getTotal());
+        case CALL_ROLE:
+            return QVariant(order.getCall_waiter());
         default:
             throw "No such role";
         }
@@ -65,6 +67,8 @@ QHash<int, QByteArray> OrderListModel::roleNames() const
     names[ID_TABLE_ROLE] = "idTable";
     names[ID_STATUS_ROLE] = "idStatus";
     names[TOTAL_ROLE] = "total";
+    names[CALL_ROLE] = "callWaiter";
+
     return names;
 }
 
@@ -79,4 +83,9 @@ void OrderListModel::update()
         beginInsertRows(QModelIndex(),0, list.size() - 1);
         endInsertRows();
     }
+}
+
+void OrderListModel::softupdate()
+{
+    //
 }

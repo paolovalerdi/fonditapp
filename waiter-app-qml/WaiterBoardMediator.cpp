@@ -15,3 +15,7 @@ void WaiterBoardMediator::updateBoard()
 {
     emit onBoardUpdated();
 }
+int WaiterBoardMediator::requestBill()
+{
+   return orderDao.getRequest();
+}

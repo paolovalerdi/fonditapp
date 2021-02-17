@@ -22,6 +22,8 @@ QVariant OrderViewModel::data(const QModelIndex &index, int role) const
         return QVariant();
     auto item = productDao.getProductById(list.at(index.row()).getIdProduct());
     switch (role) {
+    case idRole:
+        return QVariant(item.getId());
     case NameRole:
         return QVariant(item.getName());
     case DescriptionRole:
@@ -41,6 +43,7 @@ QVariant OrderViewModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> OrderViewModel::roleNames() const
 {
     QHash<int, QByteArray> names;
+    names[idRole] = "idProduct";
     names[NameRole] = "name";
     names[DescriptionRole] = "description";
     names[PictureRole] = "picture";
@@ -80,4 +83,18 @@ void OrderViewModel::setCallback(OrderViewModelCallback *value)
         beginInsertRows(QModelIndex(),0, list.size()-1);
         endInsertRows();
     });
+    connect(callback, &OrderViewModelCallback::onUpdateProductQuantity, this, [=](int idProduct,int quantity) {
+
+        int i=0;
+        while (true){
+            if(list.at(i).getIdProduct() == idProduct)
+            {
+                list.at(i).setQuantity(quantity);
+                break;
+            }
+            i++;
+        }
+
+    });
+
 }

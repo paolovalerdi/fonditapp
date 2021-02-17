@@ -53,7 +53,7 @@ void TestDatabase::CreateTables()
                   );
 
 
-    database.exec(QString("CREATE TABLE tables (id_table int(11) PRIMARY KEY NOT NULL,ocupied tinyint(1) NOT NULL);"));
+    database.exec(QString("CREATE TABLE tables (id_table int(11) PRIMARY KEY NOT NULL,ocupied tinyint(1) NOT NULL,request tinyint(1)NOT NULL DEFAULT 0);"));
 
     database.exec(QString("CREATE TABLE order_status (id_status int(11) PRIMARY KEY NOT NULL,name varchar(100) NOT NULL);")
                   );
@@ -89,11 +89,11 @@ void TestDatabase::InsertTables()
                   .append("(5, 'Otros');")
                   );
 
-    database.exec(QString("INSERT INTO tables (id_table, ocupied) VALUES")
-                  .append("(1, 0),")
-                  .append("(2, 0),")
-                  .append("(3,0),")
-                  .append("(4,0);")
+    database.exec(QString("INSERT INTO tables (id_table, ocupied,request) VALUES")
+                  .append("(1,0,1),")
+                  .append("(2,0,0),")
+                  .append("(3,0,0),")
+                  .append("(4,0,0);")
                   );
 
     database.exec(QString("INSERT INTO products (id_product, name, description, price, id_category) VALUES")

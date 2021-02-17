@@ -11,6 +11,7 @@ ApplicationWindow {
     visible: true
     title: qsTr("Mesero")
 
+
     Item {
         id: windowContent
         anchors.fill: parent
@@ -46,4 +47,6 @@ ApplicationWindow {
             }
         }
     }
+
+
 }

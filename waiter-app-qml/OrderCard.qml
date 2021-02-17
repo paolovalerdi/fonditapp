@@ -8,6 +8,7 @@ Rectangle {
     id: root
 
     property var order: null
+    property var requested: false
     property string icon: "../icons/ic_receipt.svg"
     readonly property string foregroundColor: {
         if (root.color.hslLightness >= 0.7) {
@@ -41,13 +42,29 @@ Rectangle {
         anchors.fill: parent
         anchors.margins: 16
 
-        Image {
-            source: root.icon
-            sourceSize.width: 24
-            sourceSize.height: 24
-            layer.enabled: true
-            layer.effect: ColorOverlay { color: foregroundColor }
-        }
+        Row {
+            id: icon_row
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 24
+            Image {
+                source: root.icon
+                sourceSize.width: 24
+                sourceSize.height: 24
+                layer.enabled: true
+                layer.effect: ColorOverlay { color: foregroundColor }
+            }
+                Image {
+                    id: notification_icon
+                    anchors.right: parent.right
+                    source: "../icons/ic_notification.svg"
+                    sourceSize.width: 24
+                    sourceSize.height: 24
+                    layer.enabled: true
+                    layer.effect: ColorOverlay { color: foregroundColor }
+                    visible: root.order.callWaiter
+                      }
+            }
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -68,6 +85,8 @@ Rectangle {
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
+
+
 
         Text {
             text: "$" + root.order.total

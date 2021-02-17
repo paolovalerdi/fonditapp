@@ -19,9 +19,21 @@ int OrderDao::createOrder(int idTable) const
 
 void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
 {
+    auto orignialList = getProductsByOrderId(idOrder);
+    for(auto originalValue : orignialList)
+    {
+        for(int i=0; i< list.size();i++)
+        {
+            if(originalValue.getIdProduct()==list.at(i).getIdProduct())
+            {
+                list.removeAt(i);
+            }
+        }
+    }
     for(auto value : list)
     {
-        auto query = database->executeQuery(
+
+        database->executeQuery(
                     QString("INSERT INTO order_products(id_product,quantity,id_order) VALUES(%1,%2,%3);")
                     .arg(value.getIdProduct())
                     .arg(value.getQuantity())
@@ -73,8 +85,7 @@ void OrderDao::insertIntoBill(int idOrder) const
 {
     QDateTime cData = QDateTime::currentDateTime();
 
-    auto query = database->executeQuery(
-                QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
+    auto query = database->executeQuery(QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
                 .arg(idOrder)
                 );
 
@@ -85,11 +96,11 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
 {
     QList<Order> result;
     auto query = database->executeQuery(
-                QString("SELECT * FROM orders WHERE id_status = %1")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table  WHERE id_status = %1")
                 .arg(id_s)
                 );
     while(query.next())
-        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt(),calculateTotal(query.value("id_order").toInt())));
+        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt(),query.value("request").toInt(),calculateTotal(query.value("id_order").toInt())));
     return result;
 }
 
@@ -117,14 +128,35 @@ void OrderDao::updateOrderStatus(Order order)
 Order OrderDao::getOrderById(int id)
 {
     auto query = database->executeQuery(
-                QString("SELECT * FROM orders WHERE id_order = %1")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_order = %1")
                 .arg(id)
                 );
     if (query.next()) {
         return Order(query.value("id_order").toInt(),
                      query.value("id_table").toInt(),
                      query.value("id_status").toInt(),
+                     query.value("request").toInt(),
                      calculateTotal(query.value("id_order").toInt()));
     }
     throw "No such order";
 }
+
+void OrderDao::updateRequest(int id) const
+{
+    QString e=QString("UPDATE tables as T INNER JOIN orders as O ON T.id_table=O.id_table set T.request=1 where O.id_order=%1")
+            .arg(id);
+    auto query = database->executeQuery(e);
+   qDebug()<<"QUERY"+e;
+}
+
+int OrderDao::getRequest() const
+{
+    int band;
+    auto query= database->executeQuery(QString("SELECT COUNT(request) FROM tables WHERE request=1 "));
+    while (query.next()) {
+        band=query.value(0).toInt();
+    }
+    return band;
+}
+
+

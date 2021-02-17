@@ -17,6 +17,7 @@ SOURCES += \
         ../data/ProductsDao.cpp \
         Sprint4Test.cpp \
         Sprint5Test.cpp \
+        Sprint6Test.cpp \
         TestDatabase.cpp \
         main.cpp
 
