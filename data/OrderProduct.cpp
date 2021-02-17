@@ -38,3 +38,10 @@ void OrderProduct::setIdOrder(int value)
 {
     idOrder = value;
 }
+
+void OrderProduct::setQuantity(int value) const
+{
+    quantity = value;
+}
+
+int OrderProduct::quantity = 0;

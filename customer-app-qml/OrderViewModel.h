@@ -14,6 +14,7 @@ class OrderViewModel : public QAbstractListModel
 public:
     explicit OrderViewModel(QObject *parent = nullptr);
     enum {
+        idRole,
         NameRole,
         DescriptionRole,
         PictureRole,

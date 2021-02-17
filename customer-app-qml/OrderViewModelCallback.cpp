@@ -12,7 +12,10 @@ void OrderViewModelCallback::addProduct(int idProduct, int quantity)
 
 void OrderViewModelCallback::createdOrder(int idTable)
 {
-    idOrder = orderdao.createOrder(idTable);
+    if(idOrder==-1)
+    {
+      idOrder = orderdao.createOrder(idTable);
+    }
     emit onCreatedOrder(idTable);
 }
 
@@ -47,4 +50,18 @@ void OrderViewModelCallback::insertIntoBill(int idOrder)
 void OrderViewModelCallback::request()
 {
     orderdao.updateRequest(idOrder);
+}
+void OrderViewModelCallback::updateProductQuantity(int idProduct, int quantity)
+{
+    emit onUpdateProductQuantity(idProduct,quantity);
+}
+
+int OrderViewModelCallback::getIdOrder() const
+{
+    return idOrder;
+}
+
+void OrderViewModelCallback::setIdOrder(int value)
+{
+    idOrder = value;
 }

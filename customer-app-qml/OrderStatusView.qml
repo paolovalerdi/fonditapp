@@ -104,10 +104,6 @@ Page{
                 }
 
             }
-
-
-
-        }
     }
 
 
@@ -130,6 +126,7 @@ Page{
             }
 
             delegate: OrderProductItemView{
+                showControlls: false
                 name:model.name
                 description: model.description
                 price: model.price

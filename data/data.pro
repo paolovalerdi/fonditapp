@@ -13,6 +13,8 @@ SOURCES += \
         Product.cpp \
         ProductionDatabase.cpp \
         ProductsDao.cpp \
+        Tables.cpp \
+        TablesDao.cpp \
         main.cpp
 
 HEADERS += \
@@ -23,4 +25,6 @@ HEADERS += \
     OrderProduct.h \
     Product.h \
     ProductionDatabase.h \
-    ProductsDao.h
+    ProductsDao.h \
+    Tables.h \
+    TablesDao.h

@@ -184,6 +184,7 @@ Rectangle {
         }
         model: OrderViewModel { callback: orderViewModelCallback }
         delegate: OrderProductItemView{
+            idProduct: model.idProduct
             name:model.name
             description: model.description
             price: model.price
@@ -209,8 +210,9 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 root.state = "collapsed"
-                root.state = "hidden"
-                orderViewModelCallback.createdOrder(1)
+              //  root.state = "hidden"
+
+                orderViewModelCallback.createdOrder(window.idTable)
             }
         }
     }

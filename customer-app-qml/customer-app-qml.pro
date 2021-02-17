@@ -14,11 +14,14 @@ SOURCES += \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
+        ../data/Tables.cpp \
+        ../data/TablesDao.cpp \
         CategoryViewModel.cpp \
         OrderViewModel.cpp \
         OrderViewModelCallback.cpp \
         ProductViewModel.cpp \
         ProductViewModelCallback.cpp \
+        TablesModel.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -43,11 +46,14 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
+    ../data/Tables.h \
+    ../data/TablesDao.h \
     CategoryViewModel.h \
     OrderViewModel.h \
     OrderViewModelCallback.h \
     ProductViewModel.h \
-    ProductViewModelCallback.h
+    ProductViewModelCallback.h \
+    TablesModel.h
 
 INCLUDEPATH += \
     ../data
