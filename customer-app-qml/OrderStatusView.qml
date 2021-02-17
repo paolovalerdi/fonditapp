@@ -99,12 +99,11 @@ Page{
                 {
                     pago.text= "Atendiendo solicitud"
                     orderViewModelCallback.insertIntoBill(root.orderId)
+                    orderViewModelCallback.request()
                     dialog.open()
                 }
 
             }
-
-        }
     }
 
 

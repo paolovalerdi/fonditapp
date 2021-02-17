@@ -47,6 +47,10 @@ void OrderViewModelCallback::insertIntoBill(int idOrder)
     orderdao.insertIntoBill(idOrder);
 }
 
+void OrderViewModelCallback::request()
+{
+    orderdao.updateRequest(idOrder);
+}
 void OrderViewModelCallback::updateProductQuantity(int idProduct, int quantity)
 {
     emit onUpdateProductQuantity(idProduct,quantity);

@@ -16,13 +16,15 @@ class OrderListModel : public QAbstractListModel
 
 public slots:
     void update();
+    void softupdate();
 
 public:
     enum {
         ID_ROLE,
         ID_TABLE_ROLE,
         ID_STATUS_ROLE,
-        TOTAL_ROLE
+        TOTAL_ROLE,
+        CALL_ROLE
     };
 
     explicit OrderListModel(QObject *parent = nullptr);
