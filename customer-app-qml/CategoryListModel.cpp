@@ -28,7 +28,7 @@ QVariant CategoryListModel::data(const QModelIndex &index, int role) const
     case ICON_ROLE:
         return QVariant(getImagePath(category.getId()));
     default:
-        throw QString("CategoryViewModel: No value for role");
+        throw QString("CategoryListModel: No value for role");
     }
 }
 
@@ -59,6 +59,6 @@ QString CategoryListModel::getImagePath(int categoryId) const
     case 5:
         return QString("../icons/ic_otros.svg");
     default:
-        throw QString("CategoryViewModel: No icon defined for category with id: %1").arg(categoryId);
+        throw QString("CategoryListModel: No icon defined for category with id: %1").arg(categoryId);
     }
 }
