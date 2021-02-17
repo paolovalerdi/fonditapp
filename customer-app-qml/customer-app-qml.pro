@@ -16,7 +16,7 @@ SOURCES += \
         ../data/ProductsDao.cpp \
         ../data/Tables.cpp \
         ../data/TablesDao.cpp \
-        CategoryViewModel.cpp \
+        CategoryListModel.cpp \
         OrderViewModel.cpp \
         OrderViewModelCallback.cpp \
         ProductViewModel.cpp \
@@ -48,7 +48,7 @@ HEADERS += \
     ../data/ProductsDao.h \
     ../data/Tables.h \
     ../data/TablesDao.h \
-    CategoryViewModel.h \
+    CategoryListModel.h \
     OrderViewModel.h \
     OrderViewModelCallback.h \
     ProductViewModel.h \

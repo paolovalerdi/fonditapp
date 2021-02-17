@@ -6,7 +6,7 @@
 #include "ProductViewModelCallback.h"
 #include "OrderViewModel.h"
 #include "OrderViewModelCallback.h"
-#include "CategoryViewModel.h"
+#include "CategoryListModel.h"
 #include "TablesModel.h"
 
 int main(int argc, char *argv[])
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<OrderViewModel>("Order", 1, 0, "OrderViewModel");
     qmlRegisterUncreatableType<OrderViewModelCallback>("Order", 1, 0, "OrderViewModelCallback", "Can't create instaces of this class");
 
-    qmlRegisterType<CategoryViewModel>("Category", 1, 0, "CategoryViewModel");
+    qmlRegisterType<CategoryListModel>("Category", 1, 0, "CategoryViewModel");
     qmlRegisterType<TablesModel>("Tables", 1, 0, "TablesModel");
 
     // Registramos ProductViewModelCallback como una variable dentro del contexto de QML.

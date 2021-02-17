@@ -1,49 +1,47 @@
-#include "CategoryViewModel.h"
+#include "CategoryListModel.h"
 
-CategoryViewModel::CategoryViewModel(QObject *parent)
-    : QAbstractListModel(parent)
+CategoryListModel::CategoryListModel(QObject *parent): QAbstractListModel(parent)
 {
     categories.append(Category(-1, "Todo"));
     categories.append(productDao.getAllCategories());
     categories.append(Category(-2, "Seguir Orden"));
 }
 
-int CategoryViewModel::rowCount(const QModelIndex &parent) const
+int CategoryListModel::rowCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-        return 0;
-    return categories.size();
+    return parent.isValid() ? 0 : categories.size();
 }
 
-QVariant CategoryViewModel::data(const QModelIndex &index, int role) const
+QVariant CategoryListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
     {
         return QVariant();
     }
+
     auto category = categories.at(index.row());
     switch (role) {
-    case IdRole:
+    case ID_ROLE:
         return QVariant(category.getId());
-    case TitleRole:
+    case TITLE_ROLE:
         return QVariant(category.getTitle());
-    case IconRole:
+    case ICON_ROLE:
         return QVariant(getImagePath(category.getId()));
     default:
         throw QString("CategoryViewModel: No value for role");
     }
 }
 
-QHash<int, QByteArray> CategoryViewModel::roleNames() const
+QHash<int, QByteArray> CategoryListModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    names[IdRole] = "categoryId";
-    names[TitleRole] = "title";
-    names[IconRole] = "iconPath";
+    names[ID_ROLE] = "categoryId";
+    names[TITLE_ROLE] = "title";
+    names[ICON_ROLE] = "iconPath";
     return names;
 }
 
-QString CategoryViewModel::getImagePath(int categoryId) const
+QString CategoryListModel::getImagePath(int categoryId) const
 {
     switch (categoryId) {
     case -2:
