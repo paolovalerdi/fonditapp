@@ -104,71 +104,69 @@ Page{
                 }
 
             }
-    }
-
-
-    Rectangle {
-        id: orderListContainer
-        color: "white"
-        width: parent.width / 2
-        anchors{
-            left: parent.left
-            top: toolbar.bottom
-            bottom: parent.bottom
         }
 
-        ListView{
-            id: orderListView
-            anchors.fill: parent
-            clip: true
-            model: OrderViewModel {
-                callback: orderViewModelCallback
+
+        Rectangle {
+            id: orderListContainer
+            color: "white"
+            width: parent.width / 2
+            anchors{
+                left: parent.left
+                top: toolbar.bottom
+                bottom: parent.bottom
             }
 
-            delegate: OrderProductItemView{
-                showControlls: false
-                name:model.name
-                description: model.description
-                price: model.price
-                quantity: model.quantity
-                image: model.picture
-            }
-            Component.onCompleted: {
-                console.log(root.orderId)
-                if(root.orderId!==-1)
-                {
-                    orderViewModelCallback.loadOrder(root.orderId)
-                    console.log(root.amount)
+            ListView{
+                id: orderListView
+                anchors.fill: parent
+                clip: true
+                model: OrderViewModel {
+                    callback: orderViewModelCallback
                 }
 
+                delegate: OrderProductItemView{
+                    showControlls: false
+                    name:model.name
+                    description: model.description
+                    price: model.price
+                    quantity: model.quantity
+                    image: model.picture
+                }
+                Component.onCompleted: {
+                    console.log(root.orderId)
+                    if(root.orderId!==-1)
+                    {
+                        orderViewModelCallback.loadOrder(root.orderId)
+                        console.log(root.amount)
+                    }
+
+                }
             }
         }
-    }
-    Dialog {
-        id: dialog
-        width: parent.width*.5
-        height: parent.height*.3
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        modal:true
-        title: "Solicitud enviada"
-        clip: true
-        Label {
-             text: "Tu solicitud de pago sera antendida por un mesero en seguida"
-             wrapMode: Label.wrapMode
-             clip: true
-         }
-        Button {
-            id: btnaceptar
-            anchors.centerIn: parent
-            Material.background: "#0FBF5C"
-            Material.foreground: "#FFF"
+        Dialog {
+            id: dialog
+            width: parent.width*.5
+            height: parent.height*.3
+            x: Math.round((parent.width - width) / 2)
             y: Math.round((parent.height - height) / 2)
-            text: qsTr("Aceptar")
-            onClicked: dialog.close()
+            modal:true
+            title: "Solicitud enviada"
+            clip: true
+            Label {
+                text: "Tu solicitud de pago sera antendida por un mesero en seguida"
+                wrapMode: Label.wrapMode
+                clip: true
+            }
+            Button {
+                id: btnaceptar
+                anchors.centerIn: parent
+                Material.background: "#0FBF5C"
+                Material.foreground: "#FFF"
+                y: Math.round((parent.height - height) / 2)
+                text: qsTr("Aceptar")
+                onClicked: dialog.close()
+            }
         }
     }
 }
-
-
-

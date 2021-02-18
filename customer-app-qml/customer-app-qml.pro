@@ -17,9 +17,9 @@ SOURCES += \
         ../data/Tables.cpp \
         ../data/TablesDao.cpp \
         CategoryListModel.cpp \
-        OrderViewModel.cpp \
+        OrderProductListModel.cpp \
         OrderViewModelCallback.cpp \
-        ProductViewModel.cpp \
+        ProductListModel.cpp \
         ProductViewModelCallback.cpp \
         TablesModel.cpp \
         main.cpp
@@ -49,9 +49,9 @@ HEADERS += \
     ../data/Tables.h \
     ../data/TablesDao.h \
     CategoryListModel.h \
-    OrderViewModel.h \
+    OrderProductListModel.h \
     OrderViewModelCallback.h \
-    ProductViewModel.h \
+    ProductListModel.h \
     ProductViewModelCallback.h \
     TablesModel.h
 

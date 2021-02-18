@@ -1,57 +1,57 @@
-#include "ProductViewModel.h"
+#include "ProductListModel.h"
 
-ProductViewModel::ProductViewModel(QObject *parent)
+ProductListModel::ProductListModel(QObject *parent)
     : QAbstractListModel(parent), callback(nullptr)
 {
 }
 
-int ProductViewModel::rowCount(const QModelIndex &parent) const
+int ProductListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
     return productList.size();
 }
 
-QVariant ProductViewModel::data(const QModelIndex &index, int role) const
+QVariant ProductListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
     auto item = productList.at(index.row());
     switch (role) {
-    case IdRole:
+    case ID_ROLE:
         return QVariant(item.getId());
-    case NameRole:
+    case NAME_ROLE:
         return QVariant(item.getName());
-    case DescriptionRole:
+    case DESCRIPTION_ROLE:
         return QVariant(item.getDescription());
-    case PictureRole:
+    case PICTURE_ROLE:
         // QML no entiende imagenes representadas como arreglos de bits
         // es necesario convertilar a base64 y agregar el tipo.
         return QVariant("data:image/png;base64," + item.getPicture().toBase64());
-    case PriceRole:
+    case PRICE_ROLE:
         return QVariant(item.getPrice());
     }
     return QVariant();
 }
 
-QHash<int, QByteArray> ProductViewModel::roleNames() const
+QHash<int, QByteArray> ProductListModel::roleNames() const
 {
     QHash<int, QByteArray> names;
-    names[IdRole] = "productId";
-    names[NameRole] = "name";
-    names[DescriptionRole] = "description";
-    names[PictureRole] = "picture";
-    names[PriceRole]= "price";
+    names[ID_ROLE] = "productId";
+    names[NAME_ROLE] = "name";
+    names[DESCRIPTION_ROLE] = "description";
+    names[PICTURE_ROLE] = "picture";
+    names[PRICE_ROLE]= "price";
     return names;
 }
 
-ProductViewModelCallback *ProductViewModel::getCallback() const
+ProductViewModelCallback *ProductListModel::getCallback() const
 {
     return callback;
 }
 
-void ProductViewModel::setCallback(ProductViewModelCallback *value)
+void ProductListModel::setCallback(ProductViewModelCallback *value)
 {
     beginResetModel();
     callback = value;

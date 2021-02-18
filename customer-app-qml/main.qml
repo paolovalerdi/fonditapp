@@ -13,9 +13,9 @@ ApplicationWindow {
     width: 900
     height: 600
     visible: true
-    title: qsTr("Cliente")
+    title: "Cliente"
     property int idTable: -1
-
+/*
     Drawer {
         id: drawer
         width: window.width * 0.25
@@ -81,5 +81,5 @@ ApplicationWindow {
 
     TableSelection{
 
-    }
+    }*/
 }
