@@ -3,7 +3,6 @@
 #include <QQmlContext>
 
 #include "ProductListModel.h"
-#include "ProductViewModelCallback.h"
 #include "OrderProductListModel.h"
 #include "OrderViewModelCallback.h"
 #include "CategoryListModel.h"
@@ -19,18 +18,13 @@ int main(int argc, char *argv[])
 	QQmlApplicationEngine engine;
 
 	// Registramos las clases de C++ que sirven como modelos para QML
-	qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductViewModel");
-	qmlRegisterUncreatableType<ProductViewModelCallback>("Product", 1, 0, "ProductViewModelCallback", "Can't create instaces of this class");
-	//
+	qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductListModel");
+
 	qmlRegisterType<OrderProductListModel>("Order", 1, 0, "OrderViewModel");
 	qmlRegisterUncreatableType<OrderViewModelCallback>("Order", 1, 0, "OrderViewModelCallback", "Can't create instaces of this class");
 
 	qmlRegisterType<CategoryListModel>("Category", 1, 0, "CategoryViewModel");
 	qmlRegisterType<TablesModel>("Tables", 1, 0, "TablesModel");
-
-	// Registramos ProductViewModelCallback como una variable dentro del contexto de QML.
-	ProductViewModelCallback productViewModelCallback;
-	engine.rootContext()->setContextProperty("productViewModelCallback", &productViewModelCallback);
 
 	//
 	OrderViewModelCallback orderViewModelCallback;
