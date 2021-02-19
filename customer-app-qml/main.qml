@@ -8,14 +8,15 @@ import QtQuick.Controls 2.4
 import Category 1.0
 
 ApplicationWindow {
-
     id: window
+
+    property int idTable: -1
+
     width: 900
     height: 600
     visible: true
     title: "Cliente"
-    property int idTable: -1
-/*
+
     Drawer {
         id: drawer
         width: window.width * 0.25
@@ -57,12 +58,13 @@ ApplicationWindow {
                                    "status":orderViewModelCallback.getStatus()
                                })
             } else {
-                stackView.pop();
-                menuPage.toolbarTitleText = categoryTitle
-                productViewModelCallback.updateCategory(categoryId)
+                if (stackView.depth > 1) {
+                    stackView.pop();
+                }
+                menuPage.title = categoryTitle
+                menuPage.loadCategory(categoryId)
             }
             drawer.close()
-            closeDetailPanelTimer.start()
         }
     }
 
@@ -74,12 +76,14 @@ ApplicationWindow {
 
     MenuPage {
         id: menuPage
+
         transform: Translate {
             x: drawer.position * drawer.width
         }
+        onToolbarClicked: drawer.open()
     }
 
-    TableSelection{
+    /*TableSelection{
 
     }*/
 }

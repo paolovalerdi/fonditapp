@@ -5,40 +5,39 @@ import Product 1.0
 import Order 1.0
 
 Page {
-    id: menuPageRoot
+    id: root
 
-    property string toolbarTitleText: "Inicio"
+    signal toolbarClicked()
 
+    title: ""
     font.capitalization: Font.MixedCase
     anchors.fill: parent
 
     ItemDelegate {
         id: toolbar
 
-        height: menuPageRoot.height * .1
+        height: root.height * .1
+        text: root.title
         icon.source: "../icons/ic_drawer.svg"
-        text: qsTr(toolbarTitleText)
         font.pointSize: 18
         font.bold: true
 
-        onClicked: {
-            drawer.open()
-        }
+        onClicked: root.toolbarClicked()
     }
 
     GridView {
         id: menuGridView
 
         clip: true
+        cellWidth: (width / 3)
+        cellHeight: (height / 3)
         anchors {
             left: parent.left
             right: productDetailsPanel.left
             top: toolbar.bottom
             bottom: parent.bottom
         }
-        cellWidth: (width / 3)
-        cellHeight: (height / 3)
-        model: ProductViewModel { callback: productViewModelCallback }
+        model: ProductListModel { id: productListModel }
         delegate: ProductItemView {
             width: menuGridView.cellWidth
             height: menuGridView.cellHeight
@@ -55,15 +54,8 @@ Page {
                 }
             }
         }
-        ScrollIndicator.vertical: ScrollIndicator {}
-    }
 
-    Rectangle {
-        id: separator
-        width: 1
-        height: parent.height
-        anchors.right: productDetailsPanel.left
-        color: "#1f000000"
+        ScrollIndicator.vertical: ScrollIndicator {}
     }
 
     Rectangle {
@@ -90,7 +82,8 @@ Page {
         anchors.horizontalCenter: menuGridView.horizontalCenter
     }
 
-    function closeDetailPanel() {
+    function loadCategory(categoryId) {
+        productListModel.loadCategory(categoryId)
         productDetailsPanel.close()
     }
 }
