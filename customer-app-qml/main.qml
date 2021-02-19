@@ -83,6 +83,16 @@ ApplicationWindow {
         onToolbarClicked: drawer.open()
     }
 
+    Connections {
+        target: orderViewModelCallback
+        onOnAddProduct: {
+            console.log("Hello")
+        }
+        Component.onCompleted: {
+            console.log("Created connection")
+        }
+    }
+
     /*TableSelection{
 
     }*/

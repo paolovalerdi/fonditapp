@@ -2,16 +2,14 @@
 
 #include <QAbstractListModel>
 
-#include "ProductionDatabase.h"
-#include "ProductsDao.h"
-#include "OrderDao.h"
+#include "Product.h"
 #include "OrderProduct.h"
-#include "OrderViewModelCallback.h"
+#include "OrderMediator.h"
 
 class OrderProductListModel : public QAbstractListModel
 {
 		Q_OBJECT
-		Q_PROPERTY(OrderViewModelCallback *callback READ getCallback WRITE setCallback)
+		Q_PROPERTY(OrderMediator *orderMediator READ getOrderMediator WRITE setOrderMediator)
 
 	public:
 		enum {
@@ -27,15 +25,10 @@ class OrderProductListModel : public QAbstractListModel
 		int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 		QHash<int, QByteArray> roleNames() const override;
-
-		OrderViewModelCallback *getCallback() const;
-		void setCallback(OrderViewModelCallback *value);
+		OrderMediator* getOrderMediator() const;
+		void setOrderMediator(OrderMediator* value);
 
 	private:
-		int idOrder =-1;
-		QList<OrderProduct> orderProducts;
-		const OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
-		const ProductsDao productDao = ProductsDao(ProductionDatabase::getInstance());
-		OrderViewModelCallback *callback;
+		OrderMediator *orderMediator;
 };
 

@@ -1,19 +1,13 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Material 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
+
 import Order 1.0
 
 Rectangle {
     id: root
 
     property real progress: 0
-    property int amount: value
-
-    onAmountChanged: {
-        if (amount === 1) {
-            root.state = "collapsed"
-        }
-    }
 
     width: parent.width * 0.5
     height: parent.height * 0.9
@@ -182,7 +176,7 @@ Rectangle {
             right: root.right
             bottom: confirmButton.top
         }
-        model: OrderViewModel { callback: orderViewModelCallback }
+        model: OrderListModel { callback: orderViewModelCallback }
         delegate: OrderProductItemView{
             idProduct: model.idProduct
             name:model.name
@@ -192,7 +186,6 @@ Rectangle {
             image: model.picture
         }
     }
-
     Rectangle {
         id: confirmButton
         width: parent.width
@@ -217,4 +210,19 @@ Rectangle {
         }
     }
 
+
+    Connections {
+        target: orderMediator
+        onOrderCreated: root.collapse()
+    }
+
+    function expand() {
+        if (root.state === "collapsed") {
+            root.state = "expanded"
+        }
+    }
+
+    function collapse() {
+        root.state = "collapsed"
+    }
 }

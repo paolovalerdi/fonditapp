@@ -1,37 +1,38 @@
 #include "OrderProductListModel.h"
 
 OrderProductListModel::OrderProductListModel(QObject *parent)
-	: QAbstractListModel(parent),callback(nullptr)
+	: QAbstractListModel(parent), orderMediator(nullptr)
 {
 }
 
 int OrderProductListModel::rowCount(const QModelIndex &parent) const
 {
-	return parent.isValid() ? 0 : orderProducts.size();
+	return (parent.isValid() || !orderMediator) ? 0 : orderMediator->getOrderProducts().size();
 }
 
 QVariant OrderProductListModel::data(const QModelIndex &index, int role) const
 {
-	if (!index.isValid()) return QVariant();
+	if (!index.isValid() || !orderMediator)
+		return QVariant();
 
-	auto item = productDao.getProductById(orderProducts.at(index.row()).getIdProduct());
+	auto orderProduct = orderMediator->getOrderProducts().at(index.row());
+	auto product = orderMediator->asProduct(orderProduct);
 	switch (role) {
 		case ID_ROLE:
-			return QVariant(item.getId());
+			return QVariant(product.getId());
 		case NAME_ROLE:
-			return QVariant(item.getName());
+			return QVariant(product.getName());
 		case DESCRIPTION_ROLE:
-			return QVariant(item.getDescription());
+			return QVariant(product.getDescription());
 		case PICTURE_ROLE:
-			return QVariant("data:image/png;base64," + item.getPicture().toBase64());
+			return QVariant("data:image/png;base64," + product.getPicture().toBase64());
 		case PRICE_ROLE:
-			return QVariant(item.getPrice());
+			return QVariant(product.getPrice());
 		case QUANTITY_ROLE:
-			return QVariant(orderProducts.at(index.row()).getQuantity());
+			return QVariant(orderProduct.getQuantity());
 		default:
 			throw QString("OrderProductListModel: No such role");
 	}
-	return QVariant();
 }
 
 QHash<int, QByteArray> OrderProductListModel::roleNames() const
@@ -46,49 +47,25 @@ QHash<int, QByteArray> OrderProductListModel::roleNames() const
 	return names;
 }
 
-OrderViewModelCallback *OrderProductListModel::getCallback() const
+OrderMediator* OrderProductListModel::getOrderMediator() const
 {
-	return callback;
+	return orderMediator;
 }
 
-void OrderProductListModel::setCallback(OrderViewModelCallback *value)
+void OrderProductListModel::setOrderMediator(OrderMediator* value)
 {
+	orderMediator = value;
 	beginResetModel();
-	callback = value;
-	connect(callback, &OrderViewModelCallback::onAddProduct, this, [=](int idProduct,int quantity) {
+
+	connect(orderMediator, &OrderMediator::productsUpdated, this, [=] {
+		auto orderProducts = orderMediator->getOrderProducts();
 		beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
 		endRemoveRows();
-		orderProducts.append(OrderProduct(idProduct,quantity));
 		beginInsertRows(QModelIndex(),0, orderProducts.size()-1);
 		endInsertRows();
 	});
-	connect(callback, &OrderViewModelCallback::onCreatedOrder, this, [=](int idTable) {
-		beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
-		endRemoveRows();
-		orderDao.insertIntoOrder(orderProducts,callback->getIdCurrentId());
-		orderProducts.clear();
-	});
-	connect(callback, &OrderViewModelCallback::onLoadOrder, this, [=](int idOrder) {
-		qDebug()<<"cargando...";
-		beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
-		endRemoveRows();
-		orderProducts.clear();
-		orderProducts = orderDao.getProductsByOrderId(idOrder);
-		beginInsertRows(QModelIndex(),0, orderProducts.size()-1);
-		endInsertRows();
-	});
-	connect(callback, &OrderViewModelCallback::onUpdateProductQuantity, this, [=](int idProduct,int quantity) {
 
-		int i=0;
-		while (true){
-			if(orderProducts.at(i).getIdProduct() == idProduct)
-			{
-				orderProducts.at(i).setQuantity(quantity);
-				break;
-			}
-			i++;
-		}
-
+	connect(orderMediator, &OrderMediator::productUpdated, this, [=](int index) {
+		emit dataChanged(this->index(index), this->index(index));
 	});
-
 }
