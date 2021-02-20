@@ -4,7 +4,7 @@
         <file>qtquickcontrols2.conf</file>
         <file>ProductItemView.qml</file>
         <file>MenuPage.qml</file>
-        <file>OrderProductItemView.qml</file>
+        <file>OrderProduct.qml</file>
         <file>../icons/ic_shoppingcar.svg</file>
         <file>../icons/ic_add.svg</file>
         <file>../icons/ic_delete.svg</file>
