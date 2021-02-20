@@ -16,7 +16,7 @@ SOURCES += \
         OrderMediator.cpp \
         OrderProductListModel.cpp \
         ProductListModel.cpp \
-        TablesModel.cpp \
+        TableListModel.cpp \
         main.cpp
 
 HEADERS += \
@@ -34,7 +34,7 @@ HEADERS += \
     OrderMediator.h \
     OrderProductListModel.h \
     ProductListModel.h \
-    TablesModel.h
+    TableListModel.h
 
 RESOURCES += qml.qrc
 

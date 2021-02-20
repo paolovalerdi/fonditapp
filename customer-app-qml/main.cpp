@@ -4,9 +4,9 @@
 
 #include "ProductListModel.h"
 #include "OrderProductListModel.h"
-#include "OrderMediator.h"
 #include "CategoryListModel.h"
-#include "TablesModel.h"
+#include "TableListModel.h"
+#include "OrderMediator.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,9 +20,7 @@ int main(int argc, char *argv[])
 	qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductListModel");
 	qmlRegisterType<OrderProductListModel>("Order", 1, 0, "OrderProductListModel");
 	qmlRegisterType<CategoryListModel>("Category", 1, 0, "CategoryViewModel");
-	qmlRegisterType<TablesModel>("Tables", 1, 0, "TablesModel");
-
-	qmlRegisterUncreatableType<OrderMediator>("Order", 1, 0, "OrderMediator", "Can't create instaces of this class");
+	qmlRegisterType<TableListModel>("Table", 1, 0, "TableListModel");
 
 	OrderMediator orderMediator;
 	engine.rootContext()->setContextProperty("orderMediator", &orderMediator);
