@@ -1,5 +1,5 @@
 QT -= gui
-QT += sql
+QT += sql websockets
 
 CONFIG += c++11
 CONFIG += console
@@ -7,6 +7,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         Category.cpp \
+        DatabaseSocket.cpp \
         Order.cpp \
         OrderDao.cpp \
         OrderProduct.cpp \
@@ -20,6 +21,8 @@ SOURCES += \
 HEADERS += \
     AbsDatabase.h \
     Category.h \
+    DatabaseObserver.h \
+    DatabaseSocket.h \
     Order.h \
     OrderDao.h \
     OrderProduct.h \
