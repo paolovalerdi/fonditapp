@@ -7,6 +7,7 @@
 #include "Product.h"
 #include "OrderDao.h"
 #include "ProductsDao.h"
+#include "TablesDao.h"
 #include "ProductionDatabase.h"
 
 class OrderMediator : public QObject
@@ -43,6 +44,7 @@ class OrderMediator : public QObject
 		QList<OrderProduct> orderProducts;
 		OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
 		ProductsDao productsDao = ProductsDao(ProductionDatabase::getInstance());
+		TablesDao tableDao = TablesDao(ProductionDatabase::getInstance());
 
 		void updateTotal();
 };

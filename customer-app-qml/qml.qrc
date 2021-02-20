@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>Main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>ProductItemView.qml</file>
         <file>MenuPage.qml</file>
@@ -10,7 +10,7 @@
         <file>../icons/ic_delete.svg</file>
         <file>../icons/ic_remove.svg</file>
         <file>../icons/ic_receipt.svg</file>
-        <file>OrderStatusView.qml</file>
+        <file>OrderStatusPage.qml</file>
         <file>ProgressPie.qml</file>
         <file>../icons/ic_bebidas.svg</file>
         <file>../icons/ic_entradas.svg</file>

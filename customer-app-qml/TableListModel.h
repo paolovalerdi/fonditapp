@@ -10,8 +10,6 @@ class TableListModel : public QAbstractListModel
 {
 		Q_OBJECT
 
-	public slots:
-		void updateTable(int idTable);
 	public:
 		enum {
 			ID_ROLE,

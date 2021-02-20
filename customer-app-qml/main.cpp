@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	OrderMediator orderMediator;
 	engine.rootContext()->setContextProperty("orderMediator", &orderMediator);
 
-	const QUrl url(QStringLiteral("qrc:/main.qml"));
+	const QUrl url(QStringLiteral("qrc:/Main.qml"));
 	QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
 									 &app, [url](QObject *obj, const QUrl &objUrl) {
 		if (!obj && url == objUrl)

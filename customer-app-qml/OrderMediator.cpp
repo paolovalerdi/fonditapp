@@ -24,7 +24,7 @@ void OrderMediator::linkTable(int idTable)
 {
 	if (idTable == -1) {
 		this->idTable = idTable;
-		// TODO:
+		tableDao.updateOcupied(this->idTable, true);
 	}
 }
 
