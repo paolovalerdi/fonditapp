@@ -31,7 +31,7 @@ class OrderMediator : public QObject
 		void linkTable(int idTable);
 		void createOrder();
 		void addProduct(int idProduct,int quantity);
-		void updateProductQuantity(int index, int quantity);
+		void updateProductQuantity(int idProduct, int quantity);
 		void removeProduct(); // TODO
 		void replay();
 

@@ -39,22 +39,33 @@ void OrderMediator::createOrder()
 
 void OrderMediator::addProduct(int idProduct, int quantity)
 {
-	// TODO: The source of truth should be the db not an in-memory list
-	if (idOrder != -1) {
-		orderProducts.append(OrderProduct(idProduct, quantity, idOrder));
+	if (orderProducts.contains(OrderProduct(idProduct))) {
+		auto original = orderProducts.at(orderProducts.indexOf(idProduct));
+		updateProductQuantity(idProduct, original.getQuantity() + quantity);
+	} else {
+		orderProducts.append(OrderProduct(idProduct, quantity));
 		emit productsUpdated();
 	}
 }
 
-void OrderMediator::updateProductQuantity(int index, int quantity)
+void OrderMediator::updateProductQuantity(int idProduct, int quantity)
 {
-	if (idOrder != -1) {
-		auto original = orderProducts.at(index);
-		orderProducts.replace(index, OrderProduct(original.getIdProduct(),
-																							quantity,
-																							original.getIdOrder()));
-		emit productUpdated(index);
-	}
+	auto index = orderProducts.indexOf(OrderProduct(idProduct));
+	auto original = orderProducts.at(index);
+	orderProducts.replace(index, OrderProduct(original.getIdProduct(),
+																						quantity,
+																						original.getIdOrder()));
+	emit productUpdated(index);
+}
+
+void OrderMediator::removeProduct()
+{
+
+}
+
+void OrderMediator::replay()
+{
+
 }
 
 void OrderMediator::updateTotal()
