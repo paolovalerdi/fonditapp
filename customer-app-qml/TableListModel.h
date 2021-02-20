@@ -1,29 +1,29 @@
-#ifndef TABLESMODEL_H
-#define TABLESMODEL_H
+#pragma once
 
 #include <QAbstractListModel>
-#include "ProductionDatabase.h"
+
 #include "Tables.h"
+#include "ProductionDatabase.h"
 #include "TablesDao.h"
 
-class TablesModel : public QAbstractListModel
+class TableListModel : public QAbstractListModel
 {
-    Q_OBJECT
-public slots:
-    void updateTable(int idTable);
-public:
-    explicit TablesModel(QObject *parent = nullptr);
-    enum {idRole,
-          ocupiedRole
-         };
-    // Basic functionality:
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override; 
-    QHash<int, QByteArray> roleNames() const override;
+		Q_OBJECT
 
-private:
-    TablesDao tablesDao = TablesDao(ProductionDatabase::getInstance());
-    QList<Tables> listTables = tablesDao.getAllTables();
+	public slots:
+		void updateTable(int idTable);
+	public:
+		enum {
+			ID_ROLE,
+			OCUPIED_ROLE
+		};
+
+		explicit TableListModel(QObject *parent = nullptr);
+		int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+		QHash<int, QByteArray> roleNames() const override;
+
+	private:
+		QList<Tables> tables;
+		TablesDao tablesDao = TablesDao(ProductionDatabase::getInstance());
 };
-
-#endif // TABLESMODEL_H

@@ -1,10 +1,14 @@
-import QtQuick 2.0
-import Tables 1.0
+import QtQuick 2.15
+
+import Table 1.0
+
 Rectangle {
     id: root
+
     width: parent.width
     height: parent.height
     color: "#FFF"
+
     state: "open"
     states: [
         State {
@@ -18,7 +22,7 @@ Rectangle {
             name: "close"
             PropertyChanges {
                 target: root
-                y:-parent.height
+                y: -parent.height
             }
         }
     ]
@@ -40,8 +44,10 @@ Rectangle {
             }
         }
     ]
+
     Text {
         id: title
+
         text: "Selecciona tu mesa"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -49,28 +55,28 @@ Rectangle {
         font.bold: true
         font.pointSize: 18
     }
+
     GridView{
         id: gridView
-        anchors{
+
+        cellWidth: width / 3
+        cellHeight: height / 3
+        anchors {
             left: parent.left
             leftMargin: 26
             right: parent.right
             top: title.bottom
-            bottom: parent.bottom
             topMargin: 24
+            bottom: parent.bottom
         }
-        cellWidth: width/3
-        cellHeight: height/3
+        model: TableListModel{ id: tableListModel }
 
-        model: TablesModel{
-        id: tablesModel
-        }
-
-        delegate: Rectangle{
+        delegate: Rectangle {
             width: gridView.cellWidth * 0.9
             height: gridView.cellHeight * 0.9
             radius: 6
             color: "#0FBF5C"
+
             Text {
                 text: model.idTable
                 anchors.centerIn: parent
@@ -81,7 +87,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     window.idTable = model.idTable
-                    tablesModel.updateTable(model.idTable)
+                    tableListModel.updateTable(model.idTable)
                     root.state = "close"
                 }
             }
