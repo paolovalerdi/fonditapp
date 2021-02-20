@@ -1,22 +1,22 @@
 #include "OrderProductListModel.h"
 
 OrderProductListModel::OrderProductListModel(QObject *parent)
-	: QAbstractListModel(parent), orderMediator(nullptr)
+	: QAbstractListModel(parent), mediator(nullptr)
 {
 }
 
 int OrderProductListModel::rowCount(const QModelIndex &parent) const
 {
-	return (parent.isValid() || !orderMediator) ? 0 : orderMediator->getOrderProducts().size();
+	return (parent.isValid() || !mediator) ? 0 : mediator->getOrderProducts().size();
 }
 
 QVariant OrderProductListModel::data(const QModelIndex &index, int role) const
 {
-	if (!index.isValid() || !orderMediator)
+	if (!index.isValid() || !mediator)
 		return QVariant();
 
-	auto orderProduct = orderMediator->getOrderProducts().at(index.row());
-	auto product = orderMediator->asProduct(orderProduct);
+	auto orderProduct = mediator->getOrderProducts().at(index.row());
+	auto product = mediator->asProduct(orderProduct);
 	switch (role) {
 		case ID_ROLE:
 			return QVariant(product.getId());
@@ -27,7 +27,7 @@ QVariant OrderProductListModel::data(const QModelIndex &index, int role) const
 		case PICTURE_ROLE:
 			return QVariant("data:image/png;base64," + product.getPicture().toBase64());
 		case PRICE_ROLE:
-			return QVariant(product.getPrice());
+			return QVariant(product.getPrice() * orderProduct.getQuantity());
 		case QUANTITY_ROLE:
 			return QVariant(orderProduct.getQuantity());
 		default:
@@ -47,25 +47,28 @@ QHash<int, QByteArray> OrderProductListModel::roleNames() const
 	return names;
 }
 
-OrderMediator* OrderProductListModel::getOrderMediator() const
+OrderMediator* OrderProductListModel::getMediator() const
 {
-	return orderMediator;
+	return mediator;
 }
 
-void OrderProductListModel::setOrderMediator(OrderMediator* value)
+void OrderProductListModel::setMediator(OrderMediator* value)
 {
-	orderMediator = value;
+	mediator = value;
 	beginResetModel();
 
-	connect(orderMediator, &OrderMediator::productsUpdated, this, [=] {
-		auto orderProducts = orderMediator->getOrderProducts();
+	connect(mediator, &OrderMediator::productsUpdated, this, [=] {
+		auto orderProducts = mediator->getOrderProducts();
 		beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
 		endRemoveRows();
 		beginInsertRows(QModelIndex(),0, orderProducts.size()-1);
 		endInsertRows();
 	});
 
-	connect(orderMediator, &OrderMediator::productUpdated, this, [=](int index) {
-		emit dataChanged(this->index(index), this->index(index));
+	connect(mediator, &OrderMediator::productUpdated, this, [=](int index) {
+		beginRemoveRows(QModelIndex(), index, index);
+		endRemoveRows();
+		beginInsertRows(QModelIndex(), index, index);
+		endInsertRows();
 	});
 }

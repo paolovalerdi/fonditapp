@@ -9,7 +9,7 @@
 class OrderProductListModel : public QAbstractListModel
 {
 		Q_OBJECT
-		Q_PROPERTY(OrderMediator *orderMediator READ getOrderMediator WRITE setOrderMediator)
+		Q_PROPERTY(OrderMediator *mediator READ getMediator WRITE setMediator)
 
 	public:
 		enum {
@@ -25,10 +25,10 @@ class OrderProductListModel : public QAbstractListModel
 		int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 		QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 		QHash<int, QByteArray> roleNames() const override;
-		OrderMediator* getOrderMediator() const;
-		void setOrderMediator(OrderMediator* value);
+		OrderMediator* getMediator() const;
+		void setMediator(OrderMediator* value);
 
 	private:
-		OrderMediator *orderMediator;
+		OrderMediator *mediator;
 };
 
