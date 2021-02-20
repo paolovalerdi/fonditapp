@@ -71,12 +71,9 @@ Page {
 
     ProductDetailView {
         id: productDetailsPanel
-        onAddProduct: {
-            orderListView.amount++
-        }
     }
 
-    OrderListView {
+    OrderPanel {
         id: orderListView
         width: menuGridView.width * 0.6
         anchors.horizontalCenter: menuGridView.horizontalCenter
