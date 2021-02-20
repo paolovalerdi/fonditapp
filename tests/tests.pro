@@ -1,4 +1,4 @@
-QT += core sql
+QT += core sql websockets
 QT -= gui
 
 TARGET = DatabaseUnitTests

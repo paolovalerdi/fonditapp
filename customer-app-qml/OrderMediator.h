@@ -2,6 +2,8 @@
 
 #include <QObject>
 #include <QList>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include "OrderProduct.h"
 #include "Product.h"
@@ -9,8 +11,10 @@
 #include "ProductsDao.h"
 #include "TablesDao.h"
 #include "ProductionDatabase.h"
+#include "DatabaseObserver.h"
+#include "DatabaseSocket.h"
 
-class OrderMediator : public QObject
+class OrderMediator : public QObject, public DatabaseObserver
 {
 		Q_OBJECT
 		Q_PROPERTY(double total READ getTotal)
@@ -20,6 +24,7 @@ class OrderMediator : public QObject
 		double getTotal();
 		Product asProduct(OrderProduct orderProduct);
 		QList<OrderProduct> getOrderProducts() const;
+		void onEventRecieved(QJsonObject event) override;
 
 	signals:
 		void orderCreated();

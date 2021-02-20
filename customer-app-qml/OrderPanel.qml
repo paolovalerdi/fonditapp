@@ -220,9 +220,9 @@ Rectangle {
             id: confirmMouseArea
 
             hoverEnabled: true
-            anchors.fill: confirmMouseArea
+            anchors.fill: confirmButton
 
-            onClicked: console.log("Cofirmar orden")
+            onClicked: orderMediator.createOrder()
         }
     }
 

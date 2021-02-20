@@ -1,8 +1,9 @@
 #include "OrderMediator.h"
 #include <QDebug>
+
 OrderMediator::OrderMediator(QObject *parent) : QObject(parent)
 {
-
+	DatabaseSocket::getInstance()->addObserver(this);
 }
 
 double OrderMediator::getTotal()
@@ -20,9 +21,13 @@ QList<OrderProduct> OrderMediator::getOrderProducts() const
 	return orderProducts;
 }
 
+void OrderMediator::onEventRecieved(QJsonObject event)
+{
+}
+
 void OrderMediator::linkTable(int idTable)
 {
-	if (idTable == -1) {
+	if (this->idTable == -1) {
 		this->idTable = idTable;
 		tableDao.updateOcupied(this->idTable, true);
 	}
@@ -31,8 +36,12 @@ void OrderMediator::linkTable(int idTable)
 void OrderMediator::createOrder()
 {
 	if (idOrder == -1 && idTable != -1) {
-		idOrder = orderDao.createOrder(this->idTable);
-		// TODO: Emit to server
+		idOrder = orderDao.createOrder(idTable);
+		DatabaseSocket::getInstance()->sendEvent(QJsonObject {
+																							 {"target", "waiter"},
+																							 {"event", "new_order"},
+																							 {"orderId", idOrder}
+																						 });
 		emit orderCreated();
 	}
 }

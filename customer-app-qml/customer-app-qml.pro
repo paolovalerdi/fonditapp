@@ -1,9 +1,10 @@
-QT += quick sql
+QT += quick sql websockets
 
 CONFIG += c++11
 
 SOURCES += \
         ../data/Category.cpp \
+        ../data/DatabaseSocket.cpp \
         ../data/Order.cpp \
         ../data/OrderDao.cpp \
         ../data/OrderProduct.cpp \
@@ -22,6 +23,8 @@ SOURCES += \
 HEADERS += \
     ../data/AbsDatabase.h \
     ../data/Category.h \
+    ../data/DatabaseObserver.h \
+    ../data/DatabaseSocket.h \
     ../data/Order.h \
     ../data/OrderDao.h \
     ../data/OrderProduct.h \

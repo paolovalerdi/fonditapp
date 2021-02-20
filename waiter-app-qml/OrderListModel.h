@@ -7,8 +7,10 @@
 #include "ProductsDao.h"
 #include "OrderProduct.h"
 #include "WaiterBoardMediator.h"
+#include "DatabaseSocket.h"
+#include "DatabaseObserver.h"
 
-class OrderListModel : public QAbstractListModel
+class OrderListModel : public QAbstractListModel, public DatabaseObserver
 {
     Q_OBJECT
     Q_PROPERTY(int status READ getStatus WRITE setStatus)
@@ -34,7 +36,8 @@ public:
     int getStatus() const;
     void setStatus(int value);
     WaiterBoardMediator *getMediator() const;
-    void setMediator(WaiterBoardMediator *value);
+		void setMediator(WaiterBoardMediator *value);
+		void onEventRecieved(QJsonObject event) override;
 
 private:
     int status; // The particular order-status-id this list is linked to
