@@ -1,16 +1,19 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.15
-
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Controls.impl 2.12
+import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.15
 import Order 1.0
 
 Rectangle {
     id: root
 
     property real progress: 0
+    property bool editable: true
 
-    width: parent.width * 0.5
+    width: parent.width * 0.45
     height: parent.height * 0.9
+    color: "#fff"
     anchors.horizontalCenter: parent.horizontalCenter
 
     state: "hidden"
@@ -29,10 +32,6 @@ Rectangle {
                 y: parent.height - expandButton.height
             }
             PropertyChanges {
-                target: root
-                color: "#0FBF5C"
-            }
-            PropertyChanges {
                 target: expandButton
                 opacity: 1
             }
@@ -45,7 +44,7 @@ Rectangle {
                 progress: 0
             }
             PropertyChanges {
-                target: orderListView
+                target: list
                 opacity: 0
             }
         },
@@ -54,10 +53,6 @@ Rectangle {
             PropertyChanges {
                 target: root
                 y: parent.height * 0.1
-            }
-            PropertyChanges {
-                target: root
-                color: "white"
             }
             PropertyChanges {
                 target: expandButton
@@ -72,7 +67,7 @@ Rectangle {
                 progress: 1
             }
             PropertyChanges {
-                target: orderListView
+                target: list
                 opacity: 1
             }
         }
@@ -82,10 +77,6 @@ Rectangle {
             from: "collapsed"
             to: "expanded"
 
-            ColorAnimation {
-                easing.type: Easing.OutQuart;
-                duration: 350
-            }
             NumberAnimation {
                 properties: "y";
                 easing.type: Easing.OutQuart;
@@ -106,10 +97,6 @@ Rectangle {
             from: "expanded"
             to: "collapsed"
 
-            ColorAnimation {
-                easing.type: Easing.OutQuart;
-                duration: 350
-            }
             NumberAnimation {
                 properties: "y";
                 easing.type: Easing.OutQuart;
@@ -148,50 +135,72 @@ Rectangle {
         }
     ]
 
-    ItemDelegate {
+    Rectangle {
         id: expandButton
-        icon.source: "../icons/ic_receipt.svg"
-        icon.color: "white"
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: "Ver mi orden"
-        Material.foreground:"#FFF"
-        onClicked: root.state = "expanded"
+
+        width: root.width
+        height: 48
+        clip: true
+        color: "#0FBF5C"
+
+        IconLabel {
+            text: "Ver mi orden"
+            color: "#fff"
+            spacing: 16
+            font.pointSize: 12
+            icon.color: "#fff"
+            icon.source: "../icons/ic_receipt.svg"
+            anchors.centerIn: expandButton
+        }
+        Ripple {
+            id: expandRipple
+
+            color: "#1A000000"
+            pressed: expandMouseArea.pressed
+            active: expandMouseArea.containsMouse
+            anchors.fill: expandButton
+        }
+
+        MouseArea {
+            id: expandMouseArea
+
+            hoverEnabled: true
+            anchors.fill: expandButton
+
+            onClicked: root.expand()
+        }
     }
-
-
     ToolButton {
         id: collapseButton
+
         icon.source: "../icons/ic_close.svg"
-        onClicked: root.state = "collapsed"
         anchors.left: root.left
         anchors.top: root.top
+
+        onClicked: root.collapse()
     }
     ListView{
-        id: orderListView
+        id: list
 
         clip: true
+        spacing: 16
+        model: OrderProductListModel { mediator: orderMediator }
+        delegate: OrderProduct { width: list.width; product: model }
         anchors {
             left: root.left
             top: collapseButton.bottom
             right: root.right
             bottom: confirmButton.top
         }
-        model: OrderListModel { callback: orderViewModelCallback }
-        delegate: OrderProductItemView{
-            idProduct: model.idProduct
-            name:model.name
-            description: model.description
-            price: model.price
-            quantity: model.quantity
-            image: model.picture
-        }
     }
     Rectangle {
         id: confirmButton
+
         width: parent.width
         height: expandButton.height
         color: "#0FBF5C"
         anchors.bottom: root.bottom
+
         Text {
             text: qsTr("Confirmar orden")
             color: "white"
@@ -199,21 +208,33 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
         }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                root.state = "collapsed"
-              //  root.state = "hidden"
+        Ripple {
+            id: confirmRipple
 
-                orderViewModelCallback.createdOrder(window.idTable)
-            }
+            color: "#1A000000"
+            pressed: confirmMouseArea.pressed
+            active: confirmMouseArea.containsMouse
+            anchors.fill: confirmMouseArea
+        }
+        MouseArea {
+            id: confirmMouseArea
+
+            hoverEnabled: true
+            anchors.fill: confirmMouseArea
+
+            onClicked: console.log("Cofirmar orden")
         }
     }
 
-
     Connections {
         target: orderMediator
-        onOrderCreated: root.collapse()
+        onProductsUpdated: {
+            collapse();
+        }
+
+        function onOrderCreated() {
+            collapse();
+        }
     }
 
     function expand() {
