@@ -7,6 +7,7 @@
 #include "CategoryListModel.h"
 #include "TableListModel.h"
 #include "OrderMediator.h"
+#include "DatabaseSocket.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +17,7 @@ int main(int argc, char *argv[])
 
 	QGuiApplication app(argc, argv);
 	QQmlApplicationEngine engine;
+	DatabaseSocket::getInstance();
 
 	qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductListModel");
 	qmlRegisterType<OrderProductListModel>("Order", 1, 0, "OrderProductListModel");

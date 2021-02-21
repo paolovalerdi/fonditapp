@@ -50,11 +50,7 @@ ApplicationWindow {
 
         function updateCategory(categoryId, categoryTitle) {
             if (categoryId === -2) {
-                stackView.push(Qt.createComponent("OrderStatusView.qml"), {
-                                   "orderId":orderViewModelCallback.getIdCurrentId(),
-                                   "amount":orderViewModelCallback.getTotal(),
-                                   "status":orderViewModelCallback.getStatus()
-                               })
+                stackView.push(Qt.createComponent("OrderStatusPage.qml"))
             } else {
                 if (stackView.depth > 1) {
                     stackView.pop();

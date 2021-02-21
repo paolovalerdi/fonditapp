@@ -99,8 +99,9 @@ Rectangle {
 
             width: gridView.cellWidth * 0.9
             height: gridView.cellHeight * 0.9
+            opacity: model.ocupiedTable ? 0.85 : 1
             radius: 6
-            color: "#0FBF5C"
+            color: model.ocupiedTable ? "red" : "#0FBF5C"
 
             Text {
                 text: model.idTable
@@ -114,8 +115,8 @@ Rectangle {
                 width: table.width
                 height: table.height
                 color: "#1A000000"
-                pressed: mouseArea.pressed
-                active: mouseArea.containsMouse
+                pressed: mouseArea.pressed && !model.ocupiedTable
+                active: mouseArea.containsMouse && !model.ocupiedTable
                 anchors.fill: table
                 layer.enabled: true
                 layer.effect: OpacityMask {
@@ -130,6 +131,8 @@ Rectangle {
             MouseArea{
                 id: mouseArea
                 anchors.fill: parent
+                hoverEnabled: true
+                enabled: !model.ocupiedTable
 
                 onClicked: {
                     orderMediator.linkTable(model.idTable)

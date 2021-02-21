@@ -35,6 +35,14 @@ Rectangle {
         }
     ]
 
+    MouseArea {
+        id: rootMouseArea
+        anchors.fill: parent
+
+        drag.target: root
+        drag.onActiveChanged: root.Drag.drop();
+    }
+
     Column {
         id: column
 
@@ -54,17 +62,17 @@ Rectangle {
                 layer.enabled: true
                 layer.effect: ColorOverlay { color: foregroundColor }
             }
-                Image {
-                    id: notification_icon
-                    anchors.right: parent.right
-                    source: "../icons/ic_notification.svg"
-                    sourceSize.width: 24
-                    sourceSize.height: 24
-                    layer.enabled: true
-                    layer.effect: ColorOverlay { color: foregroundColor }
-                    visible: root.order.callWaiter
-                      }
+            Image {
+                id: notification_icon
+                anchors.right: parent.right
+                source: "../icons/ic_notification.svg"
+                sourceSize.width: 24
+                sourceSize.height: 24
+                layer.enabled: true
+                layer.effect: ColorOverlay { color: foregroundColor }
+                visible: root.order.callWaiter
             }
+        }
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
@@ -85,9 +93,6 @@ Rectangle {
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             }
         }
-
-
-
         Text {
             text: "$" + root.order.total
             color: foregroundColor
@@ -109,7 +114,7 @@ Rectangle {
             }
 
             Text {
-                text: "Avanzar"
+                text: order.idStatus === 5 ? "Cerrar orden" : "Detalles"
                 color: foregroundColor
                 anchors.centerIn: parent
             }
@@ -133,16 +138,15 @@ Rectangle {
 
                 hoverEnabled: true
                 anchors.fill: parent
-                onClicked: console.log("OrderCard: button clicked")
+                onClicked: {
+                    if (root.order.idStatus === 5) {
+                        console.log("Moviendo a pagadas")
+                        waiterBoardMediator.closeOrder(root.order.idOrder)
+                    } else {
+                        // Mostrar detalles
+                    }
+                }
             }
         }
-    }
-
-    MouseArea {
-        id: rootMouseArea
-        anchors.fill: parent
-
-        drag.target: root
-        drag.onActiveChanged: root.Drag.drop();
     }
 }

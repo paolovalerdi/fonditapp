@@ -3,7 +3,6 @@
 #include <QObject>
 #include <QList>
 #include <QJsonObject>
-#include <QJsonDocument>
 
 #include "OrderProduct.h"
 #include "Product.h"
@@ -11,8 +10,8 @@
 #include "ProductsDao.h"
 #include "TablesDao.h"
 #include "ProductionDatabase.h"
-#include "DatabaseObserver.h"
 #include "DatabaseSocket.h"
+#include "DatabaseObserver.h"
 
 class OrderMediator : public QObject, public DatabaseObserver
 {

@@ -64,8 +64,11 @@ void OrderListModel::setMediator(WaiterBoardMediator *value)
 void OrderListModel::onEventRecieved(QJsonObject event)
 {
 	if (event["target"] == "waiter") {
-		qDebug() << "OrderListModel: Recieved event";
-		qDebug() << event;
+		if (event["key"] == "create_order") {
+			if (status == 3) {
+				update();
+			}
+		}
 	}
 }
 

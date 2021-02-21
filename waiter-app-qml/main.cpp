@@ -4,6 +4,7 @@
 
 #include "OrderListModel.h"
 #include "WaiterBoardMediator.h"
+#include "DatabaseSocket.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+		DatabaseSocket::getInstance();
 
     qmlRegisterType<OrderListModel>("Order", 1, 0, "OrderListModel");
     qmlRegisterUncreatableType<WaiterBoardMediator>("Order", 1, 0, "WaiterBoardMediator", "Can't create instaces of this class");

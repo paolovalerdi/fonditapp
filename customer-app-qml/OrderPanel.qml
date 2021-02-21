@@ -196,6 +196,7 @@ Rectangle {
     Rectangle {
         id: confirmButton
 
+        clip: true
         width: parent.width
         height: expandButton.height
         color: "#0FBF5C"
@@ -222,7 +223,10 @@ Rectangle {
             hoverEnabled: true
             anchors.fill: confirmButton
 
-            onClicked: orderMediator.createOrder()
+            onClicked: {
+                orderMediator.createOrder()
+                root.collapse()
+            }
         }
     }
 

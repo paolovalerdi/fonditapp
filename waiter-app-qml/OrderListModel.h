@@ -7,8 +7,8 @@
 #include "ProductsDao.h"
 #include "OrderProduct.h"
 #include "WaiterBoardMediator.h"
-#include "DatabaseSocket.h"
 #include "DatabaseObserver.h"
+#include "DatabaseSocket.h"
 
 class OrderListModel : public QAbstractListModel, public DatabaseObserver
 {

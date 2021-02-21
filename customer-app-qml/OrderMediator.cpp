@@ -23,6 +23,20 @@ QList<OrderProduct> OrderMediator::getOrderProducts() const
 
 void OrderMediator::onEventRecieved(QJsonObject event)
 {
+	if (event["target"] == "customer") {
+		if (event["key"] == "close_order") {
+			if (event["idOrder"] == idOrder) {
+				tableDao.updateOcupied(idTable, false);
+				idOrder = -1;
+				status = -1;
+				orderProducts.clear();
+				total = 0.0;
+				qDebug() << "Orden cerrada";
+				emit productsUpdated();
+				// TODO: Show survey
+			}
+		}
+	}
 }
 
 void OrderMediator::linkTable(int idTable)
@@ -37,11 +51,12 @@ void OrderMediator::createOrder()
 {
 	if (idOrder == -1 && idTable != -1) {
 		idOrder = orderDao.createOrder(idTable);
-		DatabaseSocket::getInstance()->sendEvent(QJsonObject {
-																							 {"target", "waiter"},
-																							 {"event", "new_order"},
-																							 {"orderId", idOrder}
-																						 });
+		QJsonObject createOrderEvent {
+			{"target", "waiter"},
+			{"key", "create_order"},
+			{"idOrder", idOrder}
+		};
+		DatabaseSocket::getInstance()->sendEvent(createOrderEvent);
 		emit orderCreated();
 	}
 }
