@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "ProductionDatabase.h"
-#include "../customer-app-qml/ProductViewModel.h"
+//#include "../customer-app-qml/ProductListModel.h"
 #include "ProductFormViewModel.h"
 
 int main(int argc, char *argv[])
@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     // Registramos las clases de C++ que sirven como modelos para QML
-    qmlRegisterType<ProductViewModel>("Product", 1, 0, "ProductViewModel");
+		//qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductViewModel");
     //qmlRegisterUncreatableType<ProductViewModelCallback>("Product", 1, 0, "ProductViewModelCallback", "Can't create instaces of this class");
 
     // Registramos ProductViewModelCallback como una variable dentro del contexto de QML.

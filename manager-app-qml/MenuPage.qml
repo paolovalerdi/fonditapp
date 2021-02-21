@@ -12,7 +12,7 @@ Page {
     id: root
     anchors.fill: parent
 
-    GridView {
+    /*GridView {
         id: gridView
         cellWidth: (width / 3)
         cellHeight: (height / 3)
@@ -59,5 +59,5 @@ Page {
 
     ProductEditPanel {
         id: productEditPanel
-    }
+    }*/
 }

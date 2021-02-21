@@ -148,7 +148,7 @@ Rectangle {
                         width: 60
                         height: width
                         icon.source: "../icons/ic_remove.svg"
-                        enabled: productDetailRoot.quantity >= 1
+                        enabled: productDetailRoot.quantity > 1
                         onClicked: productDetailRoot.quantity--
                     }
                     Text {
@@ -201,7 +201,7 @@ Rectangle {
 
 
                 onClicked: {
-                    orderViewModelCallback.addProduct(productDetailRoot.productModel.productId, quantity)
+                    orderMediator.addProduct(productDetailRoot.productModel.productId, quantity)
                     productDetailRoot.close()
                     productDetailRoot.addProduct()
                 }

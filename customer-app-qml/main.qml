@@ -8,13 +8,12 @@ import QtQuick.Controls 2.4
 import Category 1.0
 
 ApplicationWindow {
-
     id: window
+
     width: 900
     height: 600
     visible: true
-    title: qsTr("Cliente")
-    property int idTable: -1
+    title: "Cliente"
 
     Drawer {
         id: drawer
@@ -51,35 +50,30 @@ ApplicationWindow {
 
         function updateCategory(categoryId, categoryTitle) {
             if (categoryId === -2) {
-                stackView.push(Qt.createComponent("OrderStatusView.qml"), {
-                                   "orderId":orderViewModelCallback.getIdCurrentId(),
-                                   "amount":orderViewModelCallback.getTotal(),
-                                   "status":orderViewModelCallback.getStatus()
-                               })
+                stackView.push(Qt.createComponent("OrderStatusPage.qml"))
             } else {
-                stackView.pop();
-                menuPage.toolbarTitleText = categoryTitle
-                productViewModelCallback.updateCategory(categoryId)
+                if (stackView.depth > 1) {
+                    stackView.pop();
+                }
+                menuPage.title = categoryTitle
+                menuPage.loadCategory(categoryId)
             }
             drawer.close()
-            closeDetailPanelTimer.start()
         }
     }
-
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: menuPage
-    }
+        opacity: tableSelection.progress
 
-    MenuPage {
-        id: menuPage
-        transform: Translate {
-            x: drawer.position * drawer.width
+        initialItem: MenuPage {
+            id: menuPage
+
+            transform: Translate {
+                x: drawer.position * drawer.width
+            }
+            onToolbarClicked: drawer.open()
         }
     }
-
-    TableSelection{
-
-    }
+    TableSelection { id: tableSelection }
 }

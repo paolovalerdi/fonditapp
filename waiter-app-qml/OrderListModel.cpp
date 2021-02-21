@@ -4,6 +4,7 @@ OrderListModel::OrderListModel(QObject *parent):
     QAbstractListModel(parent), mediator(nullptr)
 {
     status = -1;
+		DatabaseSocket::getInstance()->addObserver(this);
 }
 
 int OrderListModel::rowCount(const QModelIndex &parent) const
@@ -57,7 +58,18 @@ void OrderListModel::setMediator(WaiterBoardMediator *value)
     connect(mediator,
             &WaiterBoardMediator::onBoardUpdated,
             this,
-            &OrderListModel::update);
+						&OrderListModel::update);
+}
+
+void OrderListModel::onEventRecieved(QJsonObject event)
+{
+	if (event["target"] == "waiter") {
+		if (event["key"] == "create_order") {
+			if (status == 3) {
+				update();
+			}
+		}
+	}
 }
 
 QHash<int, QByteArray> OrderListModel::roleNames() const

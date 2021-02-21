@@ -1,47 +1,33 @@
 #include "OrderProduct.h"
 
-OrderProduct::OrderProduct()
-{
-
-}
-
 OrderProduct::OrderProduct(int idProduct, int quantity, int idOrder)
 {
-    this->idProduct=idProduct;
-    this->quantity=quantity;
-    this->idOrder=idOrder;
-}
-
-OrderProduct::OrderProduct(int idProduct, int quantity)
-{
-    this->idProduct=idProduct;
-    this->quantity=quantity;
-    this->idOrder = -1;
+	this->idProduct = idProduct;
+	this->quantity = quantity;
+	this->idOrder = idOrder;
 }
 
 int OrderProduct::getIdProduct() const
 {
-    return idProduct;
+	return idProduct;
 }
 
 int OrderProduct::getQuantity() const
 {
-    return quantity;
+	return quantity;
 }
 
 int OrderProduct::getIdOrder() const
 {
-    return idOrder;
+	return idOrder;
 }
 
-void OrderProduct::setIdOrder(int value)
+bool OrderProduct::operator ==(const OrderProduct& other) const
 {
-    idOrder = value;
+	return idProduct == other.idProduct;
 }
 
-void OrderProduct::setQuantity(int value) const
+bool OrderProduct::operator !=(const OrderProduct& other) const
 {
-    quantity = value;
+	return idProduct != other.idProduct;
 }
-
-int OrderProduct::quantity = 0;

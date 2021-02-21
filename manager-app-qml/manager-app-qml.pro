@@ -1,14 +1,8 @@
-QT += quick sql
+QT += quick sql websockets
 
 CONFIG += c++11
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
 SOURCES += \
-        ../customer-app-qml/ProductViewModel.cpp \
-        ../customer-app-qml/ProductViewModelCallback.cpp \
         ../data/Category.cpp \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
@@ -35,8 +29,6 @@ INCLUDEPATH += \
     ../customer-app-qml
 
 HEADERS += \
-    ../customer-app-qml/ProductViewModel.h \
-    ../customer-app-qml/ProductViewModelCallback.h \
     ../data/AbsDatabase.h \
     ../data/Category.h \
     ../data/Product.h \

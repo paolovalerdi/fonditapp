@@ -1,23 +1,17 @@
-#ifndef ORDERPRODUCT_H
-#define ORDERPRODUCT_H
-
+#pragma once
 
 class OrderProduct
 {
-public:
-    OrderProduct();
-    OrderProduct(int idProduct, int quantity,int idOrder);
-    OrderProduct(int idProduct, int quantity);
-    int getIdProduct() const;
-    int getQuantity() const;
-    int getIdOrder() const;
-    void setIdOrder(int value);
-    void setQuantity(int value) const;
+	public:
+		OrderProduct(int idProduct = -1, int quantity = 1, int idOrder = -1);
+		int getIdProduct() const;
+		int getQuantity() const;
+		int getIdOrder() const;
+		bool operator ==(const OrderProduct& other) const;
+		bool operator !=(const OrderProduct& other) const;
 
-private:
-    int idProduct;
-    static int quantity;
-    int idOrder;
+	private:
+		int idProduct;
+		int quantity;
+		int idOrder;
 };
-
-#endif // ORDERPRODUCT_H
