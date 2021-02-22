@@ -32,24 +32,6 @@ Page{
         onClicked: drawer.open()
     }
 
-    Timer {
-        id: timer
-        interval: 1000
-        running: false
-        repeat: true
-        onTriggered: {
-
-            if(progress2.value<0.99) {
-                progress2.value = progress2.value + 0.10
-            }
-            else
-            {
-                timer.stop()
-            }
-
-        }
-    }
-
     RowLayout {
         anchors {
             left: parent.left
@@ -86,6 +68,7 @@ Page{
 
                 Text {
                     id: text1
+                    anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: true
                     font.pointSize: 12
                     text: "Estado de la orden: " + root.status
@@ -108,6 +91,12 @@ Page{
                     Component.onCompleted: {
                         timer.start()
                     }
+                }
+                Text {
+                    id: totaltext
+                    font.bold: true
+                    font.pointSize: 14
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
                 Button{
                     id: pago
@@ -154,4 +143,34 @@ Page{
             onClicked: dialog.close()
         }
     }
+
+    Connections{
+
+        target: orderMediator
+        function onStatusUpdated(){
+           text1.text=orderMediator.status
+            switch (orderMediator.status){
+
+            case 3:
+                text1.text="Pendiente"
+                progress2.value=0.33
+                break;
+             case 4:
+                 text1.text="En progreso"
+                 progress2.value=0.66
+                 break;
+             case 5:
+                 text1.text="Entregada"
+                 progress2.value=1
+                 break;
+            }
+        }
+        function onTotalUpdated(){
+
+            totaltext.text="$"+orderMediator.total
+        }
+
+    }
+
+    Component.onCompleted: orderMediator.replay()
 }

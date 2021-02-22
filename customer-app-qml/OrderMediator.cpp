@@ -36,6 +36,24 @@ void OrderMediator::onEventRecieved(QJsonObject event)
 				// TODO: Show survey
 			}
 		}
+        if(event["key"]== "update_order_status")
+        {
+            if (event["idOrder"] == idOrder) {
+
+                status=orderDao.getOrderById(idOrder).getId_status();
+                switch (status) {
+
+                case 3: progress=33;
+                        break;
+
+                case 4: progress=66;
+                        break;
+                case 5: progress=100;
+                        break;
+                }
+                emit statusUpdated();
+            }
+        }
 	}
 }
 
@@ -51,6 +69,7 @@ void OrderMediator::createOrder()
 {
 	if (idOrder == -1 && idTable != -1) {
 		idOrder = orderDao.createOrder(idTable);
+        orderDao.insertIntoOrder(orderProducts,idOrder);
 		QJsonObject createOrderEvent {
 			{"target", "waiter"},
 			{"key", "create_order"},
@@ -58,6 +77,8 @@ void OrderMediator::createOrder()
 		};
 		DatabaseSocket::getInstance()->sendEvent(createOrderEvent);
 		emit orderCreated();
+        status=3;
+        updateTotal();
 	}
 }
 
@@ -70,6 +91,8 @@ void OrderMediator::addProduct(int idProduct, int quantity)
 		orderProducts.append(OrderProduct(idProduct, quantity));
 		emit productsUpdated();
 	}
+
+    updateTotal();
 }
 
 void OrderMediator::updateProductQuantity(int idProduct, int quantity)
@@ -77,9 +100,10 @@ void OrderMediator::updateProductQuantity(int idProduct, int quantity)
 	auto index = orderProducts.indexOf(OrderProduct(idProduct));
 	auto original = orderProducts.at(index);
 	orderProducts.replace(index, OrderProduct(original.getIdProduct(),
-																						quantity,
+                                                                                        quantity,
 																						original.getIdOrder()));
 	emit productUpdated(index);
+    updateTotal();
 }
 
 void OrderMediator::removeProduct()
@@ -89,13 +113,19 @@ void OrderMediator::removeProduct()
 
 void OrderMediator::replay()
 {
+    emit statusUpdated();
+    emit totalUpdated();
+}
 
+int OrderMediator::getStatus() const
+{
+    return status;
 }
 
 void OrderMediator::updateTotal()
 {
-	total = 0;
-	for (auto orderProduct : qAsConst(orderProducts)) {
+    total = 0;
+    for (auto orderProduct : qAsConst(orderProducts)) {
 		auto product = asProduct(orderProduct);
 		total += (product.getPrice() * orderProduct.getQuantity());
 	}
