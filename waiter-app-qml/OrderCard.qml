@@ -143,10 +143,11 @@ Rectangle {
                         console.log("Moviendo a pagadas")
                         waiterBoardMediator.closeOrder(root.order.idOrder)
                     } else {
-                        // Mostrar detalles
+                        panel.open(root.order.idOrder)
                     }
                 }
             }
         }
     }
+
 }

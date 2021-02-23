@@ -67,7 +67,6 @@ Page{
 
             ListView{
                 id: orderListView
-
                 clip: true
                 anchors.fill: parent
                 model: OrderProductListModel { mediator: orderMediator }

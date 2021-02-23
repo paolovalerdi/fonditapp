@@ -71,4 +71,6 @@ void OrderProductListModel::setMediator(OrderMediator* value)
 		beginInsertRows(QModelIndex(), index, index);
 		endInsertRows();
 	});
+
+
 }

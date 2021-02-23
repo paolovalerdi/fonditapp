@@ -4,7 +4,7 @@ OrderListModel::OrderListModel(QObject *parent):
     QAbstractListModel(parent), mediator(nullptr)
 {
     status = -1;
-		DatabaseSocket::getInstance()->addObserver(this);
+    DatabaseSocket::getInstance()->addObserver(this);
 }
 
 int OrderListModel::rowCount(const QModelIndex &parent) const

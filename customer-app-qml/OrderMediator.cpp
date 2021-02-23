@@ -77,8 +77,8 @@ void OrderMediator::updateProductQuantity(int idProduct, int quantity)
 	auto index = orderProducts.indexOf(OrderProduct(idProduct));
 	auto original = orderProducts.at(index);
 	orderProducts.replace(index, OrderProduct(original.getIdProduct(),
-																						quantity,
-																						original.getIdOrder()));
+                                                             quantity,
+                                              original.getIdOrder()));
 	emit productUpdated(index);
 }
 
