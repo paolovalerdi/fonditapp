@@ -27,12 +27,14 @@ void OrderMediator::onEventRecieved(QJsonObject event)
 		if (event["key"] == "close_order") {
 			if (event["idOrder"] == idOrder) {
 				tableDao.updateOcupied(idTable, false);
+                orderDao.insertIntoBill(idOrder);
 				idOrder = -1;
 				status = -1;
 				orderProducts.clear();
 				total = 0.0;
 				qDebug() << "Orden cerrada";
 				emit productsUpdated();
+                emit orderClosed();
 				// TODO: Show survey
 			}
 		}

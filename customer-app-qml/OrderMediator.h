@@ -34,6 +34,7 @@ signals:
 		void productUpdated(int index);
 		void totalUpdated();
 		void statusUpdated();
+        void orderClosed();
 
 	public slots:
 		void linkTable(int idTable);
