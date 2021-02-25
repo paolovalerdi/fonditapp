@@ -19,7 +19,7 @@ int OrderDao::createOrder(int idTable) const
 
 void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
 {
-		auto orignialList = getProductsByOrderId(idOrder);
+    auto orignialList = getProductsByOrderId(idOrder);
     for(auto originalValue : orignialList)
     {
         for(int i=0; i< list.size();i++)
@@ -39,6 +39,8 @@ void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
                     .arg(value.getQuantity())
                     .arg(idOrder));
     }
+
+
 }
 
 QList<OrderProduct> OrderDao::getProductsByOrderId(int idOrder) const

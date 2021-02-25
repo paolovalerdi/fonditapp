@@ -116,7 +116,7 @@ void TestDatabase::InsertTables()
 
     database.exec(QString("INSERT INTO orders (id_order, id_table, id_status) VALUES")
                   .append("(1,1,3),")
-                  .append("(2,2,3);")
+                  .append("(2,2,5);")
                   );
 
 

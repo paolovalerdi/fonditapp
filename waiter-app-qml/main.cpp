@@ -5,6 +5,7 @@
 #include "OrderListModel.h"
 #include "WaiterBoardMediator.h"
 #include "DatabaseSocket.h"
+#include "WaiterOrderProductListModel.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,6 +17,8 @@ int main(int argc, char *argv[])
 		DatabaseSocket::getInstance();
 
     qmlRegisterType<OrderListModel>("Order", 1, 0, "OrderListModel");
+    qmlRegisterType<WaiterOrderProductListModel>("Order", 1, 0, "WaiterOrderProductListModel");
+
     qmlRegisterUncreatableType<WaiterBoardMediator>("Order", 1, 0, "WaiterBoardMediator", "Can't create instaces of this class");
 
     WaiterBoardMediator waiterBoardMediator;

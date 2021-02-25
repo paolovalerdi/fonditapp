@@ -10,7 +10,7 @@ class OrderProductListModel : public QAbstractListModel
 {
 		Q_OBJECT
 		Q_PROPERTY(OrderMediator *mediator READ getMediator WRITE setMediator)
-
+ public slots:
 	public:
 		enum {
 			ID_ROLE,

@@ -17,10 +17,11 @@ public slots:
     void updateOrderStatus(int orderId);
     int requestBill();
     void updateBoard();
-		void closeOrder(int orderId);
+    void closeOrder(int orderId);
 
 signals:
     void onBoardUpdated();
+    void onOrderSelected();
 
 private:
     OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());

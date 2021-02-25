@@ -26,7 +26,6 @@ TEST_CASE("Update request")
     orderDao.updateRequest(testOrder2.getId_order());
     testOrder2 = orderDao.getOrderById(1);
     qDebug()<<QString::number(testOrder2.getCall_waiter());
-
     REQUIRE(testOrder2.getCall_waiter()==1);
 }
 

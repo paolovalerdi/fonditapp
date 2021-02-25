@@ -4,12 +4,21 @@ import QtQuick.Layouts 1.15
 
 import Order 1.0
 
+import QtGraphicalEffects 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
+import QtQuick 2.2
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.0
+
 ApplicationWindow {
     id: window
     width: 900
     height: 600
     visible: true
     title: qsTr("Mesero")
+
 
 
     Item {
@@ -47,6 +56,13 @@ ApplicationWindow {
             }
         }
     }
-
-
+    Rectangle{
+        id:rect
+        anchors.fill: parent
+        visible: false
+        color: "#80000000"
+    }
+    OrderDetailView{
+        id: panel
+    }
 }

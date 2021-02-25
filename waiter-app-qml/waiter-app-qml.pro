@@ -17,12 +17,13 @@ SOURCES += \
         ../data/ProductsDao.cpp \
         OrderListModel.cpp \
         WaiterBoardMediator.cpp \
+        WaiterOrderProductListModel.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH = ../customer-app-qml/OrderProduct.qml
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -47,4 +48,7 @@ HEADERS += \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
     OrderListModel.h \
-    WaiterBoardMediator.h
+    WaiterBoardMediator.h \
+    WaiterOrderProductListModel.h
+
+DISTFILES +=

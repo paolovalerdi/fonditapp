@@ -9,5 +9,9 @@
         <file>WaiterOrderList.qml</file>
         <file>../icons/ic_cooking.svg</file>
         <file>../icons/ic_notification.svg</file>
+        <file>OrderDetailView.qml</file>
+        <file>../customer-app-qml/OrderProduct.qml</file>
+        <file>OrderProduct.qml</file>
+        <file>../icons/ic_close.svg</file>
     </qresource>
 </RCC>

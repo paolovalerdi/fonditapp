@@ -16,7 +16,8 @@
 class OrderMediator : public QObject, public DatabaseObserver
 {
 		Q_OBJECT
-		Q_PROPERTY(double total READ getTotal)
+        Q_PROPERTY(double total READ getTotal)
+        Q_PROPERTY(int status READ getStatus)
 
 	public:
 		explicit OrderMediator(QObject *parent = nullptr);
@@ -25,12 +26,15 @@ class OrderMediator : public QObject, public DatabaseObserver
 		QList<OrderProduct> getOrderProducts() const;
 		void onEventRecieved(QJsonObject event) override;
 
-	signals:
-		void orderCreated();
+        int getStatus() const;
+
+signals:
+        void orderCreated();
 		void productsUpdated();
 		void productUpdated(int index);
 		void totalUpdated();
 		void statusUpdated();
+        void orderClosed();
 
 	public slots:
 		void linkTable(int idTable);
@@ -49,6 +53,7 @@ class OrderMediator : public QObject, public DatabaseObserver
 		OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
 		ProductsDao productsDao = ProductsDao(ProductionDatabase::getInstance());
 		TablesDao tableDao = TablesDao(ProductionDatabase::getInstance());
+        int progress=0;
 
 		void updateTotal();
 };

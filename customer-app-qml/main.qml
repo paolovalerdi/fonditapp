@@ -76,4 +76,12 @@ ApplicationWindow {
         }
     }
     TableSelection { id: tableSelection }
+
+    Connections{
+        target: orderMediator
+        function onOrderClosed()
+        {
+            tableSelection.state="open"
+        }
+    }
 }
