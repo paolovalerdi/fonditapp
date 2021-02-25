@@ -142,13 +142,12 @@ Rectangle {
                     if (root.order.idStatus === 5) {
                         dialog.open()
                     } else {
-                        // Mostrar detalles
+                        panel.open(root.order.idOrder)
                     }
                 }
             }
         }
     }
-
 
     Dialog {
         id: dialog
