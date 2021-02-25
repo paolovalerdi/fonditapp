@@ -140,13 +140,48 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     if (root.order.idStatus === 5) {
-                        console.log("Moviendo a pagadas")
-                        waiterBoardMediator.closeOrder(root.order.idOrder)
+                        dialog.open()
                     } else {
                         panel.open(root.order.idOrder)
                     }
                 }
             }
+        }
+    }
+
+    Dialog {
+        id: dialog
+        parent:  windowContent
+        width: parent.width*.5
+        height: parent.height*.3
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        //anchors.centerIn: parent
+        modal:true
+        title: "Confirmación"
+        clip: true
+        Label {
+            text: "¿Estas seguro de cerrar esta orden?"
+            wrapMode: Label.wrapMode
+            clip: true
+        }
+        Button {
+            id: btnaceptar
+            anchors.right: parent.right
+            Material.background: "#0FBF5C"
+            Material.foreground: "#FFF"
+            y: Math.round((parent.height - height) / 2)
+            text: qsTr("Aceptar")
+            onClicked:  waiterBoardMediator.closeOrder(root.order.idOrder)
+        }
+        Button {
+            id: btnrechazar
+            anchors.left: parent.left
+            Material.background: "#0FBF5C"
+            Material.foreground: "#FFF"
+            y: Math.round((parent.height - height) / 2)
+            text: qsTr("Rechazar")
+            onClicked: dialog.close()
         }
     }
 

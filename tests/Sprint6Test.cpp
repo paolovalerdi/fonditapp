@@ -29,3 +29,26 @@ TEST_CASE("Adding more products to an order doesn't duplicate already existing i
 
     REQUIRE(orderDao.getProductsByOrderId(orderId).size() == 4);
 }
+
+TEST_CASE("Update order progress")
+{
+    OrderDao orderDao = OrderDao(new TestDatabase());
+    auto idOrder= orderDao.getOrderById(2);
+    QString status = orderDao.getStatus(idOrder.getId_order());
+    int progress;
+
+    if(status=="Pendiente")
+    {
+        progress=33;
+
+    }else if(status=="En progreso")
+    {
+        progress=66;
+    }if(status=="Entregada")
+    {
+        progress=100;
+    }
+    REQUIRE(progress==100);
+
+
+}

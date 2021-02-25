@@ -97,7 +97,4 @@ void OrderListModel::update()
     }
 }
 
-void OrderListModel::softupdate()
-{
-    //
-}
+
