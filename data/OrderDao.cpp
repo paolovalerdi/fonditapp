@@ -52,7 +52,10 @@ QList<OrderProduct> OrderDao::getProductsByOrderId(int idOrder) const
                 );
     while(query.next())
     {
-        list.append(OrderProduct(query.value("id_product").toInt(),query.value("quantity").toInt(),query.value("id_order").toInt()));
+				list.append(OrderProduct(query.value("id_product").toInt(),
+																 query.value("quantity").toInt(),
+																 query.value("id_order").toInt(),
+																 query.value("ready").toBool()));
     }
     return list;
 }
@@ -124,7 +127,16 @@ void OrderDao::updateOrderStatus(Order order)
         break;
     }
     queryStr=queryStr.arg(order.getId_order());
-    auto query = database->executeQuery(queryStr);
+		auto query = database->executeQuery(queryStr);
+}
+
+void OrderDao::updateOrderProductIsReady(int idOrderProduct, int idOrder, bool isReady)
+{
+	QString queryStr = QString("UPDATE order_products SET ready = %1 WHERE id_product = %2 AND id_order = %3")
+										 .arg(isReady)
+										 .arg(idOrderProduct)
+										 .arg(idOrder);
+	database->executeQuery(queryStr);
 }
 
 Order OrderDao::getOrderById(int id)

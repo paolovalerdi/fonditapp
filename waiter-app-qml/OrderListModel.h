@@ -18,7 +18,6 @@ class OrderListModel : public QAbstractListModel, public DatabaseObserver
 
 public slots:
     void update();
-    void softupdate();
 
 public:
     enum {

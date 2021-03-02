@@ -27,35 +27,38 @@ void OrderMediator::onEventRecieved(QJsonObject event)
 		if (event["key"] == "close_order") {
 			if (event["idOrder"] == idOrder) {
 				tableDao.updateOcupied(idTable, false);
-                orderDao.insertIntoBill(idOrder);
+				orderDao.insertIntoBill(idOrder);
 				idOrder = -1;
 				status = -1;
 				orderProducts.clear();
 				total = 0.0;
 				qDebug() << "Orden cerrada";
 				emit productsUpdated();
-                emit orderClosed();
+				emit orderClosed();
 				// TODO: Show survey
 			}
 		}
-        if(event["key"]== "update_order_status")
-        {
-            if (event["idOrder"] == idOrder) {
+		if(event["key"]== "update_order_status")
+		{
+			if (event["idOrder"] == idOrder) {
 
-                status=orderDao.getOrderById(idOrder).getId_status();
-                switch (status) {
+				status=orderDao.getOrderById(idOrder).getId_status();
+				switch (status) {
 
-                case 3: progress=33;
-                        break;
+					case 3: progress=33;
+						break;
 
-                case 4: progress=66;
-                        break;
-                case 5: progress=100;
-                        break;
-                }
-                emit statusUpdated();
-            }
-        }
+					case 4: progress=66;
+						break;
+					case 5: progress=100;
+						break;
+				}
+				emit statusUpdated();
+			}
+		}
+		if(event["key"] == "update_progress") {
+			emit progressUpdated(event["progress"].toDouble());
+		}
 	}
 }
 
@@ -71,7 +74,7 @@ void OrderMediator::createOrder()
 {
 	if (idOrder == -1 && idTable != -1) {
 		idOrder = orderDao.createOrder(idTable);
-        orderDao.insertIntoOrder(orderProducts,idOrder);
+		orderDao.insertIntoOrder(orderProducts,idOrder);
 		QJsonObject createOrderEvent {
 			{"target", "waiter"},
 			{"key", "create_order"},
@@ -79,8 +82,8 @@ void OrderMediator::createOrder()
 		};
 		DatabaseSocket::getInstance()->sendEvent(createOrderEvent);
 		emit orderCreated();
-        status=3;
-        updateTotal();
+		status=3;
+		updateTotal();
 	}
 }
 
@@ -94,7 +97,7 @@ void OrderMediator::addProduct(int idProduct, int quantity)
 		emit productsUpdated();
 	}
 
-    updateTotal();
+	updateTotal();
 }
 
 void OrderMediator::updateProductQuantity(int idProduct, int quantity)
@@ -102,10 +105,10 @@ void OrderMediator::updateProductQuantity(int idProduct, int quantity)
 	auto index = orderProducts.indexOf(OrderProduct(idProduct));
 	auto original = orderProducts.at(index);
 	orderProducts.replace(index, OrderProduct(original.getIdProduct(),
-                                                             quantity,
-                                              original.getIdOrder()));
+																						quantity,
+																						original.getIdOrder()));
 	emit productUpdated(index);
-    updateTotal();
+	updateTotal();
 }
 
 void OrderMediator::removeProduct()
@@ -115,19 +118,19 @@ void OrderMediator::removeProduct()
 
 void OrderMediator::replay()
 {
-    emit statusUpdated();
-    emit totalUpdated();
+	emit statusUpdated();
+	emit totalUpdated();
 }
 
 int OrderMediator::getStatus() const
 {
-    return status;
+	return status;
 }
 
 void OrderMediator::updateTotal()
 {
-    total = 0;
-    for (auto orderProduct : qAsConst(orderProducts)) {
+	total = 0;
+	for (auto orderProduct : qAsConst(orderProducts)) {
 		auto product = asProduct(orderProduct);
 		total += (product.getPrice() * orderProduct.getQuantity());
 	}

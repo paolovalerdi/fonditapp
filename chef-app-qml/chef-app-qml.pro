@@ -1,4 +1,4 @@
-QT += quick
+QT += quick sql websockets
 
 CONFIG += c++11
 
@@ -7,6 +7,16 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ../data/Category.cpp \
+        ../data/DatabaseSocket.cpp \
+        ../data/Order.cpp \
+        ../data/OrderDao.cpp \
+        ../data/OrderProduct.cpp \
+        ../data/Product.cpp \
+        ../data/ProductionDatabase.cpp \
+        ../data/ProductsDao.cpp \
+        OrderListModel.cpp \
+        ProductListModel.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -21,3 +31,19 @@ QML_DESIGNER_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    ../data/Category.h \
+    ../data/DatabaseObserver.h \
+    ../data/DatabaseSocket.h \
+    ../data/Order.h \
+    ../data/OrderDao.h \
+    ../data/OrderProduct.h \
+    ../data/Product.h \
+    ../data/ProductionDatabase.h \
+    ../data/ProductsDao.h \
+    OrderListModel.h \
+    ProductListModel.h
+
+INCLUDEPATH += \
+    ../data
