@@ -13,5 +13,6 @@
         <file>../customer-app-qml/OrderProduct.qml</file>
         <file>OrderProduct.qml</file>
         <file>../icons/ic_close.svg</file>
+        <file>../icons/ic_check_circle.svg</file>
     </qresource>
 </RCC>

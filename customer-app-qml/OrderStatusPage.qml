@@ -100,6 +100,7 @@ Page{
                 Button{
                     id: pago
                     width:parent.width
+                    enabled: false
                     Material.background:  "#FFF"
                     Material.foreground:"#0FBF5C"
                     text: "Pedir cuenta"
@@ -146,24 +147,11 @@ Page{
     Connections{
 
         target: orderMediator
-        function onStatusUpdated(){
-           text1.text=orderMediator.status
-            switch (orderMediator.status){
-
-            case 3:
-                text1.text="Pendiente"
-                progress2.value=0.33
-                break;
-             case 4:
-                 text1.text="En progreso"
-                 progress2.value=0.66
-                 break;
-             case 5:
-                 text1.text="Entregada"
-                 progress2.value=1
-                 break;
-            }
+        function onProgressUpdated(progress) {
+            progress2.value = progress
+            pago.enabled = progress === 1
         }
+
         function onTotalUpdated(){
 
             totaltext.text="$"+orderMediator.total

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>OrderCard.qml</file>
+        <file>../icons/ic_receipt.svg</file>
+        <file>ProductItemView.qml</file>
+        <file>Product.qml</file>
+        <file>../icons/ic_check_circle.svg</file>
+    </qresource>
+</RCC>

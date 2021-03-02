@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
+    chef-app-qml \
     data \
     tests \
     customer-app-qml \

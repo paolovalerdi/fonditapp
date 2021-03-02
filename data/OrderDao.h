@@ -18,8 +18,11 @@ public:
     double calculateTotal(int idOrder) const;
     QString getStatus(int idOrder) const;
     void insertIntoBill(int idOrder) const;
-    QList<Order> getOrdersByStatus(int id_s);
+		QList<Order> getOrdersByStatus(int id_s);
+		QList<Order> getNotReadyOrders();
+		void updateOrderIsReady(int idOrder, bool isReady);
     void updateOrderStatus(Order order);
+		void updateOrderProductIsReady(int idOrderProduct, int idOrder, bool isReady);
     Order getOrderById(int id);
     void updateRequest(int id) const;
     //bool Request(int id_table) const;
