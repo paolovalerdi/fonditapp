@@ -1,5 +1,17 @@
 #include "OrderListModel.h"
 
+void OrderListModel::markAsReady(int idOrder)
+{
+	orderDao.updateOrderIsReady(idOrder, true);
+	update();
+	if (!list.isEmpty()) {
+		showEmptyMessage(false);
+		emit updateProductGrid(list.at(0).getId_order());
+	} else {
+		showEmptyMessage(true);
+	}
+}
+
 OrderListModel::OrderListModel(QObject *parent):
 	QAbstractListModel(parent)
 {
@@ -60,7 +72,7 @@ void OrderListModel::update()
 	beginRemoveRows(QModelIndex(), 0, list.size() - 1);
 	endRemoveRows();
 
-	list = orderDao.getOrdersByStatus(4);
+	list = orderDao.getNotReadyOrders();
 
 	beginInsertRows(QModelIndex(),0, list.size() - 1);
 	endInsertRows();

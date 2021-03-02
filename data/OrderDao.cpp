@@ -105,8 +105,37 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
                 .arg(id_s)
                 );
     while(query.next())
-        result.append(Order(query.value("id_order").toInt(),query.value("id_table").toInt(),query.value("id_status").toInt(),query.value("request").toInt(),calculateTotal(query.value("id_order").toInt())));
-    return result;
+				result.append(Order(query.value("id_order").toInt(),
+														query.value("id_table").toInt(),
+														query.value("id_status").toInt(),
+														query.value("request").toInt(),
+														calculateTotal(query.value("id_order").toInt()),
+														query.value("ready").toBool()));
+		return result;
+}
+
+QList<Order> OrderDao::getNotReadyOrders()
+{
+	QList<Order> result;
+	auto query = database->executeQuery(
+							QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0")
+							);
+	while(query.next())
+			result.append(Order(query.value("id_order").toInt(),
+													query.value("id_table").toInt(),
+													query.value("id_status").toInt(),
+													query.value("request").toInt(),
+													calculateTotal(query.value("id_order").toInt()),
+													query.value("ready").toBool()));
+	return result;
+}
+
+void OrderDao::updateOrderIsReady(int idOrder, bool isReady)
+{
+	QString queryStr = QString("UPDATE orders SET ready = %1 WHERE id_order = %2")
+										 .arg(isReady)
+										 .arg(idOrder);
+	database->executeQuery(queryStr);
 }
 
 void OrderDao::updateOrderStatus(Order order)

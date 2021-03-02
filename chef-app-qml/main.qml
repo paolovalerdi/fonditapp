@@ -44,11 +44,12 @@ ApplicationWindow {
                     margins:  16
                 }
 
-                model: OrderListModel {}
+                model: OrderListModel { id: orderListModel }
                 delegate: OrderCard {
                     width: parent.width
                     order: model
                     color: "#FF8552"
+                    isCurrent: model.position === 0
                 }
 
                 Component.onCompleted: itemAtIndex(0).isCurrent = true
@@ -123,8 +124,15 @@ ApplicationWindow {
                     enabled: false
                     anchors.fill: confirmButton
 
-                    onClicked: orderMediator.createOrder()
+                    onClicked: orderListModel.markAsReady(orderQueue.itemAtIndex(0).order.idOrder)
                 }
+            }
+            Text {
+                id: emptyText
+                visible: false
+                text: "No hay mas ordernes por ahora"
+                anchors.centerIn: parent
+                font.pointSize: 24
             }
         }
     }
@@ -134,6 +142,19 @@ ApplicationWindow {
 
         function onEnabled(value) {
             confirmMouseArea.enabled = value
+        }
+    }
+    Connections {
+        target: orderListModel
+
+        function onUpdateProductGrid(idOrder) {
+            productListModel.loadProductsByOrderId(idOrder)
+            confirmMouseArea.enabled = false
+        }
+        function onShowEmptyMessage(show) {
+            emptyText.visible = show
+            menuGridView.visible = !show
+            confirmButton.visible = !show
         }
     }
 }

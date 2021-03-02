@@ -100,6 +100,7 @@ Page{
                 Button{
                     id: pago
                     width:parent.width
+                    enabled: false
                     Material.background:  "#FFF"
                     Material.foreground:"#0FBF5C"
                     text: "Pedir cuenta"
@@ -148,6 +149,7 @@ Page{
         target: orderMediator
         function onProgressUpdated(progress) {
             progress2.value = progress
+            pago.enabled = progress === 1
         }
 
         function onTotalUpdated(){

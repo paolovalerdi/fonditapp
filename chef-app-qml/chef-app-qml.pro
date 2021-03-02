@@ -15,6 +15,7 @@ SOURCES += \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
         ../data/ProductsDao.cpp \
+        ChefMediator.cpp \
         OrderListModel.cpp \
         ProductListModel.cpp \
         main.cpp
@@ -42,6 +43,7 @@ HEADERS += \
     ../data/Product.h \
     ../data/ProductionDatabase.h \
     ../data/ProductsDao.h \
+    ChefMediator.h \
     OrderListModel.h \
     ProductListModel.h
 

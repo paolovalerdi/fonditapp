@@ -38,8 +38,8 @@ Rectangle {
     MouseArea {
         id: rootMouseArea
         anchors.fill: parent
-
         drag.target: root
+        enabled: root.order !== null && ((root.order.ready && root.order.idStatus === 4) || root.order.idStatus === 3)
         drag.onActiveChanged: root.Drag.drop();
     }
 
@@ -70,7 +70,17 @@ Rectangle {
                 sourceSize.height: 24
                 layer.enabled: true
                 layer.effect: ColorOverlay { color: foregroundColor }
-                visible: root.order.callWaiter
+                visible: root.order.callWaiter && root.order.idStatus === 5
+            }
+            Image {
+                id: ready_icon
+                anchors.right: parent.right
+                source: "../icons/ic_check_circle.svg"
+                sourceSize.width: 24
+                sourceSize.height: 24
+                layer.enabled: true
+                layer.effect: ColorOverlay { color: foregroundColor }
+                visible: root.order.ready && root.order.idStatus === 4
             }
         }
         Column {

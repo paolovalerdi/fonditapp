@@ -14,6 +14,11 @@ class OrderListModel : public QAbstractListModel, public DatabaseObserver
 {
 		Q_OBJECT
 
+	public slots:
+		void markAsReady(int idOrder);
+	signals:
+		void updateProductGrid(int idOrder);
+		void showEmptyMessage(bool show);
 	public:
 		enum {
 			ID_ROLE,
