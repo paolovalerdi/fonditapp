@@ -18,6 +18,7 @@ SOURCES += \
         Sprint4Test.cpp \
         Sprint5Test.cpp \
         Sprint6Test.cpp \
+        Sprint7Test.cpp \
         TestDatabase.cpp \
         main.cpp
 
