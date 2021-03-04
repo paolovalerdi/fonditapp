@@ -23,5 +23,6 @@
         <file>ProductDetailView.qml</file>
         <file>OrderPanel.qml</file>
         <file>TableSelection.qml</file>
+        <file>Product.qml</file>
     </qresource>
 </RCC>
