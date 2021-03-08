@@ -31,8 +31,17 @@ void WaiterBoardMediator::closeOrder(int orderId)
 		{"key", "close_order"},
 		{"idOrder", orderId}
 	};
-	DatabaseSocket::getInstance()->sendEvent(closeOrderEvent);
+    DatabaseSocket::getInstance()->sendEvent(closeOrderEvent);
 }
+
+void WaiterBoardMediator::updateSignal(){
+    QJsonObject update_event {
+        {"target", "chef"},
+        {"key", "update_queue"}
+    };
+    DatabaseSocket::getInstance()->sendEvent(update_event);
+}
+
 int WaiterBoardMediator::requestBill()
 {
    return orderDao.getRequest();

@@ -30,6 +30,8 @@ QVariant OrderProductListModel::data(const QModelIndex &index, int role) const
 			return QVariant(product.getPrice() * orderProduct.getQuantity());
 		case QUANTITY_ROLE:
 			return QVariant(orderProduct.getQuantity());
+        case READY_ROLE:
+            return QVariant(orderProduct.getReady());
 		default:
 			throw QString("OrderProductListModel: No such role");
 	}
@@ -44,6 +46,7 @@ QHash<int, QByteArray> OrderProductListModel::roleNames() const
 	names[PICTURE_ROLE] = "picture";
 	names[PRICE_ROLE]= "price";
 	names[QUANTITY_ROLE]= "quantity";
+    names[READY_ROLE]= "ready";
 	return names;
 }
 
@@ -58,6 +61,7 @@ void OrderProductListModel::setMediator(OrderMediator* value)
 	beginResetModel();
 
 	connect(mediator, &OrderMediator::productsUpdated, this, [=] {
+        qDebug()<<"lista cargada";
 		auto orderProducts = mediator->getOrderProducts();
 		beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
 		endRemoveRows();
@@ -72,5 +76,12 @@ void OrderProductListModel::setMediator(OrderMediator* value)
 		endInsertRows();
 	});
 
+    connect(mediator, &OrderMediator::readyUpdated, this, [=]() {
+        auto orderProducts = mediator->updateListReady();
+        beginRemoveRows(QModelIndex(), 0, orderProducts.size() - 1);
+        endRemoveRows();
+        beginInsertRows(QModelIndex(),0, orderProducts.size()-1);
+        endInsertRows();
+    });
 
 }

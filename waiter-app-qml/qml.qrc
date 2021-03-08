@@ -14,5 +14,6 @@
         <file>OrderProduct.qml</file>
         <file>../icons/ic_close.svg</file>
         <file>../icons/ic_check_circle.svg</file>
+        <file>../icons/ic_greencheck.png</file>
     </qresource>
 </RCC>

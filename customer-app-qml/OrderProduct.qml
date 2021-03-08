@@ -23,10 +23,20 @@ Item {
         }
 
         Image {
+            id: notification_icon
+            anchors.left:  parent.left
+            anchors.top:  parent.top*.9
+            source: "/../icons/ic_greencheck.png"
+            sourceSize.width: 24
+            sourceSize.height: 24
+            layer.enabled: true
+            visible: root.product.ready === true
+        }
+
+        Image {
             height: Layout.preferredWidth
             source: root.product.picture
             fillMode: Image.PreserveAspectCrop
-
             Layout.alignment: Qt.AlignVCenter
             Layout.preferredWidth: parent.width * 0.25
             Layout.preferredHeight: parent.width * 0.25
@@ -84,7 +94,6 @@ Item {
             visible: root.editable
             icon.source: "../icons/ic_delete.svg"
             Layout.alignment: Qt.AlignVCenter
-
             onClicked: console.log("Delete order product")
         }
     }
@@ -94,4 +103,6 @@ Item {
                     root.product.idProduct,
                     root.product.quantity + (sum ? 1 : -1))
     }
+
+
 }

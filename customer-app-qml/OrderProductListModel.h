@@ -19,6 +19,7 @@ class OrderProductListModel : public QAbstractListModel
 			PICTURE_ROLE,
 			PRICE_ROLE,
 			QUANTITY_ROLE,
+            READY_ROLE,
 		};
 
 		explicit OrderProductListModel(QObject *parent = nullptr);

@@ -19,6 +19,20 @@ Item {
             rightMargin: 16
         }
 
+
+        Image {
+            id: notification_icon
+            anchors.left:  parent.left
+            anchors.top:  parent.top*.9
+            source: "/../icons/ic_greencheck.png"
+            sourceSize.width: 24
+            sourceSize.height: 24
+            layer.enabled: true
+            visible: root.product.ready === true
+        }
+
+
+
         Image {
             height: Layout.preferredWidth
             source: root.product.picture
@@ -55,3 +69,4 @@ Item {
         }
     }
 }
+

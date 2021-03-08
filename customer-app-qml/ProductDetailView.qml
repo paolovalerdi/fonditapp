@@ -8,7 +8,7 @@ Rectangle {
     property var productModel: ({})
     property int quantity: 1
     property real unitPrice: 0
-
+    property  real progressOrder: 0
     signal addProduct()
 
     width: parent.width * 0.35
@@ -203,7 +203,6 @@ Rectangle {
                 onClicked: {
                     orderMediator.addProduct(productDetailRoot.productModel.productId, quantity)
                     productDetailRoot.close()
-                    productDetailRoot.addProduct()
                 }
             }
         }
@@ -216,6 +215,13 @@ Rectangle {
             left: parent.left
             top: parent.top
             bottom: parent.bottom
+        }
+    }
+    Connections{
+        target: orderMediator
+
+        function onProgressUpdated(progress) {
+             productDetailRoot.progressOrder = progress
         }
     }
 

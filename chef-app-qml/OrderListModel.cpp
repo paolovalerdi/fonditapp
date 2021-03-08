@@ -3,10 +3,15 @@
 void OrderListModel::markAsReady(int idOrder)
 {
 	orderDao.updateOrderIsReady(idOrder, true);
+    QJsonObject updateOrderListEvent {
+        {"target", "waiter"},
+        {"key", "update_orderlist"}
+    };
+    DatabaseSocket::getInstance()->sendEvent(updateOrderListEvent);
+    emit updateProductGrid(list.at(0).getId_order());
 	update();
 	if (!list.isEmpty()) {
 		showEmptyMessage(false);
-		emit updateProductGrid(list.at(0).getId_order());
 	} else {
 		showEmptyMessage(true);
 	}
@@ -52,6 +57,15 @@ QVariant OrderListModel::data(const QModelIndex &index, int role) const
 
 void OrderListModel::onEventRecieved(QJsonObject event)
 {
+    if (event["target"] == "chef") {
+        if (event["key"] == "update_queue") {
+           update();
+           if(list.size()==1){
+               showEmptyMessage(false);
+               updateProductGrid(list.at(0).getId_order());
+           }
+        }
+    }
 }
 
 QHash<int, QByteArray> OrderListModel::roleNames() const

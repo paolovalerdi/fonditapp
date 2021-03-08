@@ -23,6 +23,7 @@ class WaiterOrderProductListModel : public QAbstractListModel
             PICTURE_ROLE,
             PRICE_ROLE,
             QUANTITY_ROLE,
+            READY_ROLE,
         };
 
         explicit  WaiterOrderProductListModel(QObject *parent = nullptr);

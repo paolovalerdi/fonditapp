@@ -71,6 +71,11 @@ void OrderListModel::onEventRecieved(QJsonObject event)
 				update();
 			}
 		}
+        if (event["key"] == "update_orderlist") {
+            if (status == 4) {
+                update();
+            }
+        }
 	}
 }
 
@@ -82,7 +87,7 @@ QHash<int, QByteArray> OrderListModel::roleNames() const
     names[ID_STATUS_ROLE] = "idStatus";
     names[TOTAL_ROLE] = "total";
     names[CALL_ROLE] = "callWaiter";
-		names[READY_ROLE] = "ready";
+    names[READY_ROLE] = "ready";
     return names;
 }
 
