@@ -24,7 +24,6 @@ QList<OrderProduct> OrderMediator::getOrderProducts() const
 void OrderMediator::onEventRecieved(QJsonObject event)
 {
     if (event["target"] == "customer") {
-        qDebug() << "R"<<event["key"];
         if (event["key"] == "close_order") {
             if (event["idOrder"] == idOrder) {
                 tableDao.updateOcupied(idTable, false);
@@ -40,9 +39,30 @@ void OrderMediator::onEventRecieved(QJsonObject event)
             }
         }
         if(event["key"] == "update_progress") {
-            emit progressUpdated(event["progress"].toDouble());
+            progress = event["progress"].toDouble();
+            emit progressUpdated(progress);
             emit readyUpdated();
             emit productsUpdated();
+        }
+        if(event["key"] == "update_order_status"){
+            qDebug()<<event;
+            auto obj = orderDao.getOrderById(event["idOrder"].toInt());
+            switch (obj.getId_status()) {
+            case 3:
+                statusText = "Pendiente";
+                break;
+            case 4:
+                statusText = "Progreso";
+                break;
+            case 5:
+                statusText = "Entregada";
+                break;
+            case 6:
+                statusText = "Pagada";
+                break;
+            }
+            qDebug()<<"Estatus generado: "+statusText;
+            emit statusUpdated(statusText);
         }
     }
 }
@@ -72,9 +92,9 @@ void OrderMediator::createOrder()
         updateTotal();
     }
     else{
-         QList<OrderProduct> nuevosProductos(orderProducts.mid(lastIndex,orderProducts.size()));
-         orderDao.insertIntoOrder(nuevosProductos,idOrder);
-         if(orderDao.orderIsReady(idOrder)==1){
+        QList<OrderProduct> nuevosProductos(orderProducts.mid(lastIndex,orderProducts.size()));
+        orderDao.insertIntoOrder(nuevosProductos,idOrder);
+        if(orderDao.orderIsReady(idOrder)==1){
             updateStatus();
             QJsonObject updateOrderListEvent {
                 {"target", "waiter"},
@@ -86,7 +106,7 @@ void OrderMediator::createOrder()
                 {"key", "update_queue"}
             };
             DatabaseSocket::getInstance()->sendEvent(updateQueueEvent);
-         }
+        }
         lastIndex = orderProducts.size();
     }
 }
@@ -123,13 +143,24 @@ void OrderMediator::removeProduct()
 
 void OrderMediator::replay()
 {
-    emit statusUpdated();
+    emit statusUpdated(statusText);
     emit totalUpdated();
+    emit progressUpdated(progress);
 }
 
 void OrderMediator::updateStatus()
 {
     orderDao.updateStatus(idOrder);
+}
+
+void OrderMediator::insertIntoBill(int orderId)
+{
+    orderDao.insertIntoBill(idOrder);
+}
+
+void OrderMediator::request()
+{
+    orderDao.updateRequest(idOrder);
 }
 
 

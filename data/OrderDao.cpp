@@ -99,7 +99,7 @@ QString OrderDao::getStatus(int idOrder) const
 void OrderDao::insertIntoBill(int idOrder) const
 {
     QDateTime cData = QDateTime::currentDateTime();
-
+    qDebug()<<"Id de la orden a insertar: "<<idOrder;
     auto query = database->executeQuery(QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
                                         .arg(idOrder)
                                         );

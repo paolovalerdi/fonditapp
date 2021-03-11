@@ -34,7 +34,7 @@ class OrderMediator : public QObject, public DatabaseObserver
 		void productsUpdated();
 		void productUpdated(int index);
 		void totalUpdated();
-		void statusUpdated();
+        void statusUpdated(QString status);
 		void orderClosed();
 		void progressUpdated(double progress);
         void readyUpdated();
@@ -47,6 +47,8 @@ class OrderMediator : public QObject, public DatabaseObserver
 		void removeProduct(); // TODO
 		void replay();
         void updateStatus();
+        void insertIntoBill(int orderId);
+        void request();
 
 	private:
 		int idOrder = -1;
@@ -54,12 +56,12 @@ class OrderMediator : public QObject, public DatabaseObserver
 		int status = -1;
 		double total = 0.0;
         int lastIndex = 0;
+        double progress=0;
+        QString statusText = "Pendiente";
 		QList<OrderProduct> orderProducts;
 		OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
 		ProductsDao productsDao = ProductsDao(ProductionDatabase::getInstance());
 		TablesDao tableDao = TablesDao(ProductionDatabase::getInstance());
-		int progress=0;
-
 		void updateTotal();
 };
 

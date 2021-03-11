@@ -70,7 +70,7 @@ Page{
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: true
                     font.pointSize: 12
-                    text: "Estado de la orden: " + rooygjt.status
+                    text: "Estado de la orden: Pendiente"
                 }
                 ProgressPie {
                     id: progress2
@@ -108,8 +108,8 @@ Page{
                     onClicked:
                     {
                         pago.text= "Atendiendo solicitud"
-                        orderViewModelCallback.insertIntoBill(root.orderId)
-                        orderViewModelCallback.request()
+                        orderMediator.insertIntoBill(root.orderId)
+                        orderMediator.request()
                         dialog.open()
                     }
 
@@ -154,6 +154,10 @@ Page{
         function onTotalUpdated(){
 
             totaltext.text="$"+orderMediator.total
+        }
+
+        function onStatusUpdated(status){
+              text1.text = "Estatus de la orden: "+status
         }
 
     }
