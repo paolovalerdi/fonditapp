@@ -8,10 +8,10 @@ void OrderListModel::markAsReady(int idOrder)
         {"key", "update_orderlist"}
     };
     DatabaseSocket::getInstance()->sendEvent(updateOrderListEvent);
-    emit updateProductGrid(list.at(0).getId_order());
-	update();
+    update();
 	if (!list.isEmpty()) {
 		showEmptyMessage(false);
+         emit updateProductGrid(list.at(0).getId_order());
 	} else {
 		showEmptyMessage(true);
 	}

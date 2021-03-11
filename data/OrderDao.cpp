@@ -111,7 +111,7 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
 {
     QList<Order> result;
     auto query = database->executeQuery(
-                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table  WHERE id_status = %1")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table  WHERE id_status = %1 ORDER BY o.id_order")
                 .arg(id_s)
                 );
     while(query.next())
@@ -128,7 +128,7 @@ QList<Order> OrderDao::getNotReadyOrders()
 {
     QList<Order> result;
     auto query = database->executeQuery(
-                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0 ORDER BY o.id_order")
                 );
     while(query.next())
         result.append(Order(query.value("id_order").toInt(),
