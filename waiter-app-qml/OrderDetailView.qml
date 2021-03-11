@@ -69,12 +69,13 @@ Rectangle {
             }
         }
     ]
+
     onProductModelChanged: {
-        if (productModel !== null) {
-            quantity = 1
-            unitPrice = productModel.price
+            if (productModel !== null) {
+                quantity = 1
+                unitPrice = productModel.price
+            }
         }
-    }
 
     ToolButton {
         id: toolButton
@@ -86,6 +87,8 @@ Rectangle {
         }
         onClicked: productDetailRoot.close()
     }
+
+
     ListView{
         anchors.top: toolButton.bottom
         spacing: 10
@@ -93,6 +96,8 @@ Rectangle {
         height: parent.height
         model: WaiterOrderProductListModel{id: listModel}
         delegate: OrderProduct{width: parent.width; product: model; editable: false }
+
+
     }
 
 

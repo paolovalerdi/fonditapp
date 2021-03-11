@@ -29,7 +29,7 @@ void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
                 list.removeAt(i);
             }
         }
-		}
+    }
     for(auto value : list)
     {
 
@@ -39,9 +39,19 @@ void OrderDao::insertIntoOrder(QList<OrderProduct> list, int idOrder) const
                     .arg(value.getQuantity())
                     .arg(idOrder));
     }
-
-
 }
+
+void OrderDao::insertIntoOrder(OrderProduct orderProduct, int idOrder) const
+{
+    database->executeQuery(
+                QString("INSERT INTO order_products(id_product,quantity,id_order) VALUES(%1,%2,%3);")
+                .arg(orderProduct.getIdProduct())
+                .arg(orderProduct.getQuantity())
+                .arg(idOrder));
+}
+
+
+
 
 QList<OrderProduct> OrderDao::getProductsByOrderId(int idOrder) const
 {
@@ -52,10 +62,10 @@ QList<OrderProduct> OrderDao::getProductsByOrderId(int idOrder) const
                 );
     while(query.next())
     {
-				list.append(OrderProduct(query.value("id_product").toInt(),
-																 query.value("quantity").toInt(),
-																 query.value("id_order").toInt(),
-																 query.value("ready").toBool()));
+        list.append(OrderProduct(query.value("id_product").toInt(),
+                                 query.value("quantity").toInt(),
+                                 query.value("id_order").toInt(),
+                                 query.value("ready").toBool()));
     }
     return list;
 }
@@ -91,8 +101,8 @@ void OrderDao::insertIntoBill(int idOrder) const
     QDateTime cData = QDateTime::currentDateTime();
 
     auto query = database->executeQuery(QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
-                .arg(idOrder)
-                );
+                                        .arg(idOrder)
+                                        );
 
 
 }
@@ -105,37 +115,37 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
                 .arg(id_s)
                 );
     while(query.next())
-				result.append(Order(query.value("id_order").toInt(),
-														query.value("id_table").toInt(),
-														query.value("id_status").toInt(),
-														query.value("request").toInt(),
-														calculateTotal(query.value("id_order").toInt()),
-														query.value("ready").toBool()));
-		return result;
+        result.append(Order(query.value("id_order").toInt(),
+                            query.value("id_table").toInt(),
+                            query.value("id_status").toInt(),
+                            query.value("request").toInt(),
+                            calculateTotal(query.value("id_order").toInt()),
+                            query.value("ready").toBool()));
+    return result;
 }
 
 QList<Order> OrderDao::getNotReadyOrders()
 {
-	QList<Order> result;
-	auto query = database->executeQuery(
-							QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0")
-							);
-	while(query.next())
-			result.append(Order(query.value("id_order").toInt(),
-													query.value("id_table").toInt(),
-													query.value("id_status").toInt(),
-													query.value("request").toInt(),
-													calculateTotal(query.value("id_order").toInt()),
-													query.value("ready").toBool()));
-	return result;
+    QList<Order> result;
+    auto query = database->executeQuery(
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0")
+                );
+    while(query.next())
+        result.append(Order(query.value("id_order").toInt(),
+                            query.value("id_table").toInt(),
+                            query.value("id_status").toInt(),
+                            query.value("request").toInt(),
+                            calculateTotal(query.value("id_order").toInt()),
+                            query.value("ready").toBool()));
+    return result;
 }
 
 void OrderDao::updateOrderIsReady(int idOrder, bool isReady)
 {
-	QString queryStr = QString("UPDATE orders SET ready = %1 WHERE id_order = %2")
-										 .arg(isReady)
-										 .arg(idOrder);
-	database->executeQuery(queryStr);
+    QString queryStr = QString("UPDATE orders SET ready = %1 WHERE id_order = %2")
+            .arg(isReady)
+            .arg(idOrder);
+    database->executeQuery(queryStr);
 }
 
 void OrderDao::updateOrderStatus(Order order)
@@ -156,16 +166,16 @@ void OrderDao::updateOrderStatus(Order order)
         break;
     }
     queryStr=queryStr.arg(order.getId_order());
-		auto query = database->executeQuery(queryStr);
+    auto query = database->executeQuery(queryStr);
 }
 
 void OrderDao::updateOrderProductIsReady(int idOrderProduct, int idOrder, bool isReady)
 {
-	QString queryStr = QString("UPDATE order_products SET ready = %1 WHERE id_product = %2 AND id_order = %3")
-										 .arg(isReady)
-										 .arg(idOrderProduct)
-										 .arg(idOrder);
-	database->executeQuery(queryStr);
+    QString queryStr = QString("UPDATE order_products SET ready = %1 WHERE id_product = %2 AND id_order = %3")
+            .arg(isReady)
+            .arg(idOrderProduct)
+            .arg(idOrder);
+    database->executeQuery(queryStr);
 }
 
 Order OrderDao::getOrderById(int id)
@@ -189,7 +199,6 @@ void OrderDao::updateRequest(int id) const
     QString e=QString("UPDATE tables as T INNER JOIN orders as O ON T.id_table=O.id_table set T.request=1 where O.id_order=%1")
             .arg(id);
     auto query = database->executeQuery(e);
-   qDebug()<<"QUERY"+e;
 }
 
 int OrderDao::getRequest() const
@@ -201,5 +210,50 @@ int OrderDao::getRequest() const
     }
     return band;
 }
+
+void OrderDao::updateNewQuantityProduct(int idProduct, int quantity)
+{
+    QString e=QString("UPDATE order_products SET quantity=%1 WHERE id_product=%2")
+            .arg(quantity)
+            .arg(idProduct);
+    auto query = database->executeQuery(e);
+}
+
+void OrderDao::updateStatus(int idOrder){
+     QString queryStr = QString("UPDATE orders SET id_status = 4, ready = 0 WHERE id_order = %1").arg(idOrder);
+     qDebug()<<"QUERY EJECUTADO"<<queryStr;
+     auto query = database->executeQuery(queryStr);
+}
+
+bool OrderDao::orderIsReady(int idOrder){
+    bool status;
+    auto query = database->executeQuery(
+                QString("SELECT ready FROM orders WHERE id_order = %1")
+                .arg(idOrder)
+                );
+    while(query.next())
+        status = query.value(0).toBool();
+
+    return status;
+}
+
+QList<OrderProduct> OrderDao::getProductsNotReadyByOrderId(int idOrder) const
+{
+    QList<OrderProduct> list;
+    auto query = database->executeQuery(
+                QString("SELECT * FROM order_products WHERE id_order = %1 AND ready=0;")
+                .arg(idOrder)
+                );
+    while(query.next())
+    {
+        list.append(OrderProduct(query.value("id_product").toInt(),
+                                 query.value("quantity").toInt(),
+                                 query.value("id_order").toInt(),
+                                 query.value("ready").toBool()));
+    }
+    return list;
+}
+
+
 
 

@@ -14,8 +14,9 @@ Item {
     property int spanCount: 1
     property int spacing: 0
     property bool selected: false
-
+    visible: root.product.ready!==true
     signal clicked(bool isSelected)
+
 
     state: selected ? "selected" : "unselected"
     states: [
@@ -206,7 +207,6 @@ Item {
 
         MouseArea {
             id: mouseArea
-
             hoverEnabled: true
             anchors.fill: parent
             onClicked: {

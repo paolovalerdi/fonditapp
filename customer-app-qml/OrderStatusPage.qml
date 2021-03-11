@@ -70,7 +70,7 @@ Page{
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: true
                     font.pointSize: 12
-                    text: "Estado de la orden: " + root.status
+                    text: "Estado de la orden: " + rooygjt.status
                 }
                 ProgressPie {
                     id: progress2
@@ -122,9 +122,7 @@ Page{
         id: dialog
         width: parent.width*.5
         height: parent.height*.3
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        //anchors.centerIn: parent
+        anchors.centerIn: parent
         modal:true
         title: "Solicitud enviada"
         clip: true
@@ -147,6 +145,7 @@ Page{
     Connections{
 
         target: orderMediator
+
         function onProgressUpdated(progress) {
             progress2.value = progress
             pago.enabled = progress === 1
