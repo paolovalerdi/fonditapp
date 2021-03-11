@@ -74,7 +74,7 @@ double OrderDao::calculateTotal(int idOrder) const
 {
     double total=0;
     auto query = database->executeQuery(
-                QString("SELECT sum(products.price) FROM order_products INNER JOIN products on order_products.id_product = products.id_product WHERE order_products.id_order = %1")
+                QString("SELECT sum(products.price*order_products.quantity) FROM order_products INNER JOIN products on order_products.id_product = products.id_product WHERE order_products.id_order = %1")
                 .arg(idOrder)
                 );
     while(query.next())
