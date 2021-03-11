@@ -62,11 +62,13 @@ void TestDatabase::CreateTables()
                   .append("id_order int(11) NOT NULL,")
                   .append("id_table int(11) NOT NULL,")
                   .append("id_status int(11) NOT NULL DEFAULT 3,")
+                  .append("ready int(11) NOT NULL DEFAULT 0,")
                   .append("FOREIGN KEY(id_table) REFERENCES tables(id_table) ,")
                   .append("FOREIGN KEY(id_status) REFERENCES order_status(id_status) );")
                   );
 
-    database.exec(QString("CREATE TABLE order_products (id_product int(11) NOT NULL, quantity int(11),  id_order int(11) ,")
+    database.exec(QString("CREATE TABLE order_products (id_product int(11) NOT NULL, quantity int(11),  id_order int(11)")
+                    .append("ready int(11) NOT NULL DEFAULT 0,")
                     .append("FOREIGN KEY(id_product) REFERENCES products(id_product),")
                     .append("FOREIGN KEY(id_order) REFERENCES orders(id_order) );")
                   );
@@ -114,9 +116,9 @@ void TestDatabase::InsertTables()
 
 
 
-    database.exec(QString("INSERT INTO orders (id_order, id_table, id_status) VALUES")
-                  .append("(1,1,3),")
-                  .append("(2,2,5);")
+    database.exec(QString("INSERT INTO orders (id_order, id_table, id_status, ready) VALUES")
+                  .append("(1,1,3,0),")
+                  .append("(2,2,5,0);")
                   );
 
 

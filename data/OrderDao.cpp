@@ -189,7 +189,8 @@ Order OrderDao::getOrderById(int id)
                      query.value("id_table").toInt(),
                      query.value("id_status").toInt(),
                      query.value("request").toInt(),
-                     calculateTotal(query.value("id_order").toInt()));
+                     calculateTotal(query.value("id_order").toInt()),
+                     query.value("ready").toBool());
     }
     throw "No such order";
 }

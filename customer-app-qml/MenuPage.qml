@@ -38,15 +38,13 @@ Page {
             bottom: parent.bottom
         }
         model: ProductListModel { id: productListModel }
-        delegate: ProductItemView {
+        delegate: Product{
             width: menuGridView.cellWidth
             height: menuGridView.cellHeight
             spanCount: 3
             spacing: 12
-            indexOfThis: index
-            name: model.name
-            price: model.price
-            picture: model.picture
+            position: index
+            product: model
             MouseArea {
                 anchors.fill: parent
                 onClicked: {

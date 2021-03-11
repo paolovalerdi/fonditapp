@@ -14,6 +14,7 @@ SOURCES += \
         Product.cpp \
         ProductionDatabase.cpp \
         ProductsDao.cpp \
+        Question.cpp \
         Tables.cpp \
         TablesDao.cpp \
         main.cpp
@@ -29,5 +30,6 @@ HEADERS += \
     Product.h \
     ProductionDatabase.h \
     ProductsDao.h \
+    Question.h \
     Tables.h \
     TablesDao.h
