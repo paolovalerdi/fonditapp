@@ -41,6 +41,8 @@ QVariant WaiterOrderProductListModel::data(const QModelIndex &index, int role) c
             return QVariant(product.getPrice() * orderProduct.getQuantity());
         case QUANTITY_ROLE:
             return QVariant(orderProduct.getQuantity());
+        case READY_ROLE:
+             return QVariant(orderProduct.getReady());
         default:
             throw QString("OrderProductListModel: No such role");
     }
@@ -55,6 +57,7 @@ QHash<int, QByteArray> WaiterOrderProductListModel::roleNames() const
     names[PICTURE_ROLE] = "picture";
     names[PRICE_ROLE]= "price";
     names[QUANTITY_ROLE]= "quantity";
+    names[READY_ROLE]="ready";
     return names;
 }
 

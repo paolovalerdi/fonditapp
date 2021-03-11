@@ -62,12 +62,5 @@ Rectangle {
             height: 16
         }
 
-       /* Text {
-            text: "$" + root.order.total
-            color: foregroundColor
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.bold: true
-            font.pointSize: 16
-        }*/
     }
 }

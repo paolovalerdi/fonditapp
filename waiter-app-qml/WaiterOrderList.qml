@@ -65,6 +65,7 @@ Rectangle {
                                                       .source
                                                       .order
                                                       .idOrder);
+                waiterBoardMediator.updateSignal();
             }
         }
 

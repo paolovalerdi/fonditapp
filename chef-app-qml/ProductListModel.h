@@ -13,7 +13,7 @@ class ProductListModel : public QAbstractListModel
 
 	public slots:
 		void loadProductsByOrderId(int orderId);
-		void updateReady(int index, bool isReady);
+        void updateReady(int index, bool isReady);
 
 	signals:
 		void enabled(bool value);
@@ -23,7 +23,8 @@ class ProductListModel : public QAbstractListModel
 			ID_ROLE,
 			NAME_ROLE,
 			PICTURE_ROLE,
-			QUANTITY_ROLE
+            QUANTITY_ROLE,
+            READY_ROLE
 		};
 
 		explicit ProductListModel(QObject *parent = nullptr);

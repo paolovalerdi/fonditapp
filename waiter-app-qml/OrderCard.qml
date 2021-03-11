@@ -70,25 +70,25 @@ Rectangle {
                 sourceSize.height: 24
                 layer.enabled: true
                 layer.effect: ColorOverlay { color: foregroundColor }
-                visible: root.order.callWaiter && root.order.idStatus === 5
+                visible: root.order.callWaiter && root.order.ready === 1
+
             }
             Image {
-                id: ready_icon
-                anchors.right: parent.right
-                source: "../icons/ic_check_circle.svg"
-                sourceSize.width: 24
-                sourceSize.height: 24
-                layer.enabled: true
-                layer.effect: ColorOverlay { color: foregroundColor }
-                visible: root.order.ready && root.order.idStatus === 4
-            }
+                   id: check
+                   anchors.right: parent.right
+                   source: "../icons/ic_check_circle.svg"
+                   sourceSize.width: 24
+                   sourceSize.height: 24
+                   layer.enabled: true
+                   visible: root.order.callWaiter && root.order.idStatus === 5
+               }
         }
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
             Text {
                 width: parent.width
-                text: "Orden #" + root.order.idOrder
+                text: "Orden #"  + root.order.idOrder
                 color: foregroundColor
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -194,5 +194,7 @@ Rectangle {
             onClicked: dialog.close()
         }
     }
+
+
 
 }

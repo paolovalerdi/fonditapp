@@ -18,6 +18,7 @@ public slots:
     int requestBill();
     void updateBoard();
     void closeOrder(int orderId);
+    void updateSignal();
 
 signals:
     void onBoardUpdated();
