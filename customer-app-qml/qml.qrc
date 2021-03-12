@@ -26,5 +26,11 @@
         <file>Product.qml</file>
         <file>../icons/ic_check_circle.svg</file>
         <file>../icons/ic_greencheck.png</file>
+        <file>Question.qml</file>
+        <file>../icons/ic_happy.svg</file>
+        <file>../icons/ic_neutral.svg</file>
+        <file>../icons/ic_sad.svg</file>
+        <file>SurveyPage.qml</file>
+        <file>../icons/ic_send.svg</file>
     </qresource>
 </RCC>

@@ -75,7 +75,11 @@ ApplicationWindow {
             onToolbarClicked: drawer.open()
         }
     }
-    TableSelection { id: tableSelection }
+    /*TableSelection { id: tableSelection }
+*/
+    SurveyPage {
+
+    }
 
     Connections{
         target: orderMediator
