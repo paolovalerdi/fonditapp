@@ -17,7 +17,7 @@ Rectangle {
     height: parent.height
     color: "#FFF"
 
-    state: "open"
+    state: "close"
     states: [
         State {
             name: "open"
@@ -252,7 +252,10 @@ Rectangle {
                     anchors.fill: sendButton
 
                     onClicked: {
-
+                        orderMediator.sendAnswers(firstQuestion.answer,
+                                                  secondQuestion.answer,
+                                                  thirdQuestion.answer,
+                                                  fourthQuestion.answer);
                     }
                 }
             }

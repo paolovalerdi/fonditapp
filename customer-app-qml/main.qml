@@ -75,17 +75,20 @@ ApplicationWindow {
             onToolbarClicked: drawer.open()
         }
     }
-    /*TableSelection { id: tableSelection }
-*/
-    SurveyPage {
-
-    }
+    TableSelection { id: tableSelection }
+    SurveyPage { id: surveyPage }
 
     Connections{
         target: orderMediator
+
         function onOrderClosed()
         {
+            surveyPage.state = "close"
             tableSelection.state="open"
+        }
+
+        function onShowSurvey() {
+            surveyPage.state = "open"
         }
     }
 }

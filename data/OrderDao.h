@@ -32,6 +32,7 @@ public:
     void updateStatus(int idOrder);
     bool orderIsReady(int idOrder);
     QList<OrderProduct> getProductsNotReadyByOrderId(int idOrder) const;
+		void insertSurvery(int idOrder, QString a1, QString a2, QString a3, QString a4);
 private:
     AbsDatabase* database;
     //const ProductsDao productDao;

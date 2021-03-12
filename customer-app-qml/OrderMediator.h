@@ -25,7 +25,7 @@ class OrderMediator : public QObject, public DatabaseObserver
 		Product asProduct(OrderProduct orderProduct);
 		QList<OrderProduct> getOrderProducts() const;
 		void onEventRecieved(QJsonObject event) override;
-        QList<OrderProduct> updateListReady();
+		QList<OrderProduct> updateListReady();
 
 		int getStatus() const;
 
@@ -34,10 +34,11 @@ class OrderMediator : public QObject, public DatabaseObserver
 		void productsUpdated();
 		void productUpdated(int index);
 		void totalUpdated();
-        void statusUpdated(QString status);
+		void statusUpdated(QString status);
+		void showSurvey();
 		void orderClosed();
 		void progressUpdated(double progress);
-        void readyUpdated();
+		void readyUpdated();
 
 	public slots:
 		void linkTable(int idTable);
@@ -46,18 +47,20 @@ class OrderMediator : public QObject, public DatabaseObserver
 		void updateProductQuantity(int idProduct, int quantity);
 		void removeProduct(); // TODO
 		void replay();
-        void updateStatus();
-        void insertIntoBill(int orderId);
-        void request();
+		void updateStatus();
+		void insertIntoBill(int orderId);
+		void request();
+		void sendAnswers(QString a1, QString a2, QString a3, QString a4);
+		void closeOrder();
 
 	private:
 		int idOrder = -1;
 		int idTable = -1;
 		int status = -1;
 		double total = 0.0;
-        int lastIndex = 0;
-        double progress=0;
-        QString statusText = "Pendiente";
+		int lastIndex = 0;
+		double progress=0;
+		QString statusText = "Pendiente";
 		QList<OrderProduct> orderProducts;
 		OrderDao orderDao = OrderDao(ProductionDatabase::getInstance());
 		ProductsDao productsDao = ProductsDao(ProductionDatabase::getInstance());

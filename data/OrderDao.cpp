@@ -252,9 +252,20 @@ QList<OrderProduct> OrderDao::getProductsNotReadyByOrderId(int idOrder) const
                                  query.value("id_order").toInt(),
                                  query.value("ready").toBool()));
     }
-    return list;
+		return list;
 }
 
+void OrderDao::insertSurvery(int idOrder, QString a1, QString a2, QString a3, QString a4)
+{
+	auto query = QString("INSERT INTO surveys VALUES (%1, '%2', '%3', '%4', '%5')")
+							 .arg(idOrder)
+							 .arg(a1)
+							 .arg(a2)
+							 .arg(a3)
+							 .arg(a4);
+	qDebug() << query;
+	database->executeQuery(query);
+}
 
 
 
