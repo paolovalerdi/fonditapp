@@ -82,18 +82,23 @@ Column {
             }
         }
     }
-    TextField {
-       visible: root.openAsnwer
-       anchors {
-           left: parent.left
-           leftMargin: 32
-           right: parent.right
-           rightMargin: 32
-       }
-       wrapMode: Text.WordWrap
-       onTextChanged: {
-           console.log(text)
-           root.answer = text
-       }
+    ComboBox {
+        editable: false
+        visible: root.openAsnwer
+        anchors{
+            horizontalCenter: parent.horizontalCenter
+        }
+
+        model: ListModel {
+            id: model
+            ListElement { text: "Internet" }
+            ListElement { text: "Amigos/Familiares" }
+            ListElement { text: "Anuncio" }
+            ListElement { text: "Otros"}
+        }
+        onActivated: {
+            console.log(textAt(index))
+            root.answer = textAt(index)
+        }
     }
 }

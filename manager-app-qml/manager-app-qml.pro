@@ -1,8 +1,9 @@
-QT += quick sql websockets
+QT += quick sql websockets charts
 
 CONFIG += c++11
 
 SOURCES += \
+        ../customer-app-qml/ProductListModel.cpp \
         ../data/Category.cpp \
         ../data/Product.cpp \
         ../data/ProductionDatabase.cpp \
@@ -29,6 +30,7 @@ INCLUDEPATH += \
     ../customer-app-qml
 
 HEADERS += \
+    ../customer-app-qml/ProductListModel.h \
     ../data/AbsDatabase.h \
     ../data/Category.h \
     ../data/Product.h \
