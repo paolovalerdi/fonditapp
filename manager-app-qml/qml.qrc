@@ -12,5 +12,6 @@
         <file>../icons/ic_save.svg</file>
         <file>../icons/ic_delete.svg</file>
         <file>../icons/ic_add2.svg</file>
+        <file>Grafica.qml</file>
     </qresource>
 </RCC>

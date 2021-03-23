@@ -164,9 +164,7 @@ Rectangle {
         parent:  windowContent
         width: parent.width*.5
         height: parent.height*.3
-        x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        //anchors.centerIn: parent
+        anchors.centerIn: parent
         modal:true
         title: "Confirmación"
         clip: true

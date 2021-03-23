@@ -123,7 +123,6 @@ ApplicationWindow {
                     hoverEnabled: true
                     enabled: false
                     anchors.fill: confirmButton
-
                     onClicked: orderListModel.markAsReady(orderQueue.itemAtIndex(0).order.idOrder)
                 }
             }

@@ -21,7 +21,7 @@ ApplicationWindow {
                 icon.source: "../icons/ic_menu_book.svg"
                 text: qsTr("Editar menu")
                 onClicked: {
-                    stackView.push("Page1Form.qml")
+                    stackView.push("MenuPage.qml")
                     drawer.close()
                 }
             }
@@ -30,7 +30,7 @@ ApplicationWindow {
                 icon.source: "../icons/ic_menu_book.svg"
                 text: qsTr("Estadísticas")
                 onClicked: {
-                    stackView.push("Page2Form.qml")
+                    stackView.push("StatisticsPage.qml")
                     drawer.close()
                 }
             }

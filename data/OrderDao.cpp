@@ -74,7 +74,7 @@ double OrderDao::calculateTotal(int idOrder) const
 {
     double total=0;
     auto query = database->executeQuery(
-                QString("SELECT sum(products.price) FROM order_products INNER JOIN products on order_products.id_product = products.id_product WHERE order_products.id_order = %1")
+                QString("SELECT sum(products.price*order_products.quantity) FROM order_products INNER JOIN products on order_products.id_product = products.id_product WHERE order_products.id_order = %1")
                 .arg(idOrder)
                 );
     while(query.next())
@@ -99,7 +99,7 @@ QString OrderDao::getStatus(int idOrder) const
 void OrderDao::insertIntoBill(int idOrder) const
 {
     QDateTime cData = QDateTime::currentDateTime();
-
+    qDebug()<<"Id de la orden a insertar: "<<idOrder;
     auto query = database->executeQuery(QString("INSERT INTO bill(id_order,date) VALUES(%1,NOW());")
                                         .arg(idOrder)
                                         );
@@ -111,7 +111,7 @@ QList<Order> OrderDao::getOrdersByStatus(int id_s)
 {
     QList<Order> result;
     auto query = database->executeQuery(
-                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table  WHERE id_status = %1")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table  WHERE id_status = %1 ORDER BY o.id_order")
                 .arg(id_s)
                 );
     while(query.next())
@@ -128,7 +128,7 @@ QList<Order> OrderDao::getNotReadyOrders()
 {
     QList<Order> result;
     auto query = database->executeQuery(
-                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0")
+                QString("select o.*, t.request from orders as o INNER JOIN tables as t on o.id_table=t.id_table WHERE id_status = 4 AND ready = 0 ORDER BY o.id_order")
                 );
     while(query.next())
         result.append(Order(query.value("id_order").toInt(),
@@ -252,9 +252,20 @@ QList<OrderProduct> OrderDao::getProductsNotReadyByOrderId(int idOrder) const
                                  query.value("id_order").toInt(),
                                  query.value("ready").toBool()));
     }
-    return list;
+		return list;
 }
 
+void OrderDao::insertSurvery(int idOrder, QString a1, QString a2, QString a3, QString a4)
+{
+	auto query = QString("INSERT INTO surveys VALUES (%1, '%2', '%3', '%4', '%5')")
+							 .arg(idOrder)
+							 .arg(a1)
+							 .arg(a2)
+							 .arg(a3)
+							 .arg(a4);
+	qDebug() << query;
+	database->executeQuery(query);
+}
 
 
 

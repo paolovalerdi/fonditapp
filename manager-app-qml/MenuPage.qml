@@ -11,24 +11,33 @@ import QtQuick.Controls.Styles 1.4
 Page {
     id: root
     anchors.fill: parent
+    ItemDelegate {
+        id: toolbar
 
-    /*GridView {
+        height: root.height * .1
+        text: root.title
+        icon.source: "../icons/ic_drawer.svg"
+        font.pointSize: 18
+        font.bold: true
+
+        onClicked: root.toolbarClicked()
+    }
+    GridView {
         id: gridView
         cellWidth: (width / 3)
         cellHeight: (height / 3)
-        model: ProductViewModel { }
-        delegate: ProductItemView {
+        model: ProductListModel { id: productListModel }
+        delegate: ProductItemView{
             width: gridView.cellWidth
             height: gridView.cellHeight
+            selected: gridView.currentIndex === index
             spanCount: 3
             spacing: 12
-            indexOfThis: index
-            name: model.name
-            price: model.price
-            picture: model.picture
-            MouseArea {
-                anchors.fill: parent
-                onClicked: { productEditPanel.open(model) }
+            position: index
+            product: model
+            onClicked :{
+                productEditPanel.open(product)
+                gridView.currentIndex = index
             }
         }
         ScrollIndicator.vertical: ScrollIndicator {}
@@ -38,6 +47,7 @@ Page {
             bottom: parent.bottom
             right: productEditPanel.left
         }
+        Component.onCompleted: productListModel.loadCategory(-1)
     }
 
     RoundButton{
@@ -59,5 +69,5 @@ Page {
 
     ProductEditPanel {
         id: productEditPanel
-    }*/
+    }
 }

@@ -76,12 +76,19 @@ ApplicationWindow {
         }
     }
     TableSelection { id: tableSelection }
+    SurveyPage { id: surveyPage }
 
     Connections{
         target: orderMediator
+
         function onOrderClosed()
         {
+            surveyPage.state = "close"
             tableSelection.state="open"
+        }
+
+        function onShowSurvey() {
+            surveyPage.state = "open"
         }
     }
 }

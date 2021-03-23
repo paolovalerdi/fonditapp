@@ -1,8 +1,8 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "ProductionDatabase.h"
-//#include "../customer-app-qml/ProductListModel.h"
+#include "../customer-app-qml/ProductListModel.h"
 #include "ProductFormViewModel.h"
 
 int main(int argc, char *argv[])
@@ -11,18 +11,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    // Registramos las clases de C++ que sirven como modelos para QML
-		//qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductViewModel");
-    //qmlRegisterUncreatableType<ProductViewModelCallback>("Product", 1, 0, "ProductViewModelCallback", "Can't create instaces of this class");
+    qmlRegisterType<ProductListModel>("Product", 1, 0, "ProductListModel");
 
-    // Registramos ProductViewModelCallback como una variable dentro del contexto de QML.
-    //ProductViewModelCallback productViewModelCallback;
-    //engine.rootContext()->setContextProperty("productViewModelCallback", &productViewModelCallback);
     ProductFormViewModel productFormViewModel;
     engine.rootContext()->setContextProperty("productFormViewModel", &productFormViewModel);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
